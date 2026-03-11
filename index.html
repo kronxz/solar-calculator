@@ -139,7 +139,8 @@ let hsp=parseFloat(document.getElementById("city").value)
 
 let consumption=bill/tariff
 
-let baseKwp=consumption/(hsp*30)
+let efficiency = 0.75
+let baseKwp = consumption/(hsp*30*efficiency)
 
 let essential=baseKwp*0.8
 let recommended=baseKwp
