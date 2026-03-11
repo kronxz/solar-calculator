@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora Solar</title>
+
+<style>
+
+body{
+font-family:Arial;
+padding:20px;
+background:#0f172a;
+color:white;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+font-size:16px;
+border-radius:8px;
+border:none;
+}
+
+button{
+background:#22c55e;
+font-weight:bold;
+}
+
+.card{
+background:#1f2937;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>☀️ Calculadora Solar</h2>
+
+Conta de luz (R$)
+<input id="bill" type="number">
+
+Tarifa (R$/kWh)
+<input id="tariff" value="0.95">
+
+<button onclick="calc()">Simular</button>
+
+<div id="result"></div>
+
+<script>
+
+function calc(){
+
+let bill=document.getElementById("bill").value
+let tariff=document.getElementById("tariff").value
+
+let consumption=bill/tariff
+
+let system=consumption/140
+
+let panels=Math.ceil((system*1000)/575)
+
+let generation=system*140
+
+let price=system*4500
+
+document.getElementById("result").innerHTML=
+
+"<div class='card'>"+
+"<b>Sistema recomendado</b><br>"+
+panels+" módulos<br>"+
+system.toFixed(2)+" kWp<br>"+
+"Geração: "+generation.toFixed(0)+" kWh<br>"+
+"Investimento: R$ "+price.toFixed(0)+
+"</div>"
+
+}
+
+</script>
+
+</body>
+</html>
