@@ -76,6 +76,8 @@ margin-bottom:5px;
 <input type="tel" id="clienteTelefone" placeholder="Telefone / WhatsApp">
 
 <input type="text" id="endereco" placeholder="Endereço da instalação">
+  
+<button onclick="verTelhado()">Ver telhado no mapa 🛰</button>
 
 <h2>Consumo</h2>
 
@@ -108,6 +110,21 @@ if(kwp<=8) return "8 kW"
 if(kwp<=10) return "10 kW"
 
 return "15 kW"
+
+}
+
+function verTelhado(){
+
+let endereco=document.getElementById("endereco").value
+
+if(endereco==""){
+alert("Digite o endereço para visualizar o telhado.")
+return
+}
+
+let mapa="https://www.google.com/maps/search/"+encodeURIComponent(endereco)
+
+window.open(mapa,"_blank")
 
 }
 
@@ -199,20 +216,19 @@ let nome=document.getElementById("clienteNome").value
 let telefone=document.getElementById("clienteTelefone").value
 let endereco=document.getElementById("endereco").value
 let bill=document.getElementById("bill").value
+  
 
-
-let seuNumero="5521972381004"
 let mensagem=
 "Olá, sou "+nome+"\n\n"+
+"Acabei de fazer uma simulação de energia solar.\n\n"+
 "Telefone: "+telefone+"\n"+
-"Endereço: "+endereco+"\n"+
+(endereco ? "Endereço: "+endereco+"\n" : "")+
 "Conta de luz: R$ "+bill+"\n\n"+
 "Sistema escolhido: "+nomeSistema+"\n"+
 "Potência: "+kwp+" kWp\n"+
 "Módulos: "+placas+"\n"+
 "Economia mensal: R$ "+economia+"\n\n"+
-"Mapa da instalação:\n"+
-"https://www.google.com/maps/search/"+encodeURIComponent(endereco)
+(endereco ? "Mapa da instalação:\nhttps://www.google.com/maps/search/"+encodeURIComponent(endereco)+"\n\n" : "")+
 "Gostaria de falar sobre esse projeto."
 
 let url="https://wa.me/"+seuNumero+"?text="+encodeURIComponent(mensagem)
