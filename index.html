@@ -222,11 +222,7 @@ window.open(url)
 
 }
 
-</script>
-
-</body>
-
-</html>
+<script>
 
 function enviarKit(nomeSistema,kwp,placas,economia){
 
@@ -235,11 +231,11 @@ let telefone=document.getElementById("clienteTelefone").value
 
 let mensagem=
 "Olá "+nome+" 👋\n\n"+
-"Segue a simulação do seu sistema solar:\n\n"+
-"🔆 Sistema: "+nomeSistema+"\n"+
-"⚡ Potência: "+kwp+" kWp\n"+
-"🔋 Módulos: "+placas+"\n"+
-"💰 Economia mensal: R$ "+economia+"\n\n"+
+"Segue a simulação do seu sistema solar.\n\n"+
+"Sistema: "+nomeSistema+"\n"+
+"Potência: "+kwp+" kWp\n"+
+"Módulos: "+placas+"\n"+
+"Economia mensal: R$ "+economia+"\n\n"+
 "Esse sistema pode reduzir sua conta de luz em até 90%."
 
 let url="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagem)
@@ -247,3 +243,11 @@ let url="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagem)
 window.open(url)
 
 }
+
+</script>
+
+</body>
+
+</html>
+
+
