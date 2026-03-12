@@ -198,28 +198,6 @@ document.getElementById("result").innerHTML=html
 
 }
 
-function enviarWhatsApp(){
-
-let nome=document.getElementById("clienteNome").value
-
-let telefone=document.getElementById("clienteTelefone").value
-
-let bill=document.getElementById("bill").value
-
-let mensagem=
-
-"Olá "+nome+
-
-", fiz uma simulação do seu sistema solar.\n\n"+
-
-"Conta de luz aproximada: R$ "+bill+"\n\n"+
-
-"Veja os detalhes do sistema na simulação."
-
-let url="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagem)
-
-window.open(url)
-
 }
 
 <script>
