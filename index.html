@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-  
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MF Soluções Elétricas e Energia Solar</title>
@@ -76,7 +76,7 @@ margin-bottom:5px;
 <input type="tel" id="clienteTelefone" placeholder="Telefone / WhatsApp">
 
 <input type="text" id="endereco" placeholder="Endereço da instalação">
-  
+
 <button onclick="verTelhado()">Ver telhado no mapa 🛰</button>
 
 <h2>Consumo</h2>
@@ -94,6 +94,12 @@ Cidade
 <option value="5.5">Brasília</option>
 <option value="5.0">Belo Horizonte</option>
 <option value="5.3">Salvador</option>
+</select>
+
+Potência do módulo
+<select id="potenciaPlaca">
+<option value="620">620 W</option>
+<option value="700" selected>700 W</option>
 </select>
 
 <button onclick="calc()">Simular Sistema</button>
@@ -128,9 +134,9 @@ window.open(mapa,"_blank")
 
 }
 
-function systemCard(name,kwp,hsp,tariff){
+function systemCard(name,kwp,hsp,tariff,potenciaPlaca){
 
-let panels=Math.ceil((kwp*1000)/575)
+let panels=Math.ceil((kwp*1000)/potenciaPlaca)
 
 let generation=kwp*hsp*30
 
@@ -149,6 +155,7 @@ return `
 <div class="resultTitle">${name}</div>
 
 ${panels} módulos<br>
+Potência do módulo: ${potenciaPlaca} W<br>
 
 ${kwp.toFixed(2)} kWp<br>
 
@@ -186,6 +193,8 @@ let tariff=parseFloat(document.getElementById("tariff").value)
 
 let hsp=parseFloat(document.getElementById("city").value)
 
+let potenciaPlaca=parseFloat(document.getElementById("potenciaPlaca").value)
+
 let consumption=bill/tariff
 
 let perdas=0.75
@@ -200,11 +209,11 @@ let premium=baseKwp*1.3
 
 let html=""
 
-html+=systemCard("Essencial",essential,hsp,tariff)
+html+=systemCard("Essencial",essential,hsp,tariff,potenciaPlaca)
 
-html+=systemCard("Recomendado ⭐",recommended,hsp,tariff)
+html+=systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca)
 
-html+=systemCard("Premium",premium,hsp,tariff)
+html+=systemCard("Premium",premium,hsp,tariff,potenciaPlaca)
 
 document.getElementById("result").innerHTML=html
 
@@ -216,9 +225,9 @@ let nome=document.getElementById("clienteNome").value
 let telefone=document.getElementById("clienteTelefone").value
 let endereco=document.getElementById("endereco").value
 let bill=document.getElementById("bill").value
-  
+
 let seuNumero="5521972381004"
-  
+
 let mensagem=
 "Olá, sou "+nome+"\n\n"+
 "Acabei de fazer uma simulação de energia solar.\n\n"+
@@ -240,3 +249,5 @@ window.open(url,"_blank")
 
 </script>
 
+</body>
+</html>
