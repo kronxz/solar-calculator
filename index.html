@@ -63,6 +63,12 @@ margin-bottom:5px;
 <h1>☀️ Simulador Solar - MF Soluções</h1>
 <p>Descubra quanto você pode economizar com energia solar em Maricá</p>
 
+<h2>Dados do Cliente</h2>
+
+<input type="text" id="clienteNome" placeholder="Nome do cliente">
+
+<input type="tel" id="clienteTelefone" placeholder="Telefone / WhatsApp">
+  
 Conta de luz (R$)
 <input id="bill" type="number" placeholder="Ex: 350">
 
@@ -142,7 +148,17 @@ let tariff=parseFloat(document.getElementById("tariff").value)
 
 let hsp=parseFloat(document.getElementById("city").value)
 
-let consumption=bill/tariff
+let consumption = bill / tariff
+
+let hsp = 4.8
+let perdas = 0.75
+
+let potenciaSistema = consumption / (hsp * 30 * perdas)
+
+let placa = 0.575
+let numeroPlacas = Math.ceil(potenciaSistema / placa)
+
+let potenciaFinal = numeroPlacas * placa
 
 let efficiency = 0.75
 let baseKwp = consumption/(hsp*30*efficiency)
@@ -161,22 +177,29 @@ html+=systemCard("Premium",premium,hsp,tariff)
 
 html+=`
 <br>
-<button onclick="sendWhats()">Enviar simulação no WhatsApp</button>
+<button onclick="enviarWhatsApp()">Enviar simulação no WhatsApp</button>
 `
 
 document.getElementById("result").innerHTML=html
 
 }
 
-function sendWhats(){
+function enviarWhatsApp(){
 
-let bill=document.getElementById("bill").value
+let nome = document.getElementById("clienteNome").value;
+let telefone = document.getElementById("clienteTelefone").value;
+let consumo = document.getElementById("consumo").value;
 
-let message=`Olá! Fiz uma simulação de energia solar para uma conta de R$ ${bill}.`
+let mensagem = 
+"Olá " + nome + 
+", fiz uma simulação do seu sistema solar.\n\n" +
+"Consumo: " + consumo + " kWh\n" +
+"Veja os detalhes do sistema.";
 
-let url="https://wa.me/?text="+encodeURIComponent(message)
+let url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem);
 
-window.open(url)
+window.open(url);
+}
 
 }
 
