@@ -118,6 +118,19 @@ if(kwp<=10) return "10 kW"
 return "15 kW"
 
 }
+function precoPorKwp(kwp){
+
+if(kwp <= 4){
+return 4200
+}
+
+if(kwp <= 8){
+return 3900
+}
+
+return 3500
+
+}  
 
 function verTelhado(){
 
@@ -187,6 +200,7 @@ Escolher este sistema
 
 }
 
+  
 function calc(){
 
 let bill=parseFloat(document.getElementById("bill").value)
