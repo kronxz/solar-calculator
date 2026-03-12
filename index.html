@@ -146,6 +146,12 @@ Payback: ${payback.toFixed(1)} anos<br>
 
 Inversor sugerido: ${inverter}
 
+<br><br>
+
+<button onclick="enviarKit('${name}',${kwp.toFixed(2)},${panels},${saving.toFixed(0)})">
+Escolher este sistema
+</button>
+
 </div>
 
 `
@@ -221,3 +227,23 @@ window.open(url)
 </body>
 
 </html>
+
+function enviarKit(nomeSistema,kwp,placas,economia){
+
+let nome=document.getElementById("clienteNome").value
+let telefone=document.getElementById("clienteTelefone").value
+
+let mensagem=
+"Olá "+nome+" 👋\n\n"+
+"Segue a simulação do seu sistema solar:\n\n"+
+"🔆 Sistema: "+nomeSistema+"\n"+
+"⚡ Potência: "+kwp+" kWp\n"+
+"🔋 Módulos: "+placas+"\n"+
+"💰 Economia mensal: R$ "+economia+"\n\n"+
+"Esse sistema pode reduzir sua conta de luz em até 90%."
+
+let url="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagem)
+
+window.open(url)
+
+}
