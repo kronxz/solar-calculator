@@ -140,7 +140,7 @@ let panels=Math.ceil((kwp*1000)/potenciaPlaca)
 
 let generation=kwp*hsp*30
 
-let saving=generation*tariff
+let saving = Math.min(generation * tariff, bill * 0.9)
 
 let investment=kwp*2500
 
