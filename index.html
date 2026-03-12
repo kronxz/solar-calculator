@@ -75,6 +75,8 @@ margin-bottom:5px;
 
 <input type="tel" id="clienteTelefone" placeholder="Telefone / WhatsApp">
 
+<input type="text" id="endereco" placeholder="Endereço da instalação">
+
 <h2>Consumo</h2>
 
 Conta de luz (R$)
@@ -195,19 +197,22 @@ function enviarKit(nomeSistema,kwp,placas,economia){
 
 let nome=document.getElementById("clienteNome").value
 let telefone=document.getElementById("clienteTelefone").value
+let endereco=document.getElementById("endereco").value
 let bill=document.getElementById("bill").value
 
-let seuNumero="5521972381004"
 
+let seuNumero="5521972381004"
 let mensagem=
-"Olá, sou "+nome+" 👋\n\n"+
-"Acabei de fazer uma simulação de energia solar.\n\n"+
+"Olá, sou "+nome+"\n\n"+
 "Telefone: "+telefone+"\n"+
+"Endereço: "+endereco+"\n"+
 "Conta de luz: R$ "+bill+"\n\n"+
 "Sistema escolhido: "+nomeSistema+"\n"+
 "Potência: "+kwp+" kWp\n"+
 "Módulos: "+placas+"\n"+
-"Economia mensal: R$ "+economia
+"Economia mensal: R$ "+economia+"\n\n"+
+"Mapa da instalação:\n"+
+"https://www.google.com/maps/search/"+encodeURIComponent(endereco)
 "Gostaria de falar sobre esse projeto."
 
 let url="https://wa.me/"+seuNumero+"?text="+encodeURIComponent(mensagem)
