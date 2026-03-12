@@ -196,6 +196,10 @@ let nome=document.getElementById("clienteNome").value
 let telefone=document.getElementById("clienteTelefone").value
 let bill=document.getElementById("bill").value
 
+// SEU WHATSAPP
+let seuNumero="5521972381004"
+
+// mensagem do cliente
 let mensagemCliente=
 "Olá "+nome+" 👋\n\n"+
 "Segue a simulação do seu sistema solar.\n\n"+
@@ -205,15 +209,7 @@ let mensagemCliente=
 "Economia mensal: R$ "+economia+"\n\n"+
 "Esse sistema pode reduzir sua conta de luz em até 90%."
 
-let urlCliente="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagemCliente)
-
-window.open(urlCliente)
-
-
-// MENSAGEM PARA VOCÊ (LEAD GERADO)
-
-let seuNumero="5521972381004"   // COLOQUE SEU WHATSAPP AQUI
-
+// mensagem do lead para você
 let mensagemLead=
 "🔥 NOVO LEAD GERADO\n\n"+
 "Cliente: "+nome+"\n"+
@@ -222,13 +218,22 @@ let mensagemLead=
 "Sistema escolhido: "+nomeSistema+"\n"+
 "Potência: "+kwp+" kWp\n"+
 "Módulos: "+placas+"\n"+
-"Economia mensal: R$ "+economia
+"Economia mensal: R$ "+economia+"\n\n"+
+"Contato do cliente: https://wa.me/"+telefone
+
+// abre whatsapp para o cliente
+let urlCliente="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagemCliente)
+
+window.open(urlCliente,"_blank")
+
+// envia lead para você
+setTimeout(function(){
 
 let urlLead="https://wa.me/"+seuNumero+"?text="+encodeURIComponent(mensagemLead)
 
-setTimeout(function(){
-window.open(urlLead)
-},2000)
+window.open(urlLead,"_blank")
+
+},1500)
 
 }
 
