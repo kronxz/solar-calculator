@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,17 +9,17 @@
 <style>
 
 body{
-<div style="text-align:center;margin-bottom:20px;">
-<img src="logo.jpg" width="220">
-</div>
-</div>
-font-family:Arial;
+font-family: Arial;
 background:#0f172a;
 color:white;
 padding:20px;
 }
 
 h1{
+margin-bottom:10px;
+}
+
+p{
 margin-bottom:20px;
 }
 
@@ -60,6 +61,10 @@ margin-bottom:5px;
 
 <body>
 
+<div style="text-align:center;margin-bottom:20px;">
+<img src="logo%20mf.jpg" width="220">
+</div>
+
 <h1>☀️ Simulador Solar - MF Soluções</h1>
 <p>Descubra quanto você pode economizar com energia solar em Maricá</p>
 
@@ -68,7 +73,9 @@ margin-bottom:5px;
 <input type="text" id="clienteNome" placeholder="Nome do cliente">
 
 <input type="tel" id="clienteTelefone" placeholder="Telefone / WhatsApp">
-  
+
+<h2>Consumo</h2>
+
 Conta de luz (R$)
 <input id="bill" type="number" placeholder="Ex: 350">
 
@@ -77,13 +84,11 @@ Tarifa (R$/kWh)
 
 Cidade
 <select id="city">
-
 <option value="4.8">Rio de Janeiro</option>
 <option value="4.3">São Paulo</option>
 <option value="5.5">Brasília</option>
 <option value="5.0">Belo Horizonte</option>
 <option value="5.3">Salvador</option>
-
 </select>
 
 <button onclick="calc()">Simular Sistema</button>
@@ -98,6 +103,7 @@ if(kwp<=3) return "3 kW"
 if(kwp<=5) return "5 kW"
 if(kwp<=8) return "8 kW"
 if(kwp<=10) return "10 kW"
+
 return "15 kW"
 
 }
@@ -110,23 +116,28 @@ let generation=kwp*hsp*30
 
 let saving=generation*tariff
 
-let investment=kwp*3000
+let investment=kwp*2500
 
 let payback=investment/(saving*12)
 
 let inverter=inverterSuggestion(kwp)
 
 return `
-<div class="card ${name=="Recomendado"?"recommended":""}">
+
+<div class="card ${name=="Recomendado ⭐"?"recommended":""}">
+
 <div class="resultTitle">${name}</div>
 
 ${panels} módulos<br>
+
 ${kwp.toFixed(2)} kWp<br>
 
 Geração: ${generation.toFixed(0)} kWh/mês<br>
 
 Economia mensal: R$ ${saving.toFixed(0)}<br>
+
 Economia anual: R$ ${(saving*12).toFixed(0)}<br>
+
 Economia 25 anos: R$ ${(saving*12*25).toFixed(0)}<br>
 
 Investimento: R$ ${investment.toFixed(0)}<br>
@@ -136,6 +147,7 @@ Payback: ${payback.toFixed(1)} anos<br>
 Inversor sugerido: ${inverter}
 
 </div>
+
 `
 
 }
@@ -148,23 +160,16 @@ let tariff=parseFloat(document.getElementById("tariff").value)
 
 let hsp=parseFloat(document.getElementById("city").value)
 
-let consumption = bill / tariff
+let consumption=bill/tariff
 
-let hsp = 4.8
-let perdas = 0.75
+let perdas=0.75
 
-let potenciaSistema = consumption / (hsp * 30 * perdas)
-
-let placa = 0.575
-let numeroPlacas = Math.ceil(potenciaSistema / placa)
-
-let potenciaFinal = numeroPlacas * placa
-
-let efficiency = 0.75
-let baseKwp = consumption/(hsp*30*efficiency)
+let baseKwp=consumption/(hsp*30*perdas)
 
 let essential=baseKwp*0.8
+
 let recommended=baseKwp
+
 let premium=baseKwp*1.3
 
 let html=""
@@ -176,8 +181,11 @@ html+=systemCard("Recomendado ⭐",recommended,hsp,tariff)
 html+=systemCard("Premium",premium,hsp,tariff)
 
 html+=`
+
 <br>
+
 <button onclick="enviarWhatsApp()">Enviar simulação no WhatsApp</button>
+
 `
 
 document.getElementById("result").innerHTML=html
@@ -186,24 +194,30 @@ document.getElementById("result").innerHTML=html
 
 function enviarWhatsApp(){
 
-let nome = document.getElementById("clienteNome").value;
-let telefone = document.getElementById("clienteTelefone").value;
-let consumo = document.getElementById("consumo").value;
+let nome=document.getElementById("clienteNome").value
 
-let mensagem = 
-"Olá " + nome + 
-", fiz uma simulação do seu sistema solar.\n\n" +
-"Consumo: " + consumo + " kWh\n" +
-"Veja os detalhes do sistema.";
+let telefone=document.getElementById("clienteTelefone").value
 
-let url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem);
+let bill=document.getElementById("bill").value
 
-window.open(url);
-}
+let mensagem=
+
+"Olá "+nome+
+
+", fiz uma simulação do seu sistema solar.\n\n"+
+
+"Conta de luz aproximada: R$ "+bill+"\n\n"+
+
+"Veja os detalhes do sistema na simulação."
+
+let url="https://wa.me/"+telefone+"?text="+encodeURIComponent(mensagem)
+
+window.open(url)
 
 }
 
 </script>
 
 </body>
+
 </html>
