@@ -134,13 +134,13 @@ window.open(mapa,"_blank")
 
 }
 
-function systemCard(name,kwp,hsp,tariff,potenciaPlaca){
+function systemCard(name,kwp,hsp,tariff,potenciaPlaca,bill){
 
 let panels=Math.ceil((kwp*1000)/potenciaPlaca)
 
 let generation=kwp*hsp*30
 
-let saving = Math.min(generation * tariff, bill * 0.9)
+let saving=Math.min(generation*tariff,bill*0.9)
 
 let investment=kwp*2500
 
@@ -150,11 +150,12 @@ let inverter=inverterSuggestion(kwp)
 
 return `
 
-<div class="card ${name=="Custo Beneficio ⭐"?"recommended":""}">
+<div class="card ${name=="Recomendado ⭐"?"recommended":""}">
 
 <div class="resultTitle">${name}</div>
 
 ${panels} módulos<br>
+
 Potência do módulo: ${potenciaPlaca} W<br>
 
 ${kwp.toFixed(2)} kWp<br>
@@ -209,11 +210,11 @@ let premium=baseKwp*1.3
 
 let html=""
 
-html+=systemCard("Essencial",essential,hsp,tariff,potenciaPlaca)
+html+=systemCard("Essencial",essential,hsp,tariff,potenciaPlaca,bill)
 
-html+=systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca)
+html+=systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca,bill)
 
-html+=systemCard("Premium",premium,hsp,tariff,potenciaPlaca)
+html+=systemCard("Premium",premium,hsp,tariff,potenciaPlaca,bill)
 
 document.getElementById("result").innerHTML=html
 
@@ -239,7 +240,7 @@ let mensagem=
 "Potência: "+kwp+" kWp\n"+
 "Módulos: "+placas+"\n"+
 "Potência do módulo: "+potenciaPlaca+" W\n"+
-"Economia mensal: R$ "+economia
+"Economia mensal: R$ "+economia+"\n\n"+
 (endereco ? "Mapa da instalação:\nhttps://www.google.com/maps/search/"+encodeURIComponent(endereco)+"\n\n" : "")+
 "Gostaria de falar sobre esse projeto."
 
