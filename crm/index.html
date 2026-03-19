@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRM Solar - MF Soluções</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+margin:0;
+padding:10px;
+}
+
+h1{
+text-align:center;
+margin-bottom:10px;
+}
+
+.board{
+display:flex;
+gap:10px;
+overflow-x:auto;
+}
+
+.column{
+min-width:250px;
+background:#1f2937;
+padding:10px;
+border-radius:10px;
+}
+
+.column h2{
+font-size:16px;
+text-align:center;
+}
+
+.card{
+background:#111827;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+cursor:pointer;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:none;
+border-radius:6px;
+background:#22c55e;
+color:white;
+font-weight:bold;
+}
+
+.add{
+background:#3b82f6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>⚡ CRM Solar</h1>
+
+<button class="add" onclick="novoLead()">+ Novo Lead</button>
+
+<div class="board">
+
+<div class="column" id="novo">
+<h2>🟡 Novos</h2>
+</div>
+
+<div class="column" id="contato">
+<h2>🔵 Contato</h2>
+</div>
+
+<div class="column" id="proposta">
+<h2>🟠 Proposta</h2>
+</div>
+
+<div class="column" id="fechado">
+<h2>🟢 Fechado</h2>
+</div>
+
+</div>
+
+<script>
+
+let leads = JSON.parse(localStorage.getItem("leads")) || []
+
+function salvar(){
+localStorage.setItem("leads", JSON.stringify(leads))
+render()
+}
+
+function novoLead(){
+let nome = prompt("Nome do cliente:")
+if(!nome) return
+
+let telefone = prompt("Telefone:")
+let valor = prompt("Conta de luz (R$):")
+
+leads.push({
+id: Date.now(),
+nome,
+telefone,
+valor,
+status:"novo"
+})
+
+salvar()
+}
+
+function mover(id){
+let lead = leads.find(l => l.id == id)
+
+let ordem = ["novo","contato","proposta","fechado"]
+let i = ordem.indexOf(lead.status)
+
+if(i < ordem.length -1){
+lead.status = ordem[i+1]
+}
+
+salvar()
+}
+
+function whatsapp(telefone,nome){
+let msg = "Olá "+nome+", estou entrando em contato sobre sua simulação solar."
+window.open("https://wa.me/"+telefone+"?text="+encodeURIComponent(msg))
+}
+
+function render(){
+
+document.getElementById("novo").innerHTML="<h2>🟡 Novos</h2>"
+document.getElementById("contato").innerHTML="<h2>🔵 Contato</h2>"
+document.getElementById("proposta").innerHTML="<h2>🟠 Proposta</h2>"
+document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
+
+leads.forEach(l => {
+
+let card = `
+<div class="card">
+<b>${l.nome}</b><br>
+📞 ${l.telefone}<br>
+💡 R$ ${l.valor}
+
+<button onclick="whatsapp('${l.telefone}','${l.nome}')">WhatsApp</button>
+<button onclick="mover(${l.id})">Avançar</button>
+</div>
+`
+
+document.getElementById(l.status).innerHTML += card
+
+})
+
+}
+
+render()
+
+</script>
+
+</body>
+</html>
