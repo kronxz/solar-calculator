@@ -127,6 +127,28 @@ localStorage.setItem("leads", JSON.stringify(leads))
 render()
 }
 
+
+function detalhes(lead){
+
+alert(
+"Cliente: " + lead.nome + "\n\n" +
+"Telefone: " + lead.telefone + "\n" +
+"Endereço: " + (lead.endereco || "-") + "\n\n" +
+"Conta: R$ " + lead.valor + "\n\n" +
+
+"Sistema: " + (lead.sistema || "Simulação") + "\n" +
+"Potência: " + (lead.kwp || "-") + " kWp\n" +
+"Módulos: " + (lead.placas || "-") + "\n" +
+"Potência módulo: " + (lead.potenciaPlaca || "-") + " W\n" +
+"Economia: R$ " + (lead.economia || "-") + "\n" +
+"Investimento: R$ " + (lead.investimento || "-") + "\n\n" +
+
+"Data: " + lead.data
+)
+
+}
+  
+
 function novoLead(){
 
 let nome = prompt("Nome do cliente:")
@@ -184,6 +206,10 @@ let card = `
 <b>${l.nome}</b><br>
 <small>📞 ${l.telefone}</small><br>
 <small>💡 Conta: R$ ${l.valor}</small>
+
+<button onclick='detalhes(${JSON.stringify(l)})'>
+📊 Detalhes
+</button>
 
 <button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
 💬 WhatsApp
