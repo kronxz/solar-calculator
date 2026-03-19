@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><h1>⚡ MF Soluções - CRM</h1></title>
+
+<title>CRM - MF Soluções</title>
 
 <style>
 
@@ -20,30 +22,9 @@ text-align:center;
 margin-bottom:10px;
 }
 
-.board{
-display:flex;
-gap:10px;
-overflow-x:auto;
-}
-
-.column{
-min-width:250px;
-background:#1f2937;
-padding:10px;
-border-radius:10px;
-}
-
-.column h2{
-font-size:16px;
-text-align:center;
-}
-
-.card{
-background:#111827;
-padding:10px;
-margin-top:10px;
-border-radius:8px;
-cursor:pointer;
+.add{
+background:#3b82f6;
+margin-bottom:10px;
 }
 
 button{
@@ -51,14 +32,60 @@ width:100%;
 padding:10px;
 margin-top:5px;
 border:none;
-border-radius:6px;
-background:#22c55e;
-color:white;
+border-radius:8px;
 font-weight:bold;
+cursor:pointer;
 }
 
-.add{
-background:#3b82f6;
+.board{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding-bottom:10px;
+}
+
+.column{
+min-width:260px;
+background:#1f2937;
+padding:10px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.column h2{
+text-align:center;
+font-size:15px;
+margin-bottom:10px;
+}
+
+.card{
+background:#111827;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.5);
+animation:fadeIn 0.3s ease;
+}
+
+.card b{
+font-size:16px;
+}
+
+.card small{
+color:#9ca3af;
+}
+
+.whatsapp{
+background:#22c55e;
+}
+
+.avancar{
+background:#f59e0b;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -67,7 +94,7 @@ background:#3b82f6;
 
 <body>
 
-<h1>⚡ CRM Solar</h1>
+<h1>⚡ MF Soluções - CRM</h1>
 
 <button class="add" onclick="novoLead()">+ Novo Lead</button>
 
@@ -101,10 +128,11 @@ render()
 }
 
 function novoLead(){
+
 let nome = prompt("Nome do cliente:")
 if(!nome) return
 
-let telefone = prompt("Telefone:")
+let telefone = prompt("Telefone (com DDD):")
 let valor = prompt("Conta de luz (R$):")
 
 leads.push({
@@ -119,9 +147,11 @@ salvar()
 }
 
 function mover(id){
+
 let lead = leads.find(l => l.id == id)
 
 let ordem = ["novo","contato","proposta","fechado"]
+
 let i = ordem.indexOf(lead.status)
 
 if(i < ordem.length -1){
@@ -132,8 +162,11 @@ salvar()
 }
 
 function whatsapp(telefone,nome){
-let msg = "Olá "+nome+", estou entrando em contato sobre sua simulação solar."
+
+let msg = "Olá "+nome+"! Vi sua simulação solar e vou te ajudar com seu projeto."
+
 window.open("https://wa.me/"+telefone+"?text="+encodeURIComponent(msg))
+
 }
 
 function render(){
@@ -147,12 +180,19 @@ leads.forEach(l => {
 
 let card = `
 <div class="card">
-<b>${l.nome}</b><br>
-📞 ${l.telefone}<br>
-💡 R$ ${l.valor}
 
-<button onclick="whatsapp('${l.telefone}','${l.nome}')">WhatsApp</button>
-<button onclick="mover(${l.id})">Avançar</button>
+<b>${l.nome}</b><br>
+<small>📞 ${l.telefone}</small><br>
+<small>💡 Conta: R$ ${l.valor}</small>
+
+<button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
+💬 WhatsApp
+</button>
+
+<button class="avancar" onclick="mover(${l.id})">
+➡️ Avançar etapa
+</button>
+
 </div>
 `
 
