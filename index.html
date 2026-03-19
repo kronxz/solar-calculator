@@ -245,6 +245,25 @@ let endereco=document.getElementById("endereco").value
 let bill=document.getElementById("bill").value
 let potenciaPlaca=document.getElementById("potenciaPlaca").value
 
+// SALVAR LEAD NO CRM
+
+let leads = JSON.parse(localStorage.getItem("leads")) || []
+
+leads.push({
+id: Date.now(),
+nome: nome,
+telefone: telefone,
+valor: bill,
+endereco: endereco,
+sistema: nomeSistema,
+kwp: kwp,
+placas: placas,
+economia: economia,
+status: "novo"
+})
+
+localStorage.setItem("leads", JSON.stringify(leads))
+  
 let seuNumero="5521972381004"
 
 let mensagem=
