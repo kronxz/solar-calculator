@@ -130,10 +130,10 @@ Ele atua como:
 
 Os valores apresentados são estimativas e podem variar conforme:
 
-- Condições do telhado
+- Condições do TELHADO
 - Tipo de instalação
 - Distância elétrica
-- Padrão da concessionária
+- Padrão da CONCESSIONÀRIA
 
 ---
 
