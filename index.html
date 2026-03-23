@@ -60,6 +60,8 @@ margin-bottom:5px;
 
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <body>
 
 <div style="text-align:center;margin-bottom:20px;">
@@ -182,6 +184,8 @@ return `
 
 <div class="card ${name=="Recomendado ⭐"?"recommended":""}">
 
+
+
 <div class="resultTitle">${name}</div>
 
 ${panels} módulos<br>
@@ -202,6 +206,10 @@ Inversor sugerido: ${inverter}
 
 <br><br>
 
+<br>
+
+<canvas id="grafico_${name.replace(/\s/g,'')}" height="120"></canvas>
+
 <button onclick="enviarKit('${name}',${kwp.toFixed(2)},${panels},${saving.toFixed(0)})">
 Escolher este sistema
 </button>
@@ -209,7 +217,36 @@ Escolher este sistema
 </div>
 
 `
+}
+setTimeout(()=>{
+let ctx = document.getElementById("grafico_"+name.replace(/\s/g,''))
 
+if(ctx){
+new Chart(ctx, {
+type: 'line',
+data: {
+labels: ['0','5','10','15','20','25'],
+datasets: [{
+label: 'Economia acumulada',
+data: [
+0,
+saving*12*5,
+saving*12*10,
+saving*12*15,
+saving*12*20,
+saving*12*25
+],
+borderWidth: 3,
+tension: 0.3
+}]
+},
+options: {
+plugins: { legend: { display: false } },
+scales: { y: { beginAtZero: true } }
+}
+})
+}
+},100)
 }
 
 
