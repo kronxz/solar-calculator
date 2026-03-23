@@ -350,8 +350,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+window.db = db
+window.doc = doc
+window.updateDoc = updateDoc
+window.deleteDoc = deleteDoc
 
-// 🔥 PUXAR LEADS EM TEMPO REAL
 onSnapshot(collection(db, "leads"), (snapshot) => {
 
   leads = [] // limpa lista
