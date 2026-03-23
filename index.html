@@ -333,21 +333,26 @@ let endereco = document.getElementById("endereco").value
 let bill = document.getElementById("bill").value
 let potenciaPlaca = document.getElementById("potenciaPlaca").value
 
-let dados = {
+let leads = JSON.parse(localStorage.getItem("leads")) || []
+
+leads.push({
+id: Date.now(),
 nome,
 telefone,
 endereco,
-bill,
+valor: bill,
 sistema: nomeSistema,
 kwp,
 placas,
+potenciaPlaca,
 economia,
-potenciaPlaca
-}
+status: "proposta_pendente",
+data: new Date().toLocaleString()
+})
 
-localStorage.setItem("propostaAtual", JSON.stringify(dados))
+localStorage.setItem("leads", JSON.stringify(leads))
 
-window.open("proposta.html", "_blank")
+alert("Simulação salva! Em breve entraremos em contato com sua proposta.")
 
 }
 
