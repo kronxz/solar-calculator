@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Proposta Solar</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+font-family: Arial;
+background:#f5f5f5;
+padding:20px;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:10px;
+max-width:800px;
+margin:auto;
+}
+
+h2{
+text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Proposta de Energia Solar</h2>
+
+<div id="dados"></div>
+
+<canvas id="grafico"></canvas>
+
+</div>
+
+<script>
+
+let dados = JSON.parse(localStorage.getItem("propostaAtual"))
+
+let economia = dados.economia
+let investimento = dados.kwp * 3500
+
+let payback = investimento / (economia*12)
+
+document.getElementById("dados").innerHTML = `
+Cliente: ${dados.nome}<br>
+Sistema: ${dados.sistema}<br>
+Potência: ${dados.kwp} kWp<br>
+Módulos: ${dados.placas}<br>
+Economia mensal: R$ ${economia}<br>
+Investimento: R$ ${investimento.toFixed(0)}<br>
+Payback: ${payback.toFixed(1)} anos
+`
+
+new Chart(document.getElementById("grafico"), {
+type: 'bar',
+data: {
+labels: Array.from({length:25},(_,i)=>i+1),
+datasets: [{
+label: 'Fluxo de Caixa',
+data: Array.from({length:25},(_,i)=> economia*12*(i+1) - investimento)
+}]
+}
+})
+
+</script>
+
+</body>
+</html>
