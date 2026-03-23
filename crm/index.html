@@ -133,21 +133,10 @@ to{opacity:1; transform:translateY(0);}
 
 <div class="board">
 
-<div class="column" id="novo">
-<h2>🟡 Novos</h2>
-</div>
-
-<div class="column" id="contato">
-<h2>🔵 Contato</h2>
-</div>
-
-<div class="column" id="proposta">
-<h2>🟠 Proposta</h2>
-</div>
-
-<div class="column" id="fechado">
-<h2>🟢 Fechado</h2>
-</div>
+<div class="column" id="novo" ondragover="allowDrop(event)" ondrop="drop(event, 'novo')">
+<div class="column" id="contato" ondragover="allowDrop(event)" ondrop="drop(event, 'contato')">
+<div class="column" id="proposta" ondragover="allowDrop(event)" ondrop="drop(event, 'proposta')">
+<div class="column" id="fechado" ondragover="allowDrop(event)" ondrop="drop(event, 'fechado')">
 
 </div>
 
@@ -159,7 +148,30 @@ function salvar(){
 render()
 }
 
+function allowDrop(ev){
+  ev.preventDefault()
+}
 
+function drag(ev, id){
+  ev.dataTransfer.setData("id", id)
+}
+
+
+window.drop = async function(ev, novoStatus){
+
+  ev.preventDefault()
+
+  let id = ev.dataTransfer.getData("id")
+
+  const ref = doc(db, "leads", id)
+
+  await updateDoc(ref, {
+    status: novoStatus
+  })
+
+}
+
+  
 function detalhes(lead){
 
 alert(
