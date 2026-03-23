@@ -120,10 +120,9 @@ to{opacity:1; transform:translateY(0);}
 
 <script>
 
-let leads = JSON.parse(localStorage.getItem("leads")) || []
+let leads = []
 
 function salvar(){
-localStorage.setItem("leads", JSON.stringify(leads))
 render()
 }
 
@@ -269,6 +268,41 @@ window.salvarLeadFirebase = async function(dados){
     console.error("Erro:", e);
   }
 }
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
+  authDomain: "mf-solucoes-crm.firebaseapp.com",
+  projectId: "mf-solucoes-crm",
+  storageBucket: "mf-solucoes-crm.firebasestorage.app",
+  messagingSenderId: "492242482187",
+  appId: "1:492242482187:web:c5d808bf46d199bc60030e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔥 PUXAR LEADS EM TEMPO REAL
+onSnapshot(collection(db, "leads"), (snapshot) => {
+
+  leads = [] // limpa lista
+
+  snapshot.forEach(doc => {
+    leads.push({
+      id: doc.id,
+      ...doc.data()
+    })
+  })
+
+  render()
+
+})
 
 </script>
 
