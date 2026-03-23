@@ -294,7 +294,7 @@ kwp,
 placas,
 potenciaPlaca,
 economia,
-investimento: (kwp * 3200).toFixed(0),
+investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
 status: "novos",
 tipo: "escolhido",
 data: new Date().toLocaleString()
