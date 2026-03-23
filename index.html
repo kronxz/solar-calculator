@@ -9,55 +9,119 @@
 
 <style>
 
+:root{
+  --bg: #0b1220;
+  --card: #111827;
+  --primary: #3b82f6;
+  --secondary: #1e40af;
+  --success: #22c55e;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+}
+
 body{
-font-family: Arial;
-background:#0f172a;
-color:white;
-padding:20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #0b1220, #020617);
+  color: var(--text);
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width: 1100px;
+  margin:auto;
 }
 
 h1{
-margin-bottom:10px;
-}
-
-p{
-margin-bottom:20px;
-}
-
-input,select,button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:8px;
-border:none;
-font-size:16px;
-}
-
-button{
-background:#22c55e;
-font-weight:bold;
-cursor:pointer;
+  text-align:center;
+  margin-bottom:20px;
+  font-weight:600;
 }
 
 .card{
-background:#1f2937;
-padding:15px;
-margin-top:15px;
-border-radius:10px;
+  background: var(--card);
+  padding:15px;
+  border-radius:14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  transition: 0.2s;
 }
 
-.recommended{
-border:2px solid #22c55e;
+.card:hover{
+  transform: translateY(-3px);
 }
 
-.resultTitle{
-font-weight:bold;
-font-size:18px;
-margin-bottom:5px;
+.dashboard{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.dashboard .card{
+  flex:1;
+  min-width:150px;
+  text-align:center;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border:none;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  opacity:0.9;
+  transform:scale(1.02);
+}
+
+.add{
+  background: var(--primary);
+}
+
+.whatsapp{
+  background: var(--success);
+}
+
+.avancar{
+  background: #f59e0b;
+}
+
+.excluir{
+  background: #ef4444;
+}
+
+.board{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+}
+
+.column{
+  min-width:260px;
+  background: rgba(255,255,255,0.03);
+  padding:10px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.column h2{
+  text-align:center;
+  margin-bottom:10px;
+  color: var(--muted);
+}
+
+canvas{
+  background: var(--card);
+  padding:10px;
+  border-radius:12px;
 }
 
 </style>
-
 </head>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
