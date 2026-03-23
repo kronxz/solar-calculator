@@ -145,22 +145,6 @@ return
 
 let mapa="https://www.google.com/maps/search/"+encodeURIComponent(endereco)
 
-let leads = JSON.parse(localStorage.getItem("leads")) || []
-
-leads.push({
-id: Date.now(),
-nome: nome,
-telefone: telefone,
-endereco: endereco,
-bill: bill,
-sistema: nomeSistema,
-kwp: kwp,
-placas: placas,
-economia: economia,
-status: "novos"
-})
-
-localStorage.setItem("leads", JSON.stringify(leads))
 
 window.open(mapa,"_blank")
 
