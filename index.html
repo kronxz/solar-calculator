@@ -208,7 +208,7 @@ Inversor sugerido: ${inverter}
 
 <br>
 
-<canvas id="grafico_${name.replace(/\s/g,'')}" height="120"></canvas>
+<canvas id="grafico_${name.replace(/\W/g,'')}" height="120"></canvas>
 
 <button onclick="enviarKit('${name}',${kwp.toFixed(2)},${panels},${saving.toFixed(0)})">
 Escolher este sistema
@@ -218,10 +218,13 @@ Escolher este sistema
 
 `
 }
-setTimeout(()=>{
-let ctx = document.getElementById("grafico_"+name.replace(/\s/g,''))
 
-if(ctx){
+function gerarGrafico(idCanvas, saving){
+
+let ctx = document.getElementById(idCanvas)
+
+if(!ctx) return
+
 new Chart(ctx, {
 type: 'line',
 data: {
@@ -245,11 +248,9 @@ plugins: { legend: { display: false } },
 scales: { y: { beginAtZero: true } }
 }
 })
-}
-},100)
-}
 
-
+}
+  
 function calc(){
 
 let nome = document.getElementById("clienteNome").value
@@ -293,6 +294,14 @@ html += systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca)
 html += systemCard("Premium",premium,hsp,tariff,potenciaPlaca)
 
 document.getElementById("result").innerHTML = html
+
+setTimeout(()=>{
+
+gerarGrafico("grafico_Essencial", essential * hsp * 30 * tariff)
+gerarGrafico("grafico_Recomendado⭐", recommended * hsp * 30 * tariff)
+gerarGrafico("grafico_Premium", premium * hsp * 30 * tariff)
+
+},200)
 
 }
 
