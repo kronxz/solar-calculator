@@ -219,6 +219,10 @@ let card = `
 ➡️ Avançar etapa
 </button>
 
+<button onclick="abrirProposta(l)">
+📄 Gerar Proposta
+</button>
+
 </div>
 `
 
@@ -229,6 +233,14 @@ document.getElementById(l.status).innerHTML += card
 }
 
 render()
+
+function abrirProposta(lead){
+
+localStorage.setItem("propostaAtual", JSON.stringify(lead))
+
+window.open("../proposta.html", "_blank")
+
+}
 
 </script>
 
