@@ -179,7 +179,49 @@ alert(
 )
 
 }
-  
+
+let grafico
+
+function atualizarGrafico(){
+
+let contagem = {
+  novo: 0,
+  contato: 0,
+  proposta: 0,
+  fechado: 0
+}
+
+leads.forEach(l => {
+  if(contagem[l.status] !== undefined){
+    contagem[l.status]++
+  }
+})
+
+let dados = [
+  contagem.novo,
+  contagem.contato,
+  contagem.proposta,
+  contagem.fechado
+]
+
+if(grafico){
+  grafico.destroy()
+}
+
+let ctx = document.getElementById("graficoLeads").getContext("2d")
+
+grafico = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: ["Novos", "Contato", "Proposta", "Fechado"],
+    datasets: [{
+      label: "Leads",
+      data: dados
+    }]
+  }
+})
+
+}
 
 function novoLead(){
 
@@ -276,6 +318,7 @@ document.getElementById(l.status).innerHTML += card
 })
   
 atualizarDashboard()
+atualizarGrafico()
 
 }
 
