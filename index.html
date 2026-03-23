@@ -213,6 +213,10 @@ Inversor sugerido: ${inverter}
 Escolher este sistema
 </button>
 
+<button onclick="gerarProposta('${name}',${kwp.toFixed(2)},${panels},${saving.toFixed(0)})">
+Gerar proposta detalhada 📄
+</button>
+
 </div>
 
 `
@@ -318,6 +322,32 @@ let mensagem=
 let url="https://wa.me/"+seuNumero+"?text="+encodeURIComponent(mensagem)
 
 window.open(url,"_blank")
+
+}
+
+function gerarProposta(nomeSistema, kwp, placas, economia){
+
+let nome = document.getElementById("clienteNome").value
+let telefone = document.getElementById("clienteTelefone").value
+let endereco = document.getElementById("endereco").value
+let bill = document.getElementById("bill").value
+let potenciaPlaca = document.getElementById("potenciaPlaca").value
+
+let dados = {
+nome,
+telefone,
+endereco,
+bill,
+sistema: nomeSistema,
+kwp,
+placas,
+economia,
+potenciaPlaca
+}
+
+localStorage.setItem("propostaAtual", JSON.stringify(dados))
+
+window.open("proposta.html", "_blank")
 
 }
 
