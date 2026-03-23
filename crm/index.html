@@ -283,7 +283,7 @@ document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
 leads.forEach(l => {
 
 let card = `
-<div class="card">
+<div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
 
 <b>${l.nome}</b><br>
 <small>📞 ${l.telefone}</small><br>
