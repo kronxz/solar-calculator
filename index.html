@@ -329,28 +329,39 @@ let endereco = document.getElementById("endereco").value
 let bill = document.getElementById("bill").value
 let potenciaPlaca = document.getElementById("potenciaPlaca").value
 
-let lead = {
-id: Date.now(),
-nome,
-telefone,
-endereco,
-valor: bill,
-sistema: nomeSistema,
-kwp,
-placas,
-potenciaPlaca,
-economia,
-status: "proposta",
-data: new Date().toLocaleString()
+// 🔥 SALVA NO FIREBASE
+salvarLeadFirebase({
+  nome,
+  telefone,
+  endereco,
+  valor: bill,
+  sistema: nomeSistema,
+  kwp,
+  placas,
+  potenciaPlaca,
+  economia,
+  investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
+  status: "novo",
+  tipo: "proposta",
+  data: new Date().toLocaleString()
+})
+
+// 👉 mantém proposta local (opcional)
+localStorage.setItem("propostaAtual", JSON.stringify({
+  nome,
+  telefone,
+  endereco,
+  valor: bill,
+  sistema: nomeSistema,
+  kwp,
+  placas,
+  potenciaPlaca,
+  economia
+}))
+
+alert("Simulação salva! Em breve entraremos em contato.")
+
 }
-
-// 👉 salva proposta atual
-localStorage.setItem("propostaAtual", JSON.stringify(lead))
-
-// 👉 salva também no CRM
-let leads = JSON.parse(localStorage.getItem("leads")) || []
-leads.push(lead)
-localStorage.setItem("leads", JSON.stringify(leads))
 
 
 alert("Simulação salva! Em breve entraremos em contato com sua proposta.")
