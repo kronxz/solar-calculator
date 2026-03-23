@@ -283,25 +283,21 @@ let potenciaPlaca = document.getElementById("potenciaPlaca").value
 
 let leads = JSON.parse(localStorage.getItem("leads")) || []
 
-leads.push({
-id: Date.now(),
-nome,
-telefone,
-endereco,
-valor: bill,
-sistema: nomeSistema,
-kwp,
-placas,
-potenciaPlaca,
-economia,
-investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
-status: "novo",
-tipo: "escolhido",
-data: new Date().toLocaleString()
-})
-
-
-localStorage.setItem("leads", JSON.stringify(leads))
+salvarLeadFirebase({
+  nome,
+  telefone,
+  endereco,
+  valor: bill,
+  sistema: nomeSistema,
+  kwp,
+  placas,
+  potenciaPlaca,
+  economia,
+  investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
+  status: "novo",
+  tipo: "escolhido",
+  data: new Date().toLocaleString()
+});
   
 let seuNumero="5521972381004"
 
@@ -359,6 +355,34 @@ localStorage.setItem("leads", JSON.stringify(leads))
 
 alert("Simulação salva! Em breve entraremos em contato com sua proposta.")
 
+}
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
+  authDomain: "mf-solucoes-crm.firebaseapp.com",
+  projectId: "mf-solucoes-crm",
+  storageBucket: "mf-solucoes-crm.firebasestorage.app",
+  messagingSenderId: "492242482187",
+  appId: "1:492242482187:web:c5d808bf46d199bc60030e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.salvarLeadFirebase = async function(dados){
+  try{
+    await addDoc(collection(db, "leads"), dados);
+    console.log("🔥 SALVO NO FIREBASE");
+  }catch(e){
+    console.error("Erro:", e);
+  }
 }
 
 </script>
