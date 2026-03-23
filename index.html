@@ -334,9 +334,7 @@ let endereco = document.getElementById("endereco").value
 let bill = document.getElementById("bill").value
 let potenciaPlaca = document.getElementById("potenciaPlaca").value
 
-let leads = JSON.parse(localStorage.getItem("leads")) || []
-
-leads.push({
+let lead = {
 id: Date.now(),
 nome,
 telefone,
@@ -349,9 +347,16 @@ potenciaPlaca,
 economia,
 status: "proposta",
 data: new Date().toLocaleString()
-})
+}
 
+// 👉 salva proposta atual
+localStorage.setItem("propostaAtual", JSON.stringify(lead))
+
+// 👉 salva também no CRM
+let leads = JSON.parse(localStorage.getItem("leads")) || []
+leads.push(lead)
 localStorage.setItem("leads", JSON.stringify(leads))
+
 
 alert("Simulação salva! Em breve entraremos em contato com sua proposta.")
 
