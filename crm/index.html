@@ -242,7 +242,7 @@ status:"novo"
 salvar()
 }
 
-async function mover(id){
+window.mover = async function(id){
 
 let lead = leads.find(l => l.id == id)
 
@@ -370,7 +370,7 @@ onSnapshot(collection(db, "leads"), (snapshot) => {
 
 })
 
-async function excluir(id){
+window.excluir = async function(id){
 
 let confirmar = confirm("Deseja excluir este lead?")
 
