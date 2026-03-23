@@ -167,7 +167,7 @@ status:"novo"
 salvar()
 }
 
-function mover(id){
+async function mover(id){
 
 let lead = leads.find(l => l.id == id)
 
@@ -176,10 +176,18 @@ let ordem = ["novo","contato","proposta","fechado"]
 let i = ordem.indexOf(lead.status)
 
 if(i < ordem.length -1){
-lead.status = ordem[i+1]
+
+let novoStatus = ordem[i+1]
+
+// 🔥 ATUALIZA NO FIREBASE
+const ref = doc(db, "leads", id)
+
+await updateDoc(ref, {
+  status: novoStatus
+})
+
 }
 
-salvar()
 }
 
 function whatsapp(telefone,nome){
@@ -241,40 +249,12 @@ window.open("../proposta.html", "_blank")
 
 }
 
-</script>
+
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "COLE_AQUI",
-  authDomain: "COLE_AQUI",
-  projectId: "COLE_AQUI",
-  storageBucket: "COLE_AQUI",
-  messagingSenderId: "COLE_AQUI",
-  appId: "COLE_AQUI"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.salvarLeadFirebase = async function(dados){
-  try{
-    await addDoc(collection(db, "leads"), dados);
-    console.log("SALVO NO FIREBASE 🔥");
-  }catch(e){
-    console.error("Erro:", e);
-  }
-}
-
-</script>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
