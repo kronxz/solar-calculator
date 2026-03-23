@@ -217,38 +217,6 @@ Escolher este sistema
 
 `
 }
-
-function gerarGrafico(idCanvas, saving){
-
-let ctx = document.getElementById(idCanvas)
-
-if(!ctx) return
-
-new Chart(ctx, {
-type: 'line',
-data: {
-labels: ['0','5','10','15','20','25'],
-datasets: [{
-label: 'Economia acumulada',
-data: [
-0,
-saving*12*5,
-saving*12*10,
-saving*12*15,
-saving*12*20,
-saving*12*25
-],
-borderWidth: 3,
-tension: 0.3
-}]
-},
-options: {
-plugins: { legend: { display: false } },
-scales: { y: { beginAtZero: true } }
-}
-})
-
-}
   
 function calc(){
 
@@ -293,14 +261,6 @@ html += systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca)
 html += systemCard("Premium",premium,hsp,tariff,potenciaPlaca)
 
 document.getElementById("result").innerHTML = html
-
-setTimeout(()=>{
-
-gerarGrafico("grafico_Essencial", essential * hsp * 30 * tariff)
-gerarGrafico("grafico_Recomendado⭐", recommended * hsp * 30 * tariff)
-gerarGrafico("grafico_Premium", premium * hsp * 30 * tariff)
-
-},200)
 
 }
 
