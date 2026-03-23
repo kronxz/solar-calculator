@@ -147,22 +147,36 @@ window.open(mapa,"_blank")
 
 }
 
-function systemCard(name,kwp,hsp,tariff,potenciaPlaca,bill){
+function calculateInvestment(kwp){
 
-let panels=Math.ceil((kwp*1000)/potenciaPlaca)
+if(kwp <= 4){
+return kwp * 4200
+}
 
-let generation=kwp*hsp*30
+if(kwp <= 8){
+return kwp * 3900
+}
 
-let saving=Math.min(generation*tariff,bill*0.9)
+return kwp * 3500
 
-let preco = precoPorKwp(kwp)
-
-let investment = kwp * preco
+}
 
 
-let payback=investment/(saving*12)
+function systemCard(name,kwp,hsp,tariff,potenciaPlaca){
 
-let inverter=inverterSuggestion(kwp)
+let bill = parseFloat(document.getElementById("bill").value)
+
+let panels = Math.ceil((kwp*1000)/potenciaPlaca)
+
+let generation = kwp*hsp*30
+
+let saving = Math.min(generation * tariff, bill * 0.9)
+
+let investment = calculateInvestment(kwp)
+
+let payback = investment / (saving*12)
+
+let inverter = inverterSuggestion(kwp)
 
 return `
 
@@ -171,7 +185,6 @@ return `
 <div class="resultTitle">${name}</div>
 
 ${panels} módulos<br>
-
 Potência do módulo: ${potenciaPlaca} W<br>
 
 ${kwp.toFixed(2)} kWp<br>
@@ -179,13 +192,10 @@ ${kwp.toFixed(2)} kWp<br>
 Geração: ${generation.toFixed(0)} kWh/mês<br>
 
 Economia mensal: R$ ${saving.toFixed(0)}<br>
-
 Economia anual: R$ ${(saving*12).toFixed(0)}<br>
-
 Economia 25 anos: R$ ${(saving*12*25).toFixed(0)}<br>
 
 Investimento: R$ ${investment.toFixed(0)}<br>
-
 Payback: ${payback.toFixed(1)} anos<br>
 
 Inversor sugerido: ${inverter}
@@ -202,69 +212,50 @@ Escolher este sistema
 
 }
 
-  
+
 function calc(){
 
-let bill=parseFloat(document.getElementById("bill").value)
-let tariff=parseFloat(document.getElementById("tariff").value)
-let hsp=parseFloat(document.getElementById("city").value)
-let potenciaPlaca=parseFloat(document.getElementById("potenciaPlaca").value)
+let nome = document.getElementById("clienteNome").value
+let telefone = document.getElementById("clienteTelefone").value
 
-// VALIDAÇÃO
+// 🔒 BLOQUEIO (obrigar preencher)
+if(nome === "" || telefone === ""){
+alert("Preencha nome e telefone primeiro")
+return
+}
+
+let bill = parseFloat(document.getElementById("bill").value)
+
 if(!bill || bill <= 0){
 alert("Digite o valor da conta de luz")
 return
 }
 
-if(!tariff || tariff <= 0){
-alert("Verifique a tarifa")
-return
-}
+let tariff = parseFloat(document.getElementById("tariff").value)
 
-// FEEDBACK
-document.getElementById("result").innerHTML = "Calculando..."
+let hsp = parseFloat(document.getElementById("city").value)
 
-let consumption=bill/tariff
+let potenciaPlaca = parseFloat(document.getElementById("potenciaPlaca").value)
 
-let perdas=0.80
+let consumption = bill / tariff
 
-let baseKwp=consumption/(hsp*30*perdas)
+let perdas = 0.80
 
-let essential=baseKwp*0.8
-let recommended=baseKwp
-let premium=baseKwp*1.3
+let baseKwp = consumption / (hsp * 30 * perdas)
 
-// SALVAR LEAD
-let nome = document.getElementById("clienteNome").value
-let telefone = document.getElementById("clienteTelefone").value
-let endereco = document.getElementById("endereco").value
+let essential = baseKwp * 0.8
 
-if(nome && telefone){
+let recommended = baseKwp
 
-let leads = JSON.parse(localStorage.getItem("leads")) || []
+let premium = baseKwp * 1.3
 
-leads.push({
-id: Date.now(),
-nome,
-telefone,
-endereco,
-valor: bill,
-status: "novo",
-tipo: "simulacao",
-data: new Date().toLocaleString()
-})
+let html = ""
 
-localStorage.setItem("leads", JSON.stringify(leads))
+html += systemCard("Essencial",essential,hsp,tariff,potenciaPlaca)
+html += systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca)
+html += systemCard("Premium",premium,hsp,tariff,potenciaPlaca)
 
-}
-
-let html=""
-
-html+=systemCard("Essencial",essential,hsp,tariff,potenciaPlaca,bill)
-html+=systemCard("Recomendado ⭐",recommended,hsp,tariff,potenciaPlaca,bill)
-html+=systemCard("Premium",premium,hsp,tariff,potenciaPlaca,bill)
-
-document.getElementById("result").innerHTML=html
+document.getElementById("result").innerHTML = html
 
 }
 
