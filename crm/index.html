@@ -222,7 +222,7 @@ let card = `
 💬 WhatsApp
 </button>
 
-<button class="avancar" onclick="mover(${l.id})">
+<button class="avancar" onclick="mover('${l.id}')"
 ➡️ Avançar etapa
 </button>
 
@@ -253,12 +253,12 @@ window.open("../proposta.html", "_blank")
 
 }
 
-
+</script>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
