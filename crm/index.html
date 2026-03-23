@@ -162,7 +162,7 @@ id: Date.now(),
 nome,
 telefone,
 valor,
-status:"novo"
+status:"novos"
 })
 
 salvar()
@@ -219,7 +219,7 @@ let card = `
 ➡️ Avançar etapa
 </button>
 
-<button onclick="abrirProposta(l)">📄 Gerar proposta</button>
+<button onclick='abrirProposta(${JSON.stringify(l)})'>
 📄 Gerar Proposta
 </button>
 
