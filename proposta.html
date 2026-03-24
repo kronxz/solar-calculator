@@ -41,9 +41,10 @@ h1{
 
 .capa{
   position:relative;
-  height:100vh;
+  min-height:1000px;
   display:flex;
   align-items:center;
+  padding:60px;
 
   background:url("https://images.unsplash.com/photo-1509395176047-4a66953fd231") center/cover no-repeat;
 }
@@ -344,6 +345,24 @@ h1{
   border-radius:8px;
   text-decoration:none;
   font-weight:bold;
+}
+
+  @media print {
+
+  body{
+    background:white !important;
+    color:black !important;
+  }
+
+  .pagina{
+    page-break-after:always;
+  }
+
+  .capa{
+    min-height:100vh;
+    padding:40px;
+  }
+
 }
   
 </style>
