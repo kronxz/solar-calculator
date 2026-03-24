@@ -176,9 +176,36 @@ const db = getFirestore(app);
 
 let leads = []
 
+function drag(ev, id){
+  ev.dataTransfer.setData("id", id)
+}
+
+function allowDrop(ev){
+  ev.preventDefault()
+}
+
+window.drop = async function(ev, novoStatus){
+
+  ev.preventDefault()
+
+  let id = ev.dataTransfer.getData("id")
+
+  const ref = doc(db, "leads", id)
+
+  await updateDoc(ref, {
+    status: novoStatus
+  })
+
+}
+  
 function whatsapp(telefone,nome){
-  let msg = "Olá "+nome+"! Vi sua simulação solar e vou te ajudar."
-  window.open("https://wa.me/"+telefone+"?text="+encodeURIComponent(msg))
+
+  let numero = telefone.replace(/\D/g,'')
+
+  let msg = "Olá "+nome+"! Vi sua simulação solar."
+
+  window.open("https://wa.me/55"+numero+"?text="+encodeURIComponent(msg))
+
 }
 
 window.mover = async function(id){
