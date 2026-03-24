@@ -208,7 +208,7 @@ window.drop = async function(ev, novoStatus){
 
 }
   
-function whatsapp(telefone,nome){
+window.whatsapp = function(telefone,nome){
 
   let numero = telefone.replace(/\D/g,'')
 
@@ -246,19 +246,14 @@ window.excluir = async function(id){
   await deleteDoc(ref)
 }
 
-function abrirProposta(lead){
+window.abrirProposta = function(id){
 
-  localStorage.setItem("propostaAtual", JSON.stringify({
-    nome: lead.nome,
-    telefone: lead.telefone,
-    cidade: lead.cidade || "",
-    sistema: lead.sistema || "Simulação",
-    kwp: lead.kwp || 0,
-    placas: lead.placas || 0,
-    economia: lead.economia || 0
-  }))
+  let lead = leads.find(l => l.id == id)
+
+  localStorage.setItem("propostaAtual", JSON.stringify(lead))
 
   window.open("../proposta.html", "_blank")
+
 }
   
 function render(){
@@ -337,18 +332,6 @@ window.doc = doc
 window.updateDoc = updateDoc
 window.deleteDoc = deleteDoc
 
-onSnapshot(collection(db, "leads"), (snapshot) => {
-
-  leads = [] // limpa lista
-
-  snapshot.forEach(doc => {
-    leads.push({
-      id: doc.id,
-      ...doc.data()
-    })
-  })
-
-  render()
 
 })
 
