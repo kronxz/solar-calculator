@@ -277,7 +277,7 @@ function render(){
 <small>📞 ${l.telefone}</small><br>
 <small>💡 Conta: R$ ${l.valor}</small>
 
-<button onclick="whatsapp('${l.telefone}','${l.nome}')">
+<button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
 💬 WhatsApp
 </button>
 
@@ -289,7 +289,7 @@ function render(){
 🗑 Excluir
 </button>
 
-<button onclick='abrirProposta(${JSON.stringify(l)})'>
+<button class="proposta" onclick='abrirProposta(${JSON.stringify(l)})'>
 📄 Proposta
 </button>
 
