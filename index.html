@@ -198,12 +198,34 @@ input:focus, select:focus{
   font-size:28px;
   font-weight:700;
   margin-bottom:10px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.8);
 }
+
 
 .hero-text p{
   font-size:14px;
   color:#cbd5f5;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
+  .hero-btn{
+  margin-top:15px;
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  color:white;
+
+  box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+
+  transition:0.2s;
+}
+
+.hero-btn:hover{
+  transform:scale(1.05);
 }
 
 .hero::after{
@@ -215,6 +237,7 @@ input:focus, select:focus{
   height:80px;
   background:linear-gradient(to top, rgba(2,6,23,1), rgba(2,6,23,0));
 }
+  
 }
 
 </style>
@@ -227,10 +250,14 @@ input:focus, select:focus{
 <div class="hero">
   <img src="fundo.jpeg">
 
-  <div class="hero-text">
-    <h1>Economize até 90% na conta de luz</h1>
-    <p>Energia solar com instalação profissional em Maricá</p>
-  </div>
+ <div class="hero-text">
+  <h1>Economize até 90% na conta de luz</h1>
+  <p>Energia solar com instalação profissional em Maricá</p>
+
+  <button class="hero-btn" onclick="window.scrollTo({top:500, behavior:'smooth'})">
+  Simular economia agora
+</button>
+</div>
 </div>
 <div class="container">
 <div style="text-align:center;margin-bottom:20px;">
