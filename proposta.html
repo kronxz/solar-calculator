@@ -25,12 +25,11 @@ h2{
   margin-top:20px;
 }
 
-  .pagina{
-  width:800px;
-  margin:40px auto;
-  background:white;
+ .pagina{
+  width:100%;
+  max-width:900px;
+  margin:auto;
   padding:40px;
-  border-radius:10px;
   page-break-after:always;
 }
 
@@ -93,6 +92,90 @@ h1{
   font-size:18px;
   color:#334155;
 }
+
+
+
+.sobre h2{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:28px;
+}
+
+.sobre p{
+  font-size:16px;
+  line-height:1.6;
+  margin-bottom:15px;
+  color:#334155;
+}
+
+.destaques{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:30px;
+}
+
+.item{
+  background:#0f172a;
+  color:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:bold;
+}  
+
+.item{
+  background:#0f172a;
+  color:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:bold;
+}
+
+
+/* 🔥 COMO FUNCIONA */
+
+.funcionamento h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:30px;
+}
+
+.passos{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.passo{
+  background:#f1f5f9;
+  padding:20px;
+  border-radius:12px;
+}
+
+.passo h3{
+  margin-bottom:10px;
+  color:#0f172a;
+}
+
+.passo p{
+  color:#334155;
+  font-size:15px;
+  line-height:1.5;
+}
+
+.frase-impacto{
+  margin-top:30px;
+  background:#0f172a;
+  color:white;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+</style>
   
 </style>
 
@@ -119,7 +202,88 @@ h1{
   </div>
 
 </div>
+<div class="pagina sobre">
 
+  <h2>Quem somos</h2>
+
+  <p>
+    A <strong>MF Soluções</strong> é especializada em projetos elétricos e sistemas de energia solar fotovoltaica,
+    oferecendo soluções completas, desde o dimensionamento até a instalação.
+  </p>
+
+  <p>
+    Com experiência prática em campo e atuação profissional na área elétrica,
+    entregamos sistemas eficientes, seguros e com alto padrão de qualidade.
+  </p>
+
+  <p>
+    Nosso compromisso é garantir economia real na conta de energia,
+    valorização do imóvel e independência energética para nossos clientes.
+  </p>
+
+  <div class="destaques">
+
+    <div class="item">
+      ⚡ Especialistas em energia solar
+    </div>
+
+    <div class="item">
+      🔧 Instalação profissional
+    </div>
+
+    <div class="item">
+      📊 Projeto personalizado
+    </div>
+
+    <div class="item">
+      💰 Foco em economia real
+    </div>
+
+  </div>
+
+<div class="pagina funcionamento">
+
+  <h2>Como funciona a energia solar?</h2>
+
+  <div class="passos">
+
+    <div class="passo">
+      <h3>☀️ Geração</h3>
+      <p>
+        Os painéis solares captam a luz do sol e geram energia elétrica em corrente contínua.
+      </p>
+    </div>
+
+    <div class="passo">
+      <h3>🔄 Conversão</h3>
+      <p>
+        O inversor transforma a energia para corrente alternada, que é usada na sua casa ou empresa.
+      </p>
+    </div>
+
+    <div class="passo">
+      <h3>⚡ Consumo</h3>
+      <p>
+        A energia gerada alimenta todos os equipamentos em tempo real, reduzindo sua conta.
+      </p>
+    </div>
+
+    <div class="passo">
+      <h3>🏦 Créditos</h3>
+      <p>
+        O excedente vai para a rede da concessionária e vira créditos para usar à noite.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="frase-impacto">
+    Você continua conectado à concessionária, mas passa a pagar muito menos energia.
+  </div>
+
+</div>
+  
+</div>
 
 <div class="pagina sistema">
 
