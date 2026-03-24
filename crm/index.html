@@ -153,217 +153,7 @@ to{opacity:1; transform:translateY(0);}
 
 <script>
 
-let leads = []
 
-function salvar(){
-render()
-}
-
-function allowDrop(ev){
-  ev.preventDefault()
-}
-
-function drag(ev, id){
-  ev.dataTransfer.setData("id", id)
-}
-
-
-window.drop = async function(ev, novoStatus){
-
-  ev.preventDefault()
-
-  let id = ev.dataTransfer.getData("id")
-
-  const ref = doc(db, "leads", id)
-
-  await updateDoc(ref, {
-    status: novoStatus
-  })
-
-}
-
-  
-function detalhes(lead){
-
-alert(
-"Cliente: " + lead.nome + "\n\n" +
-"Telefone: " + lead.telefone + "\n" +
-"Endereço: " + (lead.endereco || "-") + "\n\n" +
-"Conta: R$ " + lead.valor + "\n\n" +
-
-"Sistema: " + (lead.sistema || "Simulação") + "\n" +
-"Potência: " + (lead.kwp || "-") + " kWp\n" +
-"Módulos: " + (lead.placas || "-") + "\n" +
-"Potência módulo: " + (lead.potenciaPlaca || "-") + " W\n" +
-"Economia: R$ " + (lead.economia || "-") + "\n" +
-"Investimento: R$ " + (lead.investimento || "-") + "\n\n" +
-
-"Data: " + lead.data
-)
-
-}
-
-let grafico
-
-function atualizarGrafico(){
-
-let contagem = {
-  novo: 0,
-  contato: 0,
-  proposta: 0,
-  fechado: 0
-}
-
-leads.forEach(l => {
-  if(contagem[l.status] !== undefined){
-    contagem[l.status]++
-  }
-})
-
-let dados = [
-  contagem.novo,
-  contagem.contato,
-  contagem.proposta,
-  contagem.fechado
-]
-
-if(grafico){
-  grafico.destroy()
-}
-
-let ctx = document.getElementById("graficoLeads").getContext("2d")
-
-grafico = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: ["Novos", "Contato", "Proposta", "Fechado"],
-    datasets: [{
-      label: "Leads",
-      data: dados
-    }]
-  }
-})
-
-}
-
-async function novoLead(){
-
-let nome = prompt("Nome do cliente:")
-if(!nome) return
-
-let telefone = prompt("Telefone (com DDD):")
-let valor = prompt("Conta de luz (R$):")
-
-await addDoc(collection(db, "leads"), {
-  nome,
-  telefone,
-  valor,
-  status: "novo",
-  data: new Date().toLocaleString()
-})
-
-}
-window.mover = async function(id){
-
-let lead = leads.find(l => l.id == id)
-
-let ordem = ["novo","contato","proposta","fechado"]
-
-let i = ordem.indexOf(lead.status)
-
-if(i < ordem.length -1){
-
-let novoStatus = ordem[i+1]
-
-// 🔥 ATUALIZA NO FIREBASE
-const ref = doc(db, "leads", id)
-
-await updateDoc(ref, {
-  status: novoStatus
-})
-
-}
-
-}
-
-function whatsapp(telefone,nome){
-
-let msg = "Olá "+nome+"! Vi sua simulação solar e vou te ajudar com seu projeto."
-
-window.open("https://wa.me/"+telefone+"?text="+encodeURIComponent(msg))
-
-}
-
-function render(){
-
-document.getElementById("novo").innerHTML="<h2>🟡 Novo</h2>"
-document.getElementById("contato").innerHTML="<h2>🔵 Contato</h2>"
-document.getElementById("proposta").innerHTML="<h2>🟠 Proposta</h2>"
-document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
-
-leads.forEach(l => {
-
-let card = `
-<div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
-
-<b>${l.nome}</b><br>
-<small>📞 ${l.telefone}</small><br>
-<small>💡 Conta: R$ ${l.valor}</small>
-
-<button onclick='detalhes(${JSON.stringify(l)})'>
-📊 Detalhes
-</button>
-
-<button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
-💬 WhatsApp
-</button>
-
-<button class="avancar" onclick="mover('${l.id}')">
-➡️ Avançar etapa
-</button>
-
-<button style="background:#ef4444" onclick="excluir('${l.id}')">
-🗑 Excluir
-</button>
-
-<button onclick='abrirProposta(${JSON.stringify(l)})'>
-📄 Gerar Proposta
-</button>
-
-</div>
-`
-
-document.getElementById(l.status).innerHTML += card
-
- 
-})
-  
-atualizarDashboard()
-atualizarGrafico()
-
-}
-
-render()
-
-function abrirProposta(lead){
-
-// 🔥 envia os dados pro proposta.html
-localStorage.setItem("propostaAtual", JSON.stringify({
-  nome: lead.nome,
-  telefone: lead.telefone,
-  cidade: lead.cidade || "",
-  sistema: lead.sistema || "Simulação",
-  kwp: lead.kwp || 0,
-  placas: lead.placas || 0,
-  economia: lead.economia || 0
-}))
-
-// 🔥 abre a proposta
-window.open("../proposta.html", "_blank")
-
-}
-
-}
 
 </script>
 
@@ -383,6 +173,64 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+let leads = []
+
+function render(){
+
+  document.getElementById("novo").innerHTML="<h2>🟡 Novos</h2>"
+  document.getElementById("contato").innerHTML="<h2>🔵 Contato</h2>"
+  document.getElementById("proposta").innerHTML="<h2>🟠 Proposta</h2>"
+  document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
+
+  leads.forEach(l => {
+
+    let card = `
+    <div class="card">
+
+    <b>${l.nome}</b><br>
+    <small>📞 ${l.telefone}</small><br>
+    <small>💡 Conta: R$ ${l.valor}</small>
+
+    </div>
+    `
+
+    document.getElementById(l.status).innerHTML += card
+  })
+}
+
+window.novoLead = async function(){
+
+  let nome = prompt("Nome do cliente:")
+  if(!nome) return
+
+  let telefone = prompt("Telefone:")
+  let valor = prompt("Conta de luz:")
+
+  await addDoc(collection(db, "leads"), {
+    nome,
+    telefone,
+    valor,
+    status: "novo",
+    data: new Date().toLocaleString()
+  })
+
+}
+
+onSnapshot(collection(db, "leads"), (snapshot) => {
+
+  leads = []
+
+  snapshot.forEach(doc => {
+    leads.push({
+      id: doc.id,
+      ...doc.data()
+    })
+  })
+
+  render()
+})
+  
 window.db = db
 window.doc = doc
 window.updateDoc = updateDoc
