@@ -568,6 +568,14 @@ function enviarKit(nomeSistema,kwp,placas,economia){
 
 let nome=document.getElementById("clienteNome").value
 let telefone=document.getElementById("clienteTelefone").value
+
+// 🔥 limpa tudo que não é número
+telefone = telefone.replace(/\D/g, "")
+
+// adiciona 55 se não tiver
+if(!telefone.startsWith("55")){
+  telefone = "55" + telefone
+}
 let endereco=document.getElementById("endereco").value
 let bill=document.getElementById("bill").value
 
@@ -610,9 +618,19 @@ let mensagem=
 (endereco ? "Mapa da instalação:\nhttps://www.google.com/maps/search/"+encodeURIComponent(endereco)+"\n\n" : "")+
 "Gostaria de falar sobre esse projeto."
 
-let url="https://wa.me/"+seuNumero+"?text="+encodeURIComponent(mensagem)
+telefone = telefone.replace(/\D/g, "")
 
-window.open(url,"_blank")
+if(!telefone.startsWith("55")){
+  telefone = "55" + telefone
+}
+  
+let url = "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem)
+
+if(/Android|iPhone/i.test(navigator.userAgent)){
+  window.location.href = url
+}else{
+  window.open(url, "_blank")
+}
 
 }
 
