@@ -609,6 +609,15 @@ h1{
 
 let dados = JSON.parse(localStorage.getItem("propostaAtual"))
 
+let telefone = dados.telefone || ""
+
+if(telefone){
+  let msg = "Olá, vi minha proposta de energia solar e gostaria de avançar."
+  let link = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg)
+
+  document.getElementById("btnWhats").href = link
+}
+  
 document.getElementById("clienteNome").innerText = dados.nome || "Cliente"
 document.getElementById("cidade").innerText = dados.cidade || ""
 
