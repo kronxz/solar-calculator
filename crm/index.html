@@ -333,20 +333,6 @@ window.updateDoc = updateDoc
 window.deleteDoc = deleteDoc
 
 
-})
-
-window.excluir = async function(id){
-
-let confirmar = confirm("Deseja excluir este lead?")
-
-if(!confirmar) return
-
-// 🔥 REMOVE DO FIREBASE
-const ref = doc(db, "leads", id)
-
-await deleteDoc(ref)
-
-}
 
 </script>
 
