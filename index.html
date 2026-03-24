@@ -294,6 +294,11 @@ input:focus, select:focus{
   margin-top:10px;
   background:#1e293b;
 }
+
+label{
+  font-size:12px;
+  color:#9ca3af;
+}
   
 </style>
 </head>
@@ -356,8 +361,8 @@ Descubra quanto você pode economizar com energia solar em Maricá
   <div class="form-grid">
 
     <input id="bill" type="number" placeholder="Conta de luz (R$)">
-
-    <input id="tariff" value="0.95" placeholder="Tarifa (R$/kWh)">
+   <label>Tarifa da concessionária (R$/kWh)</label>
+   <input id="tariff" value="0.95" placeholder="Tarifa da concessionária (R$/kWh)">
 
     <select id="city">
       <option value="4.8">Rio de Janeiro</option>
@@ -368,12 +373,12 @@ Descubra quanto você pode economizar com energia solar em Maricá
     </select>
 
     <select id="potenciaPlaca">
-      <option value="450">450 W</option>
-      <option value="550">550 W</option>
-      <option value="620">620 W</option>
-      <option value="700" selected>700 W</option>
-      <option value="750">750 W</option>
-    </select>
+  <option value="450">450 W - Padrão antigo</option>
+  <option value="550">550 W - Alta eficiência</option>
+  <option value="620">620 W - Comercial</option>
+  <option value="700" selected>700 W - Alto rendimento</option>
+  <option value="750">750 W - Última geração</option>
+</select>
 
   </div>
 
