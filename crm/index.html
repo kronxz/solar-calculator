@@ -246,7 +246,7 @@ grafico = new Chart(ctx, {
 
 }
 
-function novoLead(){
+async function novoLead(){
 
 let nome = prompt("Nome do cliente:")
 if(!nome) return
@@ -254,17 +254,15 @@ if(!nome) return
 let telefone = prompt("Telefone (com DDD):")
 let valor = prompt("Conta de luz (R$):")
 
-leads.push({
-id: Date.now(),
-nome,
-telefone,
-valor,
-status:"novo"
+await addDoc(collection(db, "leads"), {
+  nome,
+  telefone,
+  valor,
+  status: "novo",
+  data: new Date().toLocaleString()
 })
 
-salvar()
 }
-
 window.mover = async function(id){
 
 let lead = leads.find(l => l.id == id)
@@ -372,7 +370,7 @@ window.open("../proposta.html", "_blank")
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc } from
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
