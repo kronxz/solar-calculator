@@ -557,6 +557,15 @@ let investimento = dados.kwp * 3500
 
 let payback = investimento / (economia*12)
 
+let economiaAnual = economia * 12
+let economiaTotal = economiaAnual * 25
+let lucro = economiaTotal - investimento
+
+document.getElementById("ecoMensal").innerText = "R$ " + economia
+document.getElementById("ecoAnual").innerText = "R$ " + economiaAnual.toFixed(0)
+document.getElementById("ecoTotal").innerText = "R$ " + economiaTotal.toFixed(0)
+document.getElementById("lucro").innerText = "R$ " + lucro.toFixed(0)
+  
 document.getElementById("dados").innerHTML = `
 <p><strong>Cliente:</strong> ${dados.nome}</p>
 <p><strong>Sistema:</strong> ${dados.sistema}</p>
