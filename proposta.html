@@ -21,21 +21,63 @@ margin:auto;
 }
 
 h2{
-text-align:center;
+  text-align:center;
+  margin-top:20px;
 }
+
+  .pagina{
+  width:800px;
+  margin:40px auto;
+  background:white;
+  padding:40px;
+  border-radius:10px;
+  page-break-after:always;
+}
+
+h1{
+  margin-bottom:10px;
+}
+.capa{
+  text-align:center;
+}
+
+.capa h1{
+  font-size:28px;
+  color:#0f172a;
+}
+
+.capa h2{
+  font-size:18px;
+  color:#334155;
+}
+  
 </style>
 
 </head>
 
 <body>
 
-<div class="box">
+<div class="pagina capa">
 
-<h2>Proposta de Energia Solar</h2>
+  <img src="logo.png" style="width:120px; display:block; margin:auto;">
 
-<div id="dados"></div>
+  <h1 style="text-align:center;">Proposta Comercial</h1>
+  <h2 style="text-align:center;">Energia Solar Fotovoltaica</h2>
 
-<canvas id="grafico"></canvas>
+  <p><strong>Cliente:</strong> <span id="clienteNome"></span></p>
+  <p><strong>Cidade:</strong> <span id="cidade"></span></p>
+  <p><strong>Telefone:</strong> <span id="telefone"></span></p>
+
+</div>
+
+
+<div class="pagina sistema">
+
+  <h2>Resumo do Sistema</h2>
+
+  <div id="dados"></div>
+
+  <canvas id="grafico"></canvas>
 
 </div>
 
@@ -43,19 +85,23 @@ text-align:center;
 
 let dados = JSON.parse(localStorage.getItem("propostaAtual"))
 
-let economia = dados.economia
+document.getElementById("clienteNome").innerText = dados.nome
+document.getElementById("cidade").innerText = dados.cidade || "Não informado"
+document.getElementById("telefone").innerText = dados.telefone || "Não informado"
+
+  let economia = dados.economia
 let investimento = dados.kwp * 3500
 
 let payback = investimento / (economia*12)
 
 document.getElementById("dados").innerHTML = `
-Cliente: ${dados.nome}<br>
-Sistema: ${dados.sistema}<br>
-Potência: ${dados.kwp} kWp<br>
-Módulos: ${dados.placas}<br>
-Economia mensal: R$ ${economia}<br>
-Investimento: R$ ${investimento.toFixed(0)}<br>
-Payback: ${payback.toFixed(1)} anos
+<p><strong>Cliente:</strong> ${dados.nome}</p>
+<p><strong>Sistema:</strong> ${dados.sistema}</p>
+<p><strong>Potência:</strong> ${dados.kwp} kWp</p>
+<p><strong>Módulos:</strong> ${dados.placas}</p>
+<p><strong>Economia mensal:</strong> R$ ${economia}</p>
+<p><strong>Investimento:</strong> R$ ${investimento.toFixed(0)}</p>
+<p><strong>Payback:</strong> ${payback.toFixed(1)} anos</p>
 `
 
 new Chart(document.getElementById("grafico"), {
@@ -68,7 +114,10 @@ data: Array.from({length:25},(_,i)=> economia*12*(i+1) - investimento)
 }]
 }
 })
-
+setTimeout(() => {
+  window.print()
+}, 1000)
+  
 </script>
 
 </body>
