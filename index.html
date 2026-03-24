@@ -175,7 +175,7 @@ input:focus, select:focus{
   height:500px;
   border-radius:20px;
   overflow:hidden;
-  margin-bottom:20px;
+  margin-bottom:60px;
   position:relative;
 }
 
@@ -193,7 +193,19 @@ input:focus, select:focus{
   color:white;
   max-width:500px;
 }
+.logo-hero{
+  position:relative;
+  margin-top:-80px; /* 👈 isso faz subir */
+  text-align:center;
+  z-index:10;
+}
 
+.logo-hero img{
+  width:140px;
+  border-radius:50%;
+  border:4px solid #020617;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
 .hero-text h1{
   font-size:28px;
   font-weight:700;
@@ -259,10 +271,11 @@ input:focus, select:focus{
 </button>
 </div>
 </div>
-<div class="container">
-<div style="text-align:center;margin-bottom:20px;">
-<img src="logo.jpg" width="220">
+<div class="logo-hero">
+<img src="logo.jpg">
 </div>
+<div class="container">
+
 
 <h1>☀️ Simulador Solar - MF Soluções</h1>
   
