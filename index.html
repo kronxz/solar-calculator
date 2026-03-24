@@ -189,7 +189,14 @@ input:focus, select:focus{
 </div>
 
 <h1>☀️ Simulador Solar - MF Soluções</h1>
+  
 <p>Descubra quanto você pode economizar com energia solar em Maricá</p>
+  
+<p style="text-align:center;color:#9ca3af">
+✔ Projeto profissional<br>
+✔ Equipamentos homologados<br>
+✔ Economia garantida
+</p>
 
 <div class="card section">
   <div class="section-title">👤 Dados do Cliente</div>
@@ -309,7 +316,13 @@ return `
 
 <div class="card ${name=="Recomendado ⭐"?"recommended":""}">
 
+<div style="font-size:22px;font-weight:700;color:#22c55e">
+R$ ${saving.toFixed(0)}/mês
+</div>
 
+<div style="color:#9ca3af;font-size:13px;margin-bottom:10px">
+economia estimada
+</div>
 
 <div class="resultTitle">${name}</div>
 
@@ -335,7 +348,7 @@ Inversor sugerido: ${inverter}
 
 
 <button onclick="enviarKit('${name}',${kwp.toFixed(2)},${panels},${saving.toFixed(0)})">
-Escolher este sistema
+🚀 Quero esse sistema
 </button>
 
 <button onclick="gerarProposta('${name}',${kwp.toFixed(2)},${panels},${saving.toFixed(0)})">
