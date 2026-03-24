@@ -349,9 +349,21 @@ render()
 
 function abrirProposta(lead){
 
-localStorage.setItem("propostaAtual", JSON.stringify(lead))
+// 🔥 envia os dados pro proposta.html
+localStorage.setItem("propostaAtual", JSON.stringify({
+  nome: lead.nome,
+  telefone: lead.telefone,
+  cidade: lead.cidade || "",
+  sistema: lead.sistema || "Simulação",
+  kwp: lead.kwp || 0,
+  placas: lead.placas || 0,
+  economia: lead.economia || 0
+}))
 
+// 🔥 abre a proposta
 window.open("../proposta.html", "_blank")
+
+}
 
 }
 
