@@ -176,6 +176,54 @@ const db = getFirestore(app);
 
 let leads = []
 
+function whatsapp(telefone,nome){
+  let msg = "Olá "+nome+"! Vi sua simulação solar e vou te ajudar."
+  window.open("https://wa.me/"+telefone+"?text="+encodeURIComponent(msg))
+}
+
+window.mover = async function(id){
+
+  let lead = leads.find(l => l.id == id)
+
+  let ordem = ["novo","contato","proposta","fechado"]
+  let i = ordem.indexOf(lead.status)
+
+  if(i < ordem.length -1){
+
+    let novoStatus = ordem[i+1]
+
+    const ref = doc(db, "leads", id)
+
+    await updateDoc(ref, {
+      status: novoStatus
+    })
+  }
+}
+
+window.excluir = async function(id){
+
+  if(!confirm("Excluir lead?")) return
+
+  const ref = doc(db, "leads", id)
+
+  await deleteDoc(ref)
+}
+
+function abrirProposta(lead){
+
+  localStorage.setItem("propostaAtual", JSON.stringify({
+    nome: lead.nome,
+    telefone: lead.telefone,
+    cidade: lead.cidade || "",
+    sistema: lead.sistema || "Simulação",
+    kwp: lead.kwp || 0,
+    placas: lead.placas || 0,
+    economia: lead.economia || 0
+  }))
+
+  window.open("../proposta.html", "_blank")
+}
+  
 function render(){
 
   document.getElementById("novo").innerHTML="<h2>🟡 Novos</h2>"
@@ -185,15 +233,31 @@ function render(){
 
   leads.forEach(l => {
 
-    let card = `
-    <div class="card">
+  let card = `
+<div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
 
-    <b>${l.nome}</b><br>
-    <small>📞 ${l.telefone}</small><br>
-    <small>💡 Conta: R$ ${l.valor}</small>
+<b>${l.nome}</b><br>
+<small>📞 ${l.telefone}</small><br>
+<small>💡 Conta: R$ ${l.valor}</small>
 
-    </div>
-    `
+<button onclick="whatsapp('${l.telefone}','${l.nome}')">
+💬 WhatsApp
+</button>
+
+<button onclick="mover('${l.id}')">
+➡️ Avançar
+</button>
+
+<button style="background:#ef4444" onclick="excluir('${l.id}')">
+🗑 Excluir
+</button>
+
+<button onclick='abrirProposta(${JSON.stringify(l)})'>
+📄 Proposta
+</button>
+
+</div>
+`
 
     document.getElementById(l.status).innerHTML += card
   })
