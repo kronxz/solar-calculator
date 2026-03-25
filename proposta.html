@@ -787,7 +787,11 @@ h1{
 
 <script>
 
-let dados = JSON.parse(localStorage.getItem("propostaAtual"))
+let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
+
+if(!dados.nome){
+  console.log("Sem dados carregados")
+}
 
 let telefone = dados.telefone || ""
 
