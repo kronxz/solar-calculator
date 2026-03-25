@@ -829,16 +829,20 @@ document.getElementById("dados").innerHTML = `
 <p><strong>Payback:</strong> ${payback.toFixed(1)} anos</p>
 `
 
-new Chart(document.getElementById("grafico"), {
-type: 'bar',
-data: {
-labels: Array.from({length:25},(_,i)=>i+1),
-datasets: [{
-label: 'Fluxo de Caixa',
-data: Array.from({length:25},(_,i)=> economia*12*(i+1) - investimento)
-}]
+let canvas = document.getElementById("grafico")
+
+if(canvas){
+  new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: Array.from({length:25},(_,i)=>i+1),
+      datasets: [{
+        label: 'Fluxo de Caixa',
+        data: Array.from({length:25},(_,i)=> economia*12*(i+1) - investimento)
+      }]
+    }
+  })
 }
-})
 
 let numero = localStorage.getItem("numeroProposta") || 1
 
