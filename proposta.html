@@ -513,8 +513,31 @@ h1{
 
 <body>
 
-  <div class="imagem-capa">
-    <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d">
+<div class="pagina capa">
+
+  <img class="bg-capa" src="https://images.unsplash.com/photo-1509391366360-2e959784a276">
+
+  <div class="overlay"></div>
+
+  <div class="capa-conteudo">
+
+    <img src="logo.png" class="logo-capa">
+
+    <h1>PROPOSTA</h1>
+    <h1 class="azul">COMERCIAL</h1>
+
+    <h2 id="clienteNome"></h2>
+
+    <p class="sub">Sistema de Energia Solar Fotovoltaica</p>
+
+    <div class="info">
+      <p><strong>Empresa:</strong> MF Soluções Elétricas</p>
+      <p><strong>CNPJ:</strong> 48.929.808/0001-84</p>
+      <p><strong>Responsável:</strong> Marcos Felipe</p>
+      <p><strong>Telefone:</strong> (21) 97238-1004</p>
+      <p><strong>Nº Proposta:</strong> <span id="numeroProposta"></span></p>
+    </div>
+
   </div>
 
 </div>
@@ -812,6 +835,14 @@ data: Array.from({length:25},(_,i)=> economia*12*(i+1) - investimento)
 }]
 }
 })
+
+let numero = localStorage.getItem("numeroProposta") || 1
+
+document.getElementById("numeroProposta").innerText =
+"#" + String(numero).padStart(4, '0')
+
+localStorage.setItem("numeroProposta", Number(numero) + 1)
+  
 setTimeout(() => {
   window.print()
 }, 1000)
