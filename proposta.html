@@ -803,10 +803,13 @@ if(telefone){
 }
   
 document.getElementById("clienteNome").innerText = dados.nome || "Cliente"
-document.getElementById("cidade").innerText = dados.cidade || ""
+let cidadeEl = document.getElementById("cidade")
+if(cidadeEl){
+  cidadeEl.innerText = dados.cidade || ""
+}
 
-  let economia = dados.economia
-let investimento = dados.kwp * 3500
+let economia = dados.economia || 0
+let investimento = (dados.kwp || 0) * 3500
 
 let payback = investimento / (economia*12)
 
