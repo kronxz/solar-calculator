@@ -144,8 +144,12 @@ h1{
   position:relative;
   height:1120px;
   overflow:hidden;
+
   display:flex;
-  align-items:center;
+  align-items:flex-end;
+  justify-content:flex-start;
+
+  padding:80px 80px 120px 80px; /* 👈 CONTROLE FINO DO ESPAÇO */
 
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -181,9 +185,34 @@ h1{
 .capa-conteudo{
   position:relative;
   z-index:2;
+
+  max-width:520px;
+
+  padding:30px;
+
+  background:rgba(2,6,23,0.55); /* vidro escuro */
+  backdrop-filter: blur(6px);
+
+  border-radius:12px;
+
   color:white;
-  padding:80px;
-  max-width:600px;
+}
+  .capa-conteudo h1{
+  font-size:44px;
+  margin:0;
+  line-height:1.1;
+  letter-spacing:1px;
+}
+
+.capa-conteudo h2{
+  font-size:22px;
+  margin-top:15px;
+}
+
+.sub{
+  margin-top:8px;
+  opacity:0.85;
+  font-size:15px;
 }
 
 /* LOGO */
