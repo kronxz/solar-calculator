@@ -789,8 +789,8 @@ h1{
 
 let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
 
-if(!dados.nome){
-  console.log("Sem dados carregados")
+if(!dados || !dados.kwp){
+  console.log("Sem dados da proposta")
 }
 
 let telefone = dados.telefone || ""
@@ -851,9 +851,11 @@ document.getElementById("numeroProposta").innerText =
 
 localStorage.setItem("numeroProposta", Number(numero) + 1)
   
-setTimeout(() => {
-  window.print()
-}, 1000)
+window.onload = () => {
+  setTimeout(() => {
+    window.print()
+  }, 1500)
+}
   
 </script>
 
