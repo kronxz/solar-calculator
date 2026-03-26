@@ -11,6 +11,9 @@ body{
   background: linear-gradient(180deg, #0b1220, #020617);
   color:#e5e7eb;
   padding:20px;
+
+    display:block;
+
 }
 
 .box{
@@ -929,8 +932,13 @@ localStorage.setItem("numeroProposta", Number(numero) + 1)
   
 window.onload = () => {
   setTimeout(() => {
-    window.print()
-  }, 1500)
+
+    document.body.style.display = "block";
+
+    window.focus();
+    window.print();
+
+  }, 3000); // 👈 AUMENTAMOS O TEMPO
 }
   
 </script>
