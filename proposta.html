@@ -802,7 +802,11 @@ if(telefone){
   document.getElementById("btnWhats").href = link
 }
   
-document.getElementById("clienteNome").innerText = dados.nome || "Cliente"
+let clienteEl = document.getElementById("clienteNome")
+if(clienteEl){
+  clienteEl.innerText = dados.nome || "Cliente"
+}
+
 let cidadeEl = document.getElementById("cidade")
 if(cidadeEl){
   cidadeEl.innerText = dados.cidade || ""
@@ -817,10 +821,25 @@ let economiaAnual = economia * 12
 let economiaTotal = economiaAnual * 25
 let lucro = economiaTotal - investimento
 
-document.getElementById("ecoMensal").innerText = "R$ " + economia
-document.getElementById("ecoAnual").innerText = "R$ " + economiaAnual.toFixed(0)
-document.getElementById("ecoTotal").innerText = "R$ " + economiaTotal.toFixed(0)
-document.getElementById("lucro").innerText = "R$ " + lucro.toFixed(0)
+let ecoMensalEl = document.getElementById("ecoMensal")
+if(ecoMensalEl){
+  ecoMensalEl.innerText = "R$ " + economia
+}
+
+let ecoAnualEl = document.getElementById("ecoAnual")
+if(ecoAnualEl){
+  ecoAnualEl.innerText = "R$ " + economiaAnual.toFixed(0)
+}
+
+let ecoTotalEl = document.getElementById("ecoTotal")
+if(ecoTotalEl){
+  ecoTotalEl.innerText = "R$ " + economiaTotal.toFixed(0)
+}
+
+let lucroEl = document.getElementById("lucro")
+if(lucroEl){
+  lucroEl.innerText = "R$ " + lucro.toFixed(0)
+}
   
 document.getElementById("dados").innerHTML = `
 <p><strong>Cliente:</strong> ${dados.nome}</p>
