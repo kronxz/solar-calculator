@@ -505,14 +505,24 @@ h1{
   bottom:80px;
   left:80px;
 
-  background: rgba(0,0,0,0.85) !important; /* 👈 ESSENCIAL */
+  max-width:520px;
 
-  backdrop-filter: none !important; /* 👈 REMOVE O PROBLEMA */
+  padding:30px;
+
+  background:#020617 !important; /* 👈 FUNDO REAL (ESSENCIAL) */
 
   color:white !important;
 
-  padding:30px;
   border-radius:12px;
+
+  z-index:999 !important;
+
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
   .pagina{
     page-break-after:always;
@@ -547,13 +557,7 @@ h1{
     z-index:1;
   }
 
-  .capa-conteudo{
-    position:absolute !important;
-    bottom:80px;
-    left:80px;
-    z-index:2;
-    max-width:500px;
-  }
+  
 
 }
   
