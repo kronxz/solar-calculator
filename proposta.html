@@ -400,13 +400,75 @@ h1{
 }
 
 @media print {
+  .fluxo{
+  break-inside: avoid;
+}
+
+.etapa{
+  break-inside: avoid;
+}
 
   .funcionamento{
     display:block !important;
     overflow:visible !important;
     page-break-inside: avoid;
   }
+.funcionamento h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:10px;
+}
 
+.subtitulo{
+  text-align:center;
+  color:#6b7280;
+  margin-bottom:40px;
+}
+
+.fluxo{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.etapa{
+  background:#ffffff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.05);
+  text-align:center;
+  flex:1;
+}
+
+.numero{
+  background:#3b82f6;
+  color:#fff;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 10px;
+  font-weight:bold;
+}
+
+.linha{
+  height:2px;
+  background:#3b82f6;
+  flex:0.3;
+}
+
+.impacto{
+  margin-top:40px;
+  text-align:center;
+  font-weight:bold;
+  background:#0f172a;
+  color:white;
+  padding:15px;
+  border-radius:8px;
+}
 }
 .funcionamento h2{
   text-align:center;
@@ -1018,42 +1080,46 @@ h1{
   
 <div class="pagina funcionamento">
 
-  <div class="funcionamento-header">
-    <h2>Como funciona a energia solar na prática</h2>
-    <p>Entenda de forma simples como você começa a economizar todos os meses</p>
-  </div>
+  <h2>Como funciona a energia solar na prática</h2>
+  <p class="subtitulo">
+    Entenda como você começa a economizar desde o primeiro mês
+  </p>
 
-  <div class="linha-processo"></div>
+  <div class="fluxo">
 
-  <div class="passos">
-
-    <div class="passo">
-      <div class="numero-passo">1</div>
+    <div class="etapa">
+      <div class="numero">1</div>
       <h3>☀️ Geração</h3>
       <p>Painéis captam a luz do sol e geram energia elétrica.</p>
     </div>
 
-    <div class="passo">
-      <div class="numero-passo">2</div>
+    <div class="linha"></div>
+
+    <div class="etapa">
+      <div class="numero">2</div>
       <h3>🔄 Conversão</h3>
-      <p>O inversor transforma para energia utilizável na sua casa.</p>
+      <p>O inversor transforma em energia utilizável.</p>
     </div>
 
-    <div class="passo">
-      <div class="numero-passo">3</div>
+    <div class="linha"></div>
+
+    <div class="etapa">
+      <div class="numero">3</div>
       <h3>⚡ Consumo</h3>
-      <p>Você utiliza a energia em tempo real, reduzindo sua conta.</p>
+      <p>Você usa a energia em tempo real e reduz a conta.</p>
     </div>
 
-    <div class="passo">
-      <div class="numero-passo">4</div>
+    <div class="linha"></div>
+
+    <div class="etapa">
+      <div class="numero">4</div>
       <h3>🏦 Créditos</h3>
-      <p>O excedente vira créditos para usar à noite.</p>
+      <p>O excedente vira crédito para usar à noite.</p>
     </div>
 
   </div>
 
-  <div class="frase-impacto">
+  <div class="impacto">
     Você continua conectado à rede, mas deixa de depender dela.
   </div>
 
