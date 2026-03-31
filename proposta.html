@@ -465,7 +465,17 @@ h1{
   background:linear-gradient(90deg,#3b82f6,#60a5fa);
   z-index:0;
 }
+/* 🔹 PADRÃO (página 2, números normais) */
 .numero{
+  background:#f8fafc;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  flex:1;
+  border:1px solid #e2e8f0;
+  position:static; /* 🔥 ESSENCIAL */
+}
+  .numero-fluxo{
   position:absolute;
   top:-20px;
   left:50%;
@@ -486,6 +496,8 @@ h1{
   font-weight:bold;
 
   box-shadow:0 6px 15px rgba(59,130,246,0.4);
+
+  z-index:2; /* 🔥 IMPORTANTE */
 }
 .etapa{
   position:relative;
