@@ -607,9 +607,12 @@ h1{
 
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    .sobre{
+  
+}
+  .sobre{
   position:relative;
   box-shadow:none !important;
+  border-left:none !important;
 }
 .sobre::before{
   content:"";
@@ -617,7 +620,7 @@ h1{
   top:0;
   left:0;
   width:6px;
-  height:100%;
+  height:calc(100% - 2px);
   background:#3b82f6;
 }
 /* 🔥 CORREÇÃO DO BUG DA LINHA VAZANDO */
