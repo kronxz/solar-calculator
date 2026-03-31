@@ -655,7 +655,7 @@ h1{
 }
 /* 🔥 CORREÇÃO DO BUG DA LINHA VAZANDO */
 .pagina{
-  overflow:hidden;
+  overflow:visible;
 }
   }
 
@@ -706,11 +706,15 @@ h1{
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
-  .pagina{
-    page-break-after:always;
-    width:100%;
-    height:100vh;
-  }
+.pagina{
+  page-break-after:always;
+  width:100%;
+
+  min-height:100vh; /* 👈 em vez de height */
+  height:auto;      /* 👈 ESSENCIAL */
+
+  display:block;
+}
 
   .capa{
     position:relative;
