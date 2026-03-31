@@ -44,6 +44,13 @@ h2{
 
 .sobre{
   background:#ffffff;
+
+  padding:50px;
+  border-radius:16px;
+
+  box-shadow:0 15px 40px rgba(0,0,0,0.06);
+
+  border-left:6px solid #3b82f6; /* 🔥 detalhe azul estilo Azume */
 }
 
 .sobre-header{
@@ -52,9 +59,10 @@ h2{
 }
 
 .sobre-header h2{
-  font-size:34px;
+  font-size:36px;
   color:#0f172a;
   margin-bottom:10px;
+  font-weight:700;
 }
 
 .sobre-header p{
@@ -107,10 +115,25 @@ h2{
 
 .card{
   background:#ffffff;
-  padding:20px;
-  border-radius:12px;
+  padding:22px;
+  border-radius:14px;
+
   border:1px solid #e2e8f0;
+
   transition:0.3s;
+
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:4px;
+  height:100%;
+  background:#3b82f6;
 }
 
 .card h3{
