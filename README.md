@@ -28,7 +28,7 @@ Este projeto foi criado para:
 - 📍 Integração com Google Maps para visualização do telhado
 - 📲 Envio automático de lead via WhatsApp
 - 🧠 Sugestão de expansão futura do sistema
-- 🔋 Seleção de potência dos módulos (620W / 700W)
+- 🔋 Seleção de potência dos módulos (450W / 550W / 620W / 700W /750W)
 
 ---
 
@@ -102,11 +102,11 @@ Ele atua como:
 
 ## 📌 Próximas melhorias
 
-- 📄 Geração automática de proposta em PDF
-- 📊 Gráfico de economia em 25 anos
-- ☁️ Integração com API solar (radiação real)
-- 🧮 Dimensionamento automático de strings (MPPT)
-- 🧾 Integração com CRM (Azume)
+- 📄 Geração automática de proposta em PDF ✅
+- 📊 Gráfico de economia em 25 anos ✅
+- ☁️ Integração com API solar (radiação real) ✅
+- 🧮 Dimensionamento automático de strings (MPPT) ✅
+- 🧾 Integração com CRM ✅
 
 ---
 
