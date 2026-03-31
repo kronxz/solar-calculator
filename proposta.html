@@ -722,18 +722,27 @@ h1{
   print-color-adjust: exact;
 }
 .pagina{
-  page-break-after:always;
   width:100%;
+  padding:40px;
+  box-sizing:border-box;
 
-  min-height:100vh; /* 👈 em vez de height */
-  height:auto;      /* 👈 ESSENCIAL */
+  page-break-after: always;
+  break-after: page;
+
+  min-height:100vh;
+  height:auto;
 
   display:block;
+
+  /* 🔥 ESSENCIAL */
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
   .capa{
     position:relative;
-    height:100vh !important;
+    min-height:100vh !important;
+    height:auto !important;
     padding:0 !important;
     margin:0 !important;
     overflow:hidden;
