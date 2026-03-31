@@ -776,6 +776,77 @@ h1{
   .sobre{
   page-break-inside: avoid;
 }
+.funcionamento-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.funcionamento-header h2{
+  font-size:30px;
+  color:#0f172a;
+  margin-bottom:10px;
+}
+
+.funcionamento-header p{
+  color:#64748b;
+  font-size:15px;
+}
+
+.linha-processo{
+  height:4px;
+  background:linear-gradient(90deg,#3b82f6,#60a5fa);
+  margin:30px 0 40px;
+  border-radius:10px;
+}
+
+.passos{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:25px;
+}
+
+.passo{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  padding:25px;
+  border-radius:14px;
+  position:relative;
+}
+
+.numero-passo{
+  position:absolute;
+  top:-12px;
+  left:-12px;
+  background:#3b82f6;
+  color:white;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.passo h3{
+  margin-bottom:10px;
+  color:#0f172a;
+}
+
+.passo p{
+  font-size:14px;
+  color:#475569;
+}
+
+.frase-impacto{
+  margin-top:40px;
+  padding:20px;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  border-radius:10px;
+  font-weight:600;
+}  
 }
   
 </style>
@@ -919,42 +990,43 @@ h1{
   
 <div class="pagina funcionamento">
 
-  <h2>Como funciona a energia solar?</h2>
+  <div class="funcionamento-header">
+    <h2>Como funciona a energia solar na prática</h2>
+    <p>Entenda de forma simples como você começa a economizar todos os meses</p>
+  </div>
+
+  <div class="linha-processo"></div>
 
   <div class="passos">
 
     <div class="passo">
+      <div class="numero-passo">1</div>
       <h3>☀️ Geração</h3>
-      <p>
-        Os painéis solares captam a luz do sol e geram energia elétrica em corrente contínua.
-      </p>
+      <p>Painéis captam a luz do sol e geram energia elétrica.</p>
     </div>
 
     <div class="passo">
+      <div class="numero-passo">2</div>
       <h3>🔄 Conversão</h3>
-      <p>
-        O inversor transforma a energia para corrente alternada, que é usada na sua casa ou empresa.
-      </p>
+      <p>O inversor transforma para energia utilizável na sua casa.</p>
     </div>
 
     <div class="passo">
+      <div class="numero-passo">3</div>
       <h3>⚡ Consumo</h3>
-      <p>
-        A energia gerada alimenta todos os equipamentos em tempo real, reduzindo sua conta.
-      </p>
+      <p>Você utiliza a energia em tempo real, reduzindo sua conta.</p>
     </div>
 
     <div class="passo">
+      <div class="numero-passo">4</div>
       <h3>🏦 Créditos</h3>
-      <p>
-        O excedente vai para a rede da concessionária e vira créditos para usar à noite.
-      </p>
+      <p>O excedente vira créditos para usar à noite.</p>
     </div>
 
   </div>
 
   <div class="frase-impacto">
-    Você continua conectado à concessionária, mas passa a pagar muito menos energia.
+    Você continua conectado à rede, mas deixa de depender dela.
   </div>
 
 </div>
