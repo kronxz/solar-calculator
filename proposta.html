@@ -608,10 +608,18 @@ h1{
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     .sobre{
-  border-left:6px solid #3b82f6 !important;
+  position:relative;
   box-shadow:none !important;
 }
-
+.sobre::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:6px;
+  height:100%;
+  background:#3b82f6;
+}
 /* 🔥 CORREÇÃO DO BUG DA LINHA VAZANDO */
 .pagina{
   overflow:hidden;
