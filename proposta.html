@@ -31,16 +31,13 @@ h2{
 
 .pagina{
   width:100%;
-  max-width:900px;
-  margin:auto;
+  min-height:100vh;
+  padding:40px;
+  box-sizing:border-box;
 
-  padding:30px 40px; /* 🔥 REDUZ */
-
-  page-break-after:always;
-
-  background:#ffffff;
-  position:relative;
-  z-index:2;
+  /* 🔥 ESSENCIAL */
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 
