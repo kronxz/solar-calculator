@@ -1472,6 +1472,9 @@ document.getElementById("consumo").innerText = dados.consumo || "-"
 document.getElementById("geracao").innerText = dados.geracao || "-"
 document.getElementById("kwp").innerText = dados.kwp + " kWp" || "-"
 document.getElementById("placas").innerText = dados.placas || "-"
+document.getElementById("contaSem").innerText = "R$ " + (dados.conta || "-")
+document.getElementById("contaCom").innerText = "R$ " + (dados.contaCom || "-")
+
   
 if(!dados || !dados.kwp){
   console.log("Sem dados da proposta")
