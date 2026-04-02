@@ -1652,16 +1652,44 @@ let canvas = document.getElementById("grafico")
 
 if(canvas){
   new Chart(canvas, {
-    type: 'bar',
-    data: {
-      labels: Array.from({length:25},(_,i)=>i+1),
-      datasets: [{
-        label: 'Fluxo de Caixa',
-        data: Array.from({length:25},(_,i)=> economia*12*(i+1) - investimento)
-      }]
+let anos = Array.from({length:25},(_,i)=>i+1)
+
+let fluxo = anos.map(ano => {
+  return economia * 12 * ano - investimento
+})
+
+new Chart(canvas, {
+  type: 'line',
+  data: {
+    labels: anos,
+    datasets: [
+      {
+        label: 'Retorno acumulado (R$)',
+        data: fluxo,
+        tension: 0.4,
+        fill: true,
+        borderWidth: 3,
+        pointRadius: 0,
+        borderColor: '#22c55e',
+        backgroundColor: 'rgba(34,197,94,0.2)'
+      }
+    ]
+  },
+  options: {
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: value => "R$ " + value.toLocaleString()
+        }
+      }
     }
-  })
-}
+  }
+})
 
 let numero = localStorage.getItem("numeroProposta") || 1
 
