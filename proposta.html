@@ -1113,7 +1113,31 @@ h2{
   margin:5px 0;
   font-size:15px;
 }
+.resumo-retorno{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:30px;
+}
 
+.box-retorno{
+  background:#0f172a;
+  color:white;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.box-retorno span{
+  display:block;
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:8px;
+}
+
+.box-retorno strong{
+  font-size:22px;
+}
   
 }
  
@@ -1570,6 +1594,19 @@ Após o payback, todo o valor gerado é lucro direto para você.
 
 <canvas id="grafico"></canvas>
 
+  <div class="resumo-retorno">
+
+  <div class="box-retorno">
+    <span>Tempo de retorno</span>
+    <strong id="paybackTexto"></strong>
+  </div>
+
+  <div class="box-retorno">
+    <span>Lucro em 25 anos</span>
+    <strong id="lucro25"></strong>
+  </div>
+
+</div>
 <div class="impacto">
 🚀 Quanto antes você instalar, mais cedo começa a lucrar.
 </div>
@@ -1584,6 +1621,8 @@ document.getElementById("kwp").innerText = dados.kwp + " kWp" || "-"
 document.getElementById("placas").innerText = dados.placas || "-"
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
 document.getElementById("contaCom").innerText = "R$ " + ((dados.conta || dados.economia) * 0.1 || "-")
+document.getElementById("paybackTexto").innerText = payback.toFixed(1) + " anos"
+document.getElementById("lucro25").innerText = "R$ " + lucro.toFixed(0)  
 
   
 if(!dados || !dados.kwp){
