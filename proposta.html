@@ -1660,6 +1660,18 @@ if(canvas){
     return economia * 12 * ano - investimento
   })
 
+  let canvas = document.getElementById("grafico")
+
+if(canvas){
+
+  let anos = Array.from({length:25},(_,i)=>i+1)
+
+  let fluxo = anos.map(ano => {
+    return economia * 12 * ano - investimento
+  })
+
+  let paybackAno = Math.ceil(payback)
+
   new Chart(canvas, {
     type: 'line',
     data: {
@@ -1674,6 +1686,13 @@ if(canvas){
           pointRadius: 0,
           borderColor: '#22c55e',
           backgroundColor: 'rgba(34,197,94,0.2)'
+        },
+        {
+          label: 'Payback',
+          data: anos.map(a => a === paybackAno ? fluxo[a-1] : null),
+          pointRadius: 6,
+          pointBackgroundColor: '#ef4444',
+          showLine: false
         }
       ]
     },
@@ -1681,6 +1700,11 @@ if(canvas){
       plugins: {
         legend: {
           display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => "R$ " + ctx.raw.toLocaleString()
+          }
         }
       },
       scales: {
