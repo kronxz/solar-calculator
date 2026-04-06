@@ -1835,14 +1835,15 @@ document.getElementById("numeroProposta").innerText =
 localStorage.setItem("numeroProposta", Number(numero) + 1)
   
 window.onload = () => {
-  setTimeout(() => {
-
-    document.body.style.display = "block";
-
-    window.focus();
-    window.print();
-
-  }, 3000); // 👈 AUMENTAMOS O TEMPO
+  try{
+    setTimeout(() => {
+      document.body.style.display = "block";
+      window.focus();
+      window.print();
+    }, 2000);
+  }catch(e){
+    console.log("Erro ao gerar PDF", e)
+  }
 }
   
 </script>
