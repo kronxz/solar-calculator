@@ -1690,7 +1690,10 @@ if(telefone){
   let msg = "Olá, vi minha proposta de energia solar e gostaria de avançar."
   let link = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg)
 
-  document.getElementById("btnWhats").href = link
+  let btn = document.getElementById("btnWhats")
+
+if(btn){
+  btn.href = link
 }
   
 let clienteEl = document.getElementById("clienteNome")
