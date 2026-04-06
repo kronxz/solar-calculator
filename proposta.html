@@ -1920,9 +1920,9 @@ if(canvas){
 
  let anos = Array.from({length:25}, (_, i) => i + 1)
 
-  let fluxo = anos.map(ano => {
-  let taxa = 1.05 ** ano
-  return (economia * 12 * taxa * ano) - investimento
+ let fluxo = anos.map(ano => {
+  let crescimento = 1.05 ** ano
+  return (economia * 12 * crescimento * ano) - investimento
 })
 
   let paybackAno = payback > 0 ? Math.ceil(payback) : null
