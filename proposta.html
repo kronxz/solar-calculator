@@ -1625,8 +1625,7 @@ document.getElementById("kwp").innerText = dados.kwp + " kWp" || "-"
 document.getElementById("placas").innerText = dados.placas || "-"
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
 document.getElementById("contaCom").innerText = "R$ " + ((dados.conta || dados.economia) * 0.1 || "-")
-document.getElementById("paybackTexto").innerText = payback.toFixed(1) + " anos"
-document.getElementById("lucro25").innerText = "R$ " + lucro.toFixed(0)  
+
 
   
 if(!dados || !dados.kwp){
