@@ -1707,7 +1707,7 @@ if(cidadeEl){
 let economia = dados.economia || 0
 let investimento = (dados.kwp || 0) * 3500
 
-let payback = investimento / (economia*12)
+let payback = economia > 0 ? investimento / (economia * 12) : 0
 
 let economiaAnual = economia * 12
 let economiaTotal = economiaAnual * 25
