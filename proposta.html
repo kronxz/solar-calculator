@@ -1734,15 +1734,19 @@ if(lucroEl){
   lucroEl.innerText = "R$ " + lucro.toFixed(0)
 }
   
-document.getElementById("dados").innerHTML = `
+let dadosEl = document.getElementById("dados")
+
+if(dadosEl){
+  dadosEl.innerHTML = `
 <p><strong>Cliente:</strong> ${dados.nome || "-"}</p>
-<p><strong>Sistema:</strong> ${dados.sistema}</p>
-<p><strong>Potência:</strong> ${dados.kwp} kWp</p>
-<p><strong>Módulos:</strong> ${dados.placas}</p>
+<p><strong>Sistema:</strong> ${dados.sistema || "-"}</p>
+<p><strong>Potência:</strong> ${dados.kwp || "-"} kWp</p>
+<p><strong>Módulos:</strong> ${dados.placas || "-"}</p>
 <p><strong>Economia mensal:</strong> R$ ${economia}</p>
 <p><strong>Investimento:</strong> R$ ${investimento.toFixed(0)}</p>
 <p><strong>Payback:</strong> ${payback.toFixed(1)} anos</p>
 `
+}
 
 
   let canvas = document.getElementById("grafico")
