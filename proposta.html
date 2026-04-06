@@ -1729,7 +1729,7 @@ if(canvas){
   })
 
   let paybackAno = Math.ceil(payback)
-
+  let linhaPayback = anos.map(a => a === paybackAno ? fluxo[a-1] : null)
   new Chart(canvas, {
     type: 'line',
     data: {
