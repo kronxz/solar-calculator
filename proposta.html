@@ -1851,13 +1851,21 @@ if(canvas){
           }
         }
       },
-      scales: {
-        y: {
-          ticks: {
-            callback: value => "R$ " + value.toLocaleString()
-          }
-        }
-      }
+ scales: {
+  x: {
+    min: 1,
+    max: 25,
+    ticks: {
+      stepSize: 1,
+      callback: value => value
+    }
+  },
+  y: {
+    ticks: {
+      callback: value => "R$ " + value.toLocaleString()
+    }
+  }
+}
     }
   })
 
