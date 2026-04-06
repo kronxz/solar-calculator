@@ -1736,7 +1736,7 @@ if(lucroEl){
 }
   
 document.getElementById("dados").innerHTML = `
-<p><strong>Cliente:</strong> ${dados.nome}</p>
+<p><strong>Cliente:</strong> ${dados.nome || "-"}</p>
 <p><strong>Sistema:</strong> ${dados.sistema}</p>
 <p><strong>Potência:</strong> ${dados.kwp} kWp</p>
 <p><strong>Módulos:</strong> ${dados.placas}</p>
