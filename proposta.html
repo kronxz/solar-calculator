@@ -1650,7 +1650,20 @@ document.getElementById("kwp").innerText = dados.kwp + " kWp" || "-"
 document.getElementById("placas").innerText = dados.placas || "-"
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
 document.getElementById("contaCom").innerText = "R$ " + ((dados.conta || dados.economia) * 0.1 || "-")
+// 🔥 MÓDULOS
+document.getElementById("potenciaModulo").innerText = dados.potenciaPlaca || "-"
+document.getElementById("quantidadeModulos").innerText = dados.placas || "-"
 
+// 🔥 INVERSOR AUTOMÁTICO (mesma lógica do simulador)
+function sugerirInversor(kwp){
+  if(kwp<=3) return "3 kW"
+  if(kwp<=5) return "5 kW"
+  if(kwp<=8) return "8 kW"
+  if(kwp<=10) return "10 kW"
+  return "15 kW"
+}
+
+document.getElementById("potenciaInversor").innerText = sugerirInversor(dados.kwp)
 
   
 if(!dados || !dados.kwp){
