@@ -1649,7 +1649,10 @@ document.getElementById("geracao").innerText = dados.geracao || "-"
 document.getElementById("kwp").innerText = dados.kwp ? dados.kwp + " kWp" : "-"
 document.getElementById("placas").innerText = dados.placas || "-"
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
-document.getElementById("contaCom").innerText = "R$ " + ((dados.conta || dados.economia) * 0.1 || "-")
+let contaBase = dados.conta || dados.economia || 0
+
+document.getElementById("contaCom").innerText =
+contaBase ? "R$ " + (contaBase * 0.1).toFixed(0) : "-"
 
 // 🔥 MÓDULOS
 let mod = document.getElementById("potenciaModulo")
@@ -1676,8 +1679,6 @@ function sugerirInversor(kwp){
   if(kwp<=10) return "10 kW"
   return "15 kW"
 }
-
-document.getElementById("potenciaInversor").innerText = sugerirInversor(dados.kwp)
 
   
 if(!dados || !dados.kwp){
