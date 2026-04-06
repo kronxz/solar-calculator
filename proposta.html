@@ -1756,8 +1756,8 @@ if(canvas){
     return economia * 12 * ano - investimento
   })
 
-  let paybackAno = Math.ceil(payback)
-  let linhaPayback = anos.map(a => a === paybackAno ? fluxo[a-1] : null)
+  let paybackAno = payback > 0 ? Math.ceil(payback) : null
+ let linhaPayback = paybackAno ? anos.map(a => a === paybackAno ? fluxo[a-1] : null) : []
   new Chart(canvas, {
     type: 'line',
     data: {
