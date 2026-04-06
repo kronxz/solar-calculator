@@ -1646,13 +1646,27 @@ let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
 
 document.getElementById("consumo").innerText = dados.consumo || "-"
 document.getElementById("geracao").innerText = dados.geracao || "-"
-document.getElementById("kwp").innerText = dados.kwp + " kWp" || "-"
+document.getElementById("kwp").innerText = dados.kwp ? dados.kwp + " kWp" : "-"
 document.getElementById("placas").innerText = dados.placas || "-"
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
 document.getElementById("contaCom").innerText = "R$ " + ((dados.conta || dados.economia) * 0.1 || "-")
+
 // 🔥 MÓDULOS
-document.getElementById("potenciaModulo").innerText = dados.potenciaPlaca || "-"
-document.getElementById("quantidadeModulos").innerText = dados.placas || "-"
+let mod = document.getElementById("potenciaModulo")
+if(mod){
+  mod.innerText = dados.potenciaPlaca || "-"
+}
+
+let qtd = document.getElementById("quantidadeModulos")
+if(qtd){
+  qtd.innerText = dados.placas || "-"
+}
+
+// 🔥 INVERSOR
+let inv = document.getElementById("potenciaInversor")
+if(inv){
+  inv.innerText = sugerirInversor(dados.kwp)
+}
 
 // 🔥 INVERSOR AUTOMÁTICO (mesma lógica do simulador)
 function sugerirInversor(kwp){
