@@ -1648,8 +1648,15 @@ Após o payback, todo o valor gerado é lucro direto para você.
 
 let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
 
-document.getElementById("consumo").innerText = dados.consumo || "-"
-document.getElementById("geracao").innerText = dados.geracao || "-"
+let consumoEl = document.getElementById("consumo")
+if(consumoEl){
+  consumoEl.innerText = dados.consumo || "-"
+}
+
+let geracaoEl = document.getElementById("geracao")
+if(geracaoEl){
+  geracaoEl.innerText = dados.geracao || "-"
+}
 document.getElementById("kwp").innerText = dados.kwp ? dados.kwp + " kWp" : "-"
 document.getElementById("placas").innerText = dados.placas || "-"
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
