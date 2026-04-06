@@ -1807,8 +1807,14 @@ let geracaoEl = document.getElementById("geracao")
 if(geracaoEl){
   geracaoEl.innerText = dados.geracao || "-"
 }
-document.getElementById("kwp").innerText = dados.kwp ? dados.kwp + " kWp" : "-"
-document.getElementById("placas").innerText = dados.placas || "-"
+let kwpEl = document.getElementById("kwp")
+if(kwpEl){
+  kwpEl.innerText = dados.kwp ? dados.kwp + " kWp" : "-"
+}
+let placasEl = document.getElementById("placas")
+if(placasEl){
+  placasEl.innerText = dados.placas || "-"
+}
 document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
 let contaBase = dados.conta || dados.economia || 0
 
