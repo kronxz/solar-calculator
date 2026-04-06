@@ -1659,6 +1659,8 @@ let payback = investimento / (economia*12)
 let economiaAnual = economia * 12
 let economiaTotal = economiaAnual * 25
 let lucro = economiaTotal - investimento
+  document.getElementById("paybackTexto").innerText = payback.toFixed(1) + " anos"
+document.getElementById("lucro25").innerText = "R$ " + lucro.toFixed(0)
 
 let ecoMensalEl = document.getElementById("ecoMensal")
 if(ecoMensalEl){
