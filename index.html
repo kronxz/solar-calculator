@@ -9,14 +9,6 @@
 
 <style>
 
-:root{
-  --bg: #0b1220;
-  --card: #111827;
-  --primary: #3b82f6;
-  --secondary: #1e40af;
-  --success: #22c55e;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
 }
 
 body{
@@ -154,14 +146,16 @@ input:focus, select:focus{
 }
 
 .cta{
-background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
+  background:#22c55e !important;
+  color:#000 !important;
   font-size:16px;
   padding:14px;
   margin-top:15px;
-}
-
-.cta:hover{
-  transform:scale(1.03);
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  border: 2px solid red
 }
 
 .resultTitle{
@@ -229,7 +223,7 @@ background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
   cursor:pointer;
 
   background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
-  color:white;
+  
 
   box-shadow: 0 10px 25px rgba(59,130,246,0.4);
 
@@ -660,6 +654,15 @@ salvarLeadFirebase({
 })
 
 // 👉 mantém proposta local (opcional)
+let tariff = parseFloat(document.getElementById("tariff").value)
+let hsp = parseFloat(document.getElementById("city").value)
+
+let consumo = (bill / tariff).toFixed(0)
+let geracao = (kwp * hsp * 30).toFixed(0)
+
+let consumoAnual = (consumo * 12).toFixed(0)
+let geracaoAnual = (geracao * 12).toFixed(0)
+
 localStorage.setItem("propostaAtual", JSON.stringify({
   nome,
   telefone,
@@ -669,9 +672,13 @@ localStorage.setItem("propostaAtual", JSON.stringify({
   kwp,
   placas,
   potenciaPlaca,
-  economia
-}))
+  economia,
 
+  consumo: consumo + " kWh",
+  geracao: geracao + " kWh",
+  consumoAnual: consumoAnual + " kWh",
+  geracaoAnual: geracaoAnual + " kWh"
+}))
 alert("Simulação salva! Em breve entraremos em contato.")
 
 }
