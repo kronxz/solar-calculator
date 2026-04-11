@@ -39,18 +39,20 @@ h1{
 }
 
 .hero-btn{
-  margin-top:15px;
-  padding:12px 20px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color:#022c22;
+  padding:16px 22px;
+  font-size:16px;
   border:none;
-  border-radius:10px;
-  font-weight:600;
-  font-size:14px;
+  border-radius:12px;
+  font-weight:700;
   cursor:pointer;
+  box-shadow: 0 15px 40px rgba(34,197,94,0.4);
+  transition:0.3s;
+}
 
-  background: linear-gradient(90deg, #2563eb, #60a5fa) !important;
-  color:white !important;
-
-  box-shadow: 0 10px 25px rgba(37,99,235,0.4);
+.hero-btn:hover{
+  transform: scale(1.05);
 }
 .card{
   background: var(--card);
@@ -341,8 +343,7 @@ input:focus, select:focus{
 
 
 
-<label>Tarifa da concessionária (R$/kWh)</label>
-<input id="tariff" value="0.95">
+
 
 <label>Cidade</label>
 <select id="city">...</select>
@@ -718,6 +719,12 @@ salvarLeadFirebase({
   data: new Date().toLocaleString()
 })
 
+function scrollSimulador(){
+  document.querySelector('.container').scrollIntoView({
+    behavior:'smooth'
+  })
+}
+
 // 👉 mantém proposta local (opcional)
 let tariff = parseFloat(document.getElementById("tariff").value)
 let hsp = parseFloat(document.getElementById("city").value)
@@ -748,13 +755,6 @@ alert("Simulação salva! Em breve entraremos em contato.")
 
 }
 
-<script>
-function scrollSimulador(){
-  document.querySelector('.container').scrollIntoView({
-    behavior:'smooth'
-  })
-}
-</script>
 
 </script>
 
