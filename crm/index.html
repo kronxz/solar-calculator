@@ -236,24 +236,20 @@ window.whatsapp = function(telefone,nome){
 }
 window.verDetalhes = function(lead){
 
-function verDetalhes(lead){
-  document.getElementById("modal").innerHTML = `
-    <div class="modal-box">
-      <h2>${lead.nome}</h2>
+  alert(`
+👤 Cliente: ${lead.nome}
 
-      <p><b>📞 Telefone:</b> ${lead.telefone}</p>
-      <p><b>📍 Endereço:</b> ${lead.endereco}</p>
+📞 Telefone: ${lead.telefone || "Não informado"}
+📍 Endereço: ${lead.endereco || "Não informado"}
 
-      <hr>
+⚡ Sistema: ${lead.sistema || "-"}
+🔋 Potência: ${lead.kwp || "-"} kWp
+🔢 Módulos: ${lead.placas || "-"}
 
-      <p><b>Sistema:</b> ${lead.sistema}</p>
-      <p><b>Potência:</b> ${lead.kwp} kWp</p>
-      <p><b>Módulos:</b> ${lead.placas}</p>
+💰 Economia: R$ ${lead.economia || "-"}
+💵 Investimento: R$ ${lead.investimento || "-"}
+  `)
 
-      <p><b>Economia:</b> R$ ${lead.economia}</p>
-      <p><b>Investimento:</b> R$ ${lead.investimento}</p>
-    </div>
-  `
 }
 window.mover = async function(id){
 
