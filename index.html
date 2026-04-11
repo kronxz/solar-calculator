@@ -359,16 +359,32 @@ input:focus, select:focus{
 <body>
 
 <div class="hero">
+
   <img src="fundo.jpeg">
 
- <div class="hero-text">
-  <h1>Economize até 90% na conta de luz</h1>
-  <p>Energia solar com instalação profissional em Maricá</p>
+  <div class="hero-overlay"></div>
 
-  <button class="hero-btn" onclick="window.scrollTo({top:500, behavior:'smooth'})">
-  Simular economia agora
-</button>
-</div>
+  <div class="hero-text">
+
+    <div class="badge">⚡ Energia Solar em Maricá</div>
+
+    <h1>
+      Reduza até <span>90%</span> da sua conta de luz
+    </h1>
+
+    <p>
+      Projeto profissional + instalação completa com garantia real de economia.
+    </p>
+
+    <div class="prova-social">
+      ⭐ +150 clientes atendidos em Maricá
+    </div>
+
+    <button class="hero-btn" onclick="scrollSimulador()">
+      🔎 Simular economia agora
+    </button>
+
+  </div>
 </div>
 <div class="logo-hero">
 <img src="logo.jpg">
@@ -732,7 +748,13 @@ alert("Simulação salva! Em breve entraremos em contato.")
 
 }
 
-
+<script>
+function scrollSimulador(){
+  document.querySelector('.container').scrollIntoView({
+    behavior:'smooth'
+  })
+}
+</script>
 
 </script>
 
