@@ -30,7 +30,14 @@ h1{
   text-align:center;
   margin-bottom:20px;
   font-weight:600;
+
 }
+
+
+.hero::after{
+  pointer-events: none;
+}
+
 .hero-btn{
   margin-top:15px;
   padding:12px 20px;
@@ -212,6 +219,12 @@ input:focus, select:focus{
   color:white;
   max-width:500px;
 }
+
+.hero::after{ pointer-events:none; }
+.hero-text{ z-index:5; }
+.hero-btn{ z-index:10; }
+
+
 .logo-hero{
   position:relative;
   margin-top:-80px; /* 👈 isso faz subir */
@@ -311,11 +324,22 @@ input:focus, select:focus{
 
 .btn-sec{
   margin-top:10px;
-  background:#1e293b;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color:#022c22;
+  font-weight:600;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-<label>Conta de luz (R$)</label>
-<input id="bill" type="number">
+.btn-sec:hover{
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(34,197,94,0.4);
+}
+
+
 
 <label>Tarifa da concessionária (R$/kWh)</label>
 <input id="tariff" value="0.95">
