@@ -56,7 +56,12 @@ h1{
 .card:hover{
   transform: translateY(-3px);
 }
-
+.hero button,
+.hero a {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
 .dashboard{
   display:flex;
   gap:10px;
