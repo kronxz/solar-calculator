@@ -1283,20 +1283,39 @@ h2{
 }
 
 .explicacao-extra{
+
   margin-top:25px;
-  padding:20px;
+  padding:28px;
 
-  background:#f8fafc; /* cinza premium */
-  border-left:4px solid var(--azul-principal);
+  background:linear-gradient(180deg, #f8fafc, #eef2ff);
 
-  border-radius:10px;
+  border-left:6px solid var(--azul-principal);
 
-  font-size:15px;
-  line-height:1.6;
+  border-radius:14px;
 
-  color:var(--texto);
-  font-weight:500;
+  font-size:15.5px;
+  line-height:1.8;
+
+  color:#0f172a;
+
+  box-shadow:0 15px 35px rgba(2,6,23,0.08);
 }
+.explicacao-extra{
+  counter-reset: passo;
+}
+
+.explicacao-extra br{
+  display:block;
+  margin-bottom:8px;
+}
+
+.explicacao-extra strong{
+  display:block;
+  font-size:17px;
+  margin-bottom:12px;
+  color:var(--azul-principal);
+}
+
  .card strong{
   color:#020617;
   font-weight:700;
