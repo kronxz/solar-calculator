@@ -195,6 +195,26 @@ function allowDrop(ev){
   ev.preventDefault()
 }
 
+window.mover = async function(id){
+
+  let lead = leads.find(l => l.id === id)
+
+  if(!lead) return
+
+  let novoStatus = ""
+
+  if(lead.status === "novo") novoStatus = "contato"
+  else if(lead.status === "contato") novoStatus = "proposta"
+  else if(lead.status === "proposta") novoStatus = "fechado"
+  else return
+
+  const ref = doc(db, "leads", id)
+
+  await updateDoc(ref, {
+    status: novoStatus
+  })
+}
+
 window.drop = async function(ev, novoStatus){
 
   ev.preventDefault()
@@ -208,7 +228,7 @@ window.drop = async function(ev, novoStatus){
   })
 
 }
-  
+
 window.whatsapp = function(telefone,nome){
 
   let numero = telefone.replace(/\D/g,'')
