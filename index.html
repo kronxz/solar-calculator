@@ -652,6 +652,15 @@ salvarLeadFirebase({
 })
 
 // 👉 mantém proposta local (opcional)
+let tariff = parseFloat(document.getElementById("tariff").value)
+let hsp = parseFloat(document.getElementById("city").value)
+
+let consumo = (bill / tariff).toFixed(0)
+let geracao = (kwp * hsp * 30).toFixed(0)
+
+let consumoAnual = (consumo * 12).toFixed(0)
+let geracaoAnual = (geracao * 12).toFixed(0)
+
 localStorage.setItem("propostaAtual", JSON.stringify({
   nome,
   telefone,
@@ -661,9 +670,14 @@ localStorage.setItem("propostaAtual", JSON.stringify({
   kwp,
   placas,
   potenciaPlaca,
-  economia
-}))
+  economia,
 
+  // 🔥 NOVOS DADOS
+  consumo: consumo + " kWh",
+  geracao: geracao + " kWh",
+  consumoAnual: consumoAnual + " kWh",
+  geracaoAnual: geracaoAnual + " kWh"
+}))
 alert("Simulação salva! Em breve entraremos em contato.")
 
 }

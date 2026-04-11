@@ -8,19 +8,27 @@
 <style>
 
 :root{
-  --azul-principal:#2563eb;
-  --azul-escuro:var(--azul-escuro);
-  --azul-claro:var(--azul-claro);
 
+  /* 🔵 AZUL PRINCIPAL (SUA MARCA) */
+  --azul-principal:#1d4ed8;
+
+  /* 🔵 AZUL FORTE (HOVER / DESTAQUE) */
+  --azul-escuro:#1e40af;
+
+  /* 🔵 AZUL SUAVE (FUNDO / DETALHES) */
+  --azul-claro:#60a5fa;
+
+  /* ⚪ BASE */
   --branco:#ffffff;
   --fundo:#f8fafc;
 
+  /* 🧠 TEXTO */
   --texto:#020617;
-  --texto-fraco:#64748b;
+  --texto-fraco:#475569;
 
+  /* 💰 VERDE (CTA) */
   --verde:#22c55e;
 }
-
 
 body{
   font-family: 'Segoe UI', sans-serif;
@@ -1853,6 +1861,15 @@ let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
 let consumoEl = document.getElementById("consumo")
 if(consumoEl){
   consumoEl.innerText = dados.consumo || "-"
+}
+let consumoAnualEl = document.getElementById("consumoAnual")
+if(consumoAnualEl){
+  consumoAnualEl.innerText = dados.consumoAnual || "-"
+}
+
+let geracaoAnualEl = document.getElementById("geracaoAnual")
+if(geracaoAnualEl){
+  geracaoAnualEl.innerText = dados.geracaoAnual || "-"
 }
 
 let geracaoEl = document.getElementById("geracao")
