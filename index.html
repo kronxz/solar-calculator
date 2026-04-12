@@ -509,6 +509,21 @@ if(kwp <= 8){
 return kwp * 3900
 }
 
+let descricaoPlano = ""
+
+if(name === "Essencial"){
+  descricaoPlano = "✔ Menor investimento<br>✔ Resolve seu consumo atual"
+}
+
+if(name === "Recomendado ⭐"){
+  descricaoPlano = "✔ Melhor custo-benefício<br>✔ Mais estabilidade<br>✔ Preparado para aumento de consumo"
+}
+
+if(name === "Premium"){
+  descricaoPlano = "✔ Máxima performance<br>✔ Maior geração<br>✔ Ideal para crescimento futuro"
+}
+
+
 return kwp * 3500
 
 }
@@ -532,17 +547,19 @@ let inverter = inverterSuggestion(kwp)
 
 return `
 
-<div class="card ${name=="Recomendado ⭐"?"recommended":""}">
-
 <div style="font-size:22px;font-weight:700;color:#22c55e">
 R$ ${saving.toFixed(0)}/mês
 </div>
 
 <div style="color:#9ca3af;font-size:13px;margin-bottom:10px">
-economia estimada
+até 90% da conta eliminada
 </div>
 
 <div class="resultTitle">${name}</div>
+
+<div style="margin:10px 0; color:#cbd5f5; font-size:13px">
+${descricaoPlano}
+</div>
 
 ${panels} módulos<br>
 Potência do módulo: ${potenciaPlaca} W<br>
