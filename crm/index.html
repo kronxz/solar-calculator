@@ -421,14 +421,8 @@ onSnapshot(collection(db, "leads"), (snapshot) => {
   })
 // 🔥 CALCULAR MÉTRICAS CORRETAMENTE
 
-let total = leads.length
+// 🔥 CALCULAR MÉTRICAS CORRETAMENTE
 
-let negociacao = leads.filter(l => 
-  l.status === "contato" || l.status === "proposta"
-)
-let fechado = leads.filter(l => l.status === "fechado")
-
-let valorNegociacao = negociacao.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
 let total = leads.length
 
 let negociacao = leads.filter(l => 
@@ -445,28 +439,30 @@ let valorFechado = fechado.reduce((acc, l) => {
   return acc + (parseFloat(l.investimento) || 0)
 }, 0)
 
-// 🔥 NOVO: ticket médio
+// 🔥 ticket médio
 let ticketMedio = fechado.length > 0 
   ? (valorFechado / fechado.length).toFixed(0) 
   : 0
 
+// 🔥 conversão
 let conversao = total > 0 
   ? ((fechado.length / total) * 100).toFixed(0) 
   : 0
 
-let conversao = total > 0 ? ((fechado.length / total) * 100).toFixed(0) : 0
-
-// 🔥 ATUALIZA UI COM SEGURANÇA
+// 🔥 ATUALIZA UI
 const elNeg = document.getElementById("negociacao")
 const elFech = document.getElementById("fechadoTotal")
 const elLeads = document.getElementById("totalLeads")
 const elConv = document.getElementById("conversao")
+const elTicket = document.getElementById("ticket")
 
 if(elNeg) elNeg.innerText = "R$ " + valorNegociacao
 if(elFech) elFech.innerText = "R$ " + valorFechado
 if(elLeads) elLeads.innerText = total
 if(elConv) elConv.innerText = conversao + "%"
-  render()
+if(elTicket) elTicket.innerText = "R$ " + ticketMedio
+
+render()
 })
   
 window.db = db
