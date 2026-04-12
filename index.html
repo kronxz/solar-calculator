@@ -712,8 +712,8 @@ salvarLeadFirebase({
   investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
   
   tarifa: tariff,
-  hsp: hsp
-  
+  hsp: hsp,
+
   status: "novo",
   tipo: "escolhido",
   data: new Date().toLocaleString()
@@ -804,6 +804,8 @@ localStorage.setItem("propostaAtual", JSON.stringify({
   consumoAnual: consumoAnual + " kWh",
   geracaoAnual: geracaoAnual + " kWh"
 }))
+window.open("proposta.html", "_blank")
+
 alert("Simulação salva! Em breve entraremos em contato.")
 
 }
