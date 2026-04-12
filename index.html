@@ -696,6 +696,8 @@ let bill=document.getElementById("bill").value
 let potenciaPlaca = document.getElementById("potenciaPlaca").value
 
 let leads = JSON.parse(localStorage.getItem("leads")) || []
+let tariff = document.getElementById("tariff").value
+let hsp = document.getElementById("city").value
 
 salvarLeadFirebase({
   nome,
@@ -708,6 +710,10 @@ salvarLeadFirebase({
   potenciaPlaca,
   economia,
   investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
+  
+  tarifa: tariff,
+  hsp: hsp
+  
   status: "novo",
   tipo: "escolhido",
   data: new Date().toLocaleString()
