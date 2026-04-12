@@ -509,7 +509,14 @@ if(kwp <= 8){
 return kwp * 3900
 }
 
-let descricaoPlano = ""
+return kwp * 3500
+
+}
+
+
+function systemCard(name,kwp,hsp,tariff,potenciaPlaca){
+
+  let descricaoPlano = ""
 
 if(name === "Essencial"){
   descricaoPlano = "✔ Menor investimento<br>✔ Resolve seu consumo atual"
@@ -522,14 +529,6 @@ if(name === "Recomendado ⭐"){
 if(name === "Premium"){
   descricaoPlano = "✔ Máxima performance<br>✔ Maior geração<br>✔ Ideal para crescimento futuro"
 }
-
-
-return kwp * 3500
-
-}
-
-
-function systemCard(name,kwp,hsp,tariff,potenciaPlaca){
 
 let bill = parseFloat(document.getElementById("bill").value)
 
@@ -736,11 +735,7 @@ salvarLeadFirebase({
   data: new Date().toLocaleString()
 })
 
-function scrollSimulador(){
-  document.querySelector('.container').scrollIntoView({
-    behavior:'smooth'
-  })
-}
+
 
 // 👉 mantém proposta local (opcional)
 let tariff = parseFloat(document.getElementById("tariff").value)
@@ -771,7 +766,11 @@ localStorage.setItem("propostaAtual", JSON.stringify({
 alert("Simulação salva! Em breve entraremos em contato.")
 
 }
-
+function scrollSimulador(){
+  document.querySelector('.container').scrollIntoView({
+    behavior:'smooth'
+  })
+}
 
 </script>
 
