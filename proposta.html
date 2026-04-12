@@ -1710,8 +1710,12 @@ style="width:100%; border-radius:12px; margin-bottom:20px;">
 <div class="grid-projeto">
 
 <div class="card-projeto">
-<span>Consumo médio mensal</span>
+<span>Seu consumo atual</span>
 <strong id="consumo">-</strong>
+</div>
+
+<div class="destaque-financeiro">
+💰 Você pode economizar aproximadamente R$ ${dados.economia}/mês
 </div>
 
 <div class="card-projeto">
@@ -2133,6 +2137,28 @@ window.onload = () => {
   }
 }
   
+</script>
+
+<script>
+
+let dados = JSON.parse(localStorage.getItem("propostaAtual"))
+
+if(dados){
+
+let consumo = (dados.valor / dados.tarifa).toFixed(0)
+let geracao = (dados.kwp * dados.hsp * 30).toFixed(0)
+
+// anual
+let consumoAnual = (consumo * 12).toFixed(0)
+let geracaoAnual = (geracao * 12).toFixed(0)
+
+// jogar na tela
+document.getElementById("consumo").innerText = consumo + " kWh"
+document.getElementById("geracao").innerText = geracao + " kWh"
+document.getElementById("consumoAnual").innerText = consumoAnual + " kWh"
+document.getElementById("geracaoAnual").innerText = geracaoAnual + " kWh"
+
+}
 </script>
 
 </body>
