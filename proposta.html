@@ -1344,6 +1344,41 @@ h2{
   padding-top:20px;
 }
   
+
+.economia-box{
+  background: linear-gradient(135deg, #022c22, #064e3b);
+  color: #ecfdf5;
+
+  padding: 25px;
+  border-radius: 16px;
+
+  text-align: center;
+
+  box-shadow: 0 15px 40px rgba(34,197,94,0.25);
+
+  border: 1px solid rgba(34,197,94,0.3);
+
+  margin: 15px 0 20px;
+}
+
+.economia-topo{
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.economia-valor{
+  font-size: 36px;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.economia-desc{
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
   
 }
  
@@ -1714,8 +1749,20 @@ style="width:100%; border-radius:12px; margin-bottom:20px;">
 <strong id="consumo">-</strong>
 </div>
 
-<div class="destaque-financeiro">
-💰 Você pode economizar aproximadamente <strong id="economia"></strong>/mês
+<div class="economia-box">
+
+  <div class="economia-topo">
+    💰 Economia estimada
+  </div>
+
+  <div class="economia-valor" id="economia">
+    R$ 0
+  </div>
+
+  <div class="economia-desc">
+    por mês na sua conta de energia
+  </div>
+
 </div>
 
 <div class="card-projeto">
