@@ -329,16 +329,16 @@ let dias = diasPassados(l.data)
 let alerta = ""
 let cor = ""
 
-if(dias >= 5){
-  alerta = "🔥 URGENTE"
+if(l.status === "proposta" && dias >= 2){
+  alerta = "🔥 QUENTE (fechar hoje)"
   cor = "#ef4444"
 }
-else if(dias >= 2){
-  alerta = "⚠️ Esfriando"
+else if(dias >= 5){
+  alerta = "⚠️ PERDENDO CLIENTE"
   cor = "#f59e0b"
 }
 else{
-  alerta = "🟢 Novo"
+  alerta = "🟢 EM ANDAMENTO"
   cor = "#22c55e"
 }
   let card = `
