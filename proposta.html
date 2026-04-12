@@ -1923,7 +1923,7 @@ let placasEl = document.getElementById("placas")
 if(placasEl){
   placasEl.innerText = dados.placas || "-"
 }
-document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
+document.getElementById("contaSem").innerText = "R$ " + (dados.valor || "-")
 let contaBase = dados.conta || dados.economia || 0
 
 document.getElementById("contaCom").innerText =
