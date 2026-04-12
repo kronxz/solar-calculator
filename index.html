@@ -457,6 +457,8 @@ Descubra quanto você pode economizar com energia solar em Maricá
   
 </div>
 
+${excedente > 0 ? `<div style="color:#22c55e">⚡ Crédito para uso futuro: R$ ${excedente.toFixed(0)}</div>` : ""}
+
 <script>
 
 function inverterSuggestion(kwp){
@@ -536,7 +538,9 @@ let panels = Math.ceil((kwp*1000)/potenciaPlaca)
 
 let generation = kwp*hsp*30
 
-let saving = Math.min(generation * tariff, bill * 0.9)
+let saving = generation * tariff
+
+let saving = Math.min(savingReal, bill)
 
 let investment = calculateInvestment(kwp)
 
