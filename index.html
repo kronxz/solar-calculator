@@ -463,13 +463,17 @@ Descubra quanto você pode economizar com energia solar em Maricá
 
 function inverterSuggestion(kwp){
 
-if(kwp<=3) return "3 kW"
-if(kwp<=5) return "5 kW"
-if(kwp<=8) return "8 kW"
-if(kwp<=10) return "10 kW"
+let alvo = kwp / 1.15  // mira em ~115% de overload
 
-return "15 kW"
+if(alvo <= 3) return "3 kW"
+if(alvo <= 5) return "5 kW"
+if(alvo <= 8) return "8 kW"
+if(alvo <= 10) return "10 kW"
+if(alvo <= 12) return "12 kW"
+if(alvo <= 15) return "15 kW"
+if(alvo <= 20) return "20 kW"
 
+return "25 kW"
 }
 function precoPorKwp(kwp){
 
@@ -548,7 +552,23 @@ let investment = calculateInvestment(kwp)
 let payback = investment / (saving*12)
 
 let inverter = inverterSuggestion(kwp)
+let inverterKw = parseFloat(inverter)
+let overload = (kwp / inverterKw) * 100
+let statusOverload = ""
+let corOverload = ""
 
+if(overload < 90){
+  statusOverload = "Subdimensionado (baixa eficiência)"
+  corOverload = "#f59e0b"
+}
+else if(overload <= 130){
+  statusOverload = "Ideal (máxima eficiência)"
+  corOverload = "#22c55e"
+}
+else{
+  statusOverload = "Alto (risco de clipping)"
+  corOverload = "#ef4444"
+}
 
 
 return `
@@ -585,6 +605,11 @@ Investimento: R$ ${investment.toFixed(0)}<br>
 Payback: ${payback.toFixed(1)} anos<br>
 
 Inversor sugerido: ${inverter}
+
+<br>
+<span style="color:${corOverload}; font-size:13px">
+⚙️ Overload: ${overload.toFixed(0)}% — ${statusOverload}
+</span>
 
 <br><br>
 
@@ -636,7 +661,7 @@ let baseKwp = consumption / (hsp * 30 * perdas)
 
 let essential = baseKwp * 0.8
 
-let recommended = baseKwp
+let recommended = baseKwp * 1.1
 
 let premium = baseKwp * 1.3
 
