@@ -317,23 +317,7 @@ function render(){
   document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
 
   leads.forEach(l => {
-let dias = diasPassados(l.data)
 
-let alerta = ""
-let cor = ""
-
-if(dias >= 5){
-  alerta = "🔥 URGENTE"
-  cor = "#ef4444"
-}
-else if(dias >= 2){
-  alerta = "⚠️ Esfriando"
-  cor = "#f59e0b"
-}
-else{
-  alerta = "🟢 Novo"
-  cor = "#22c55e"
-}
 let dias = diasPassados(l.data)
 
 let alerta = ""
