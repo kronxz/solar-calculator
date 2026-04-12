@@ -461,6 +461,47 @@ if(elLeads) elLeads.innerText = total
 if(elConv) elConv.innerText = conversao + "%"
 if(elTicket) elTicket.innerText = "R$ " + ticketMedio
 
+// 🔥 AGRUPAR FATURAMENTO POR MÊS (SÓ FECHADOS)
+let faturamentoMensal = {}
+
+leads.forEach(l => {
+  if(l.status === "fechado"){
+
+    let data = new Date(l.data)
+
+    let mes = data.toLocaleDateString("pt-BR", {
+      month: "short",
+      year: "numeric"
+    })
+
+    faturamentoMensal[mes] = 
+      (faturamentoMensal[mes] || 0) + (parseFloat(l.investimento) || 0)
+  }
+})
+
+// 🔥 PREPARAR DADOS
+let labels = Object.keys(faturamentoMensal)
+let valores = Object.values(faturamentoMensal)
+
+// 🔥 EVITA BUG (muito importante)
+if(window.grafico){
+  window.grafico.destroy()
+}
+
+// 🔥 CRIAR GRÁFICO
+let ctx = document.getElementById("graficoLeads")
+
+window.grafico = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: labels,
+    datasets: [{
+      label: "Faturamento (R$)",
+      data: valores
+    }]
+  }
+})
+  
 render()
 })
   
