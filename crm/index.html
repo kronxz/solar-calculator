@@ -97,7 +97,24 @@ background:#22c55e;
 .avancar{
 background:#f59e0b;
 }
+.btn-novo-lead{
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+  box-shadow: 0 4px 15px rgba(34,197,94,0.3);
+  transition: 0.3s;
+}
 
+.btn-novo-lead:hover{
+  transform: scale(1.05);
+}
 .excluir{
   background:#ef4444;
   color:white;
@@ -186,7 +203,9 @@ to{opacity:1; transform:translateY(0);}
 ">
   📊 Ver faturamento
 </button>  
-<button class="add" onclick="novoLead()">+ Novo Lead</button>
+<button onclick="novoLead()" class="btn-novo-lead">
+  + Novo Lead
+</button>
 
 <div class="board">
 
