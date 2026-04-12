@@ -394,18 +394,19 @@ window.novoLead = async function(){
   if(!nome) return
 
   let telefone = prompt("Telefone:")
- let valor = prompt("Conta de luz:")
-let investimento = prompt("Valor do sistema (R$):")
+  let valor = prompt("Conta de luz:")
+  let investimento = prompt("Valor do sistema (R$):")
+  let kwp = prompt("Potência do sistema (kWp):")
 
-await addDoc(collection(db, "leads"), {
-  nome,
-  telefone,
-  valor,
-  investimento,
-  status: "novo",
-  data: new Date().toISOString()
-})
-
+  await addDoc(collection(db, "leads"), {
+    nome,
+    telefone,
+    valor,
+    investimento,
+    kwp,
+    status: "novo",
+    data: new Date().toISOString()
+  })
 }
 
 onSnapshot(collection(db, "leads"), (snapshot) => {
