@@ -236,13 +236,20 @@ window.whatsapp = function(telefone,nome){
 }
 window.verDetalhes = function(lead){
 
-  alert(
-`🔧 Sistema: ${lead.sistema || "-"}
-⚡ Potência: ${lead.kwp || "-"} kWp
-🔋 Módulos: ${lead.placas || "-"}
+  alert(`
+👤 Cliente: ${lead.nome}
+
+📞 Telefone: ${lead.telefone || "Não informado"}
+📍 Endereço: ${lead.endereco || "Não informado"}
+
+⚡ Sistema: ${lead.sistema || "-"}
+🔋 Potência: ${lead.kwp || "-"} kWp
+🔢 Módulos: ${lead.placas || "-"}
+
 💰 Economia: R$ ${lead.economia || "-"}
-💵 Investimento: R$ ${lead.investimento || "-"}`
-  )
+💵 Investimento: R$ ${lead.investimento || "-"}
+  `)
+
 }
 window.mover = async function(id){
 

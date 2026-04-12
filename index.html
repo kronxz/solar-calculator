@@ -9,27 +9,51 @@
 
 <style>
 
-}
+
 
 body{
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, #0b1220, #020617);
-  color: var(--text);
+  background: linear-gradient(180deg, #020617, #0f172a) !important;
+  color: #e5e7eb;
   margin:0;
   padding:20px;
 }
-
 .container{
   max-width: 1100px;
   margin:auto;
 }
-
+:root{
+  --azul-principal:#2563eb;
+  --azul-claro:#60a5fa;
+}
 h1{
   text-align:center;
   margin-bottom:20px;
   font-weight:600;
+
 }
 
+
+.hero::after{
+  pointer-events: none;
+}
+
+.hero-btn{
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color:#022c22;
+  padding:16px 22px;
+  font-size:16px;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow: 0 15px 40px rgba(34,197,94,0.4);
+  transition:0.3s;
+}
+
+.hero-btn:hover{
+  transform: scale(1.05);
+}
 .card{
   background: var(--card);
   padding:15px;
@@ -41,7 +65,12 @@ h1{
 .card:hover{
   transform: translateY(-3px);
 }
-
+.hero button,
+.hero a {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
 .dashboard{
   display:flex;
   gap:10px;
@@ -146,16 +175,21 @@ input:focus, select:focus{
 }
 
 .cta{
-  background:#22c55e !important;
-  color:#000 !important;
+  background: linear-gradient(90deg, #22c55e, #16a34a) !important;
+  color:#022c22 !important;
   font-size:16px;
-  padding:14px;
-  margin-top:15px;
-  border:none;
-  border-radius:10px;
+  padding:16px;
+  border-radius:12px;
   font-weight:700;
-  cursor:pointer;
-  border: 2px solid red
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  border:none;
+  box-shadow: 0 10px 25px rgba(34,197,94,0.4);
+}
+
+.cta:hover{
+  transform:scale(1.03);
 }
 
 .resultTitle{
@@ -187,6 +221,12 @@ input:focus, select:focus{
   color:white;
   max-width:500px;
 }
+
+.hero::after{ pointer-events:none; }
+.hero-text{ z-index:5; }
+.hero-btn{ z-index:10; }
+
+
 .logo-hero{
   position:relative;
   margin-top:-80px; /* 👈 isso faz subir */
@@ -234,7 +274,7 @@ input:focus, select:focus{
   transform:scale(1.05);
 }
 
-}
+
   
 .hero::after{
   content:"";
@@ -286,14 +326,24 @@ input:focus, select:focus{
 
 .btn-sec{
   margin-top:10px;
-  background:#1e293b;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color:#022c22;
+  font-weight:600;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-<label>Conta de luz (R$)</label>
-<input id="bill" type="number">
+.btn-sec:hover{
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(34,197,94,0.4);
+}
 
-<label>Tarifa da concessionária (R$/kWh)</label>
-<input id="tariff" value="0.95">
+
+
+
 
 <label>Cidade</label>
 <select id="city">...</select>
@@ -310,16 +360,32 @@ input:focus, select:focus{
 <body>
 
 <div class="hero">
+
   <img src="fundo.jpeg">
 
- <div class="hero-text">
-  <h1>Economize até 90% na conta de luz</h1>
-  <p>Energia solar com instalação profissional em Maricá</p>
+  <div class="hero-overlay"></div>
 
-  <button class="hero-btn" onclick="window.scrollTo({top:500, behavior:'smooth'})">
-  Simular economia agora
-</button>
-</div>
+  <div class="hero-text">
+
+    <div class="badge">⚡ Energia Solar em Maricá</div>
+
+    <h1>
+      Reduza até <span>90%</span> da sua conta de luz
+    </h1>
+
+    <p>
+      Projeto profissional + instalação completa com garantia real de economia.
+    </p>
+
+    <div class="prova-social">
+      ⭐ +150 clientes atendidos em Maricá
+    </div>
+
+    <button class="hero-btn" onclick="scrollSimulador()">
+      🔎 Simular economia agora
+    </button>
+
+  </div>
 </div>
 <div class="logo-hero">
 <img src="logo.jpg">
@@ -391,17 +457,23 @@ Descubra quanto você pode economizar com energia solar em Maricá
   
 </div>
 
+
+
 <script>
 
 function inverterSuggestion(kwp){
 
-if(kwp<=3) return "3 kW"
-if(kwp<=5) return "5 kW"
-if(kwp<=8) return "8 kW"
-if(kwp<=10) return "10 kW"
+let alvo = kwp / 1.15  // mira em ~115% de overload
 
-return "15 kW"
+if(alvo <= 3) return "3 kW"
+if(alvo <= 5) return "5 kW"
+if(alvo <= 8) return "8 kW"
+if(alvo <= 10) return "10 kW"
+if(alvo <= 12) return "12 kW"
+if(alvo <= 15) return "15 kW"
+if(alvo <= 20) return "20 kW"
 
+return "25 kW"
 }
 function precoPorKwp(kwp){
 
@@ -450,33 +522,70 @@ return kwp * 3500
 
 function systemCard(name,kwp,hsp,tariff,potenciaPlaca){
 
+  let descricaoPlano = ""
+
+if(name === "Essencial"){
+  descricaoPlano = "✔ Menor investimento<br>✔ Resolve seu consumo atual"
+}
+
+if(name === "Recomendado ⭐"){
+  descricaoPlano = "✔ Melhor custo-benefício<br>✔ Mais estabilidade<br>✔ Preparado para aumento de consumo"
+}
+
+if(name === "Premium"){
+  descricaoPlano = "✔ Máxima performance<br>✔ Maior geração<br>✔ Ideal para crescimento futuro"
+}
+
 let bill = parseFloat(document.getElementById("bill").value)
 
 let panels = Math.ceil((kwp*1000)/potenciaPlaca)
 
 let generation = kwp*hsp*30
 
-let saving = Math.min(generation * tariff, bill * 0.9)
+let savingReal = generation * tariff
+let saving = Math.min(savingReal, bill)
+
+let excedente = savingReal - bill
 
 let investment = calculateInvestment(kwp)
 
 let payback = investment / (saving*12)
 
 let inverter = inverterSuggestion(kwp)
+let inverterKw = parseFloat(inverter)
+let overload = (kwp / inverterKw) * 100
+let statusOverload = ""
+let corOverload = ""
+
+if(overload < 90){
+  statusOverload = "Subdimensionado (baixa eficiência)"
+  corOverload = "#f59e0b"
+}
+else if(overload <= 130){
+  statusOverload = "Ideal (máxima eficiência)"
+  corOverload = "#22c55e"
+}
+else{
+  statusOverload = "Alto (risco de clipping)"
+  corOverload = "#ef4444"
+}
+
 
 return `
-
-<div class="card ${name=="Recomendado ⭐"?"recommended":""}">
 
 <div style="font-size:22px;font-weight:700;color:#22c55e">
 R$ ${saving.toFixed(0)}/mês
 </div>
 
 <div style="color:#9ca3af;font-size:13px;margin-bottom:10px">
-economia estimada
+até 90% da conta eliminada
 </div>
 
 <div class="resultTitle">${name}</div>
+
+<div style="margin:10px 0; color:#cbd5f5; font-size:13px">
+${descricaoPlano}
+</div>
 
 ${panels} módulos<br>
 Potência do módulo: ${potenciaPlaca} W<br>
@@ -486,6 +595,9 @@ ${kwp.toFixed(2)} kWp<br>
 Geração: ${generation.toFixed(0)} kWh/mês<br>
 
 Economia mensal: R$ ${saving.toFixed(0)}<br>
+
+${excedente > 0 ? `<div style="color:#22c55e; font-size:13px">⚡ Crédito para uso futuro: R$ ${excedente.toFixed(0)}</div>` : ""}
+
 Economia anual: R$ ${(saving*12).toFixed(0)}<br>
 Economia 25 anos: R$ ${(saving*12*25).toFixed(0)}<br>
 
@@ -493,6 +605,11 @@ Investimento: R$ ${investment.toFixed(0)}<br>
 Payback: ${payback.toFixed(1)} anos<br>
 
 Inversor sugerido: ${inverter}
+
+<br>
+<span style="color:${corOverload}; font-size:13px">
+⚙️ Overload: ${overload.toFixed(0)}% — ${statusOverload}
+</span>
 
 <br><br>
 
@@ -544,7 +661,7 @@ let baseKwp = consumption / (hsp * 30 * perdas)
 
 let essential = baseKwp * 0.8
 
-let recommended = baseKwp
+let recommended = baseKwp * 1.1
 
 let premium = baseKwp * 1.3
 
@@ -579,6 +696,8 @@ let bill=document.getElementById("bill").value
 let potenciaPlaca = document.getElementById("potenciaPlaca").value
 
 let leads = JSON.parse(localStorage.getItem("leads")) || []
+let tariff = document.getElementById("tariff").value
+let hsp = document.getElementById("city").value
 
 salvarLeadFirebase({
   nome,
@@ -591,6 +710,10 @@ salvarLeadFirebase({
   potenciaPlaca,
   economia,
   investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
+  
+  tarifa: tariff,
+  hsp: hsp
+  
   status: "novo",
   tipo: "escolhido",
   data: new Date().toLocaleString()
@@ -653,6 +776,8 @@ salvarLeadFirebase({
   data: new Date().toLocaleString()
 })
 
+
+
 // 👉 mantém proposta local (opcional)
 let tariff = parseFloat(document.getElementById("tariff").value)
 let hsp = parseFloat(document.getElementById("city").value)
@@ -682,8 +807,11 @@ localStorage.setItem("propostaAtual", JSON.stringify({
 alert("Simulação salva! Em breve entraremos em contato.")
 
 }
-
-
+function scrollSimulador(){
+  document.querySelector('.container').scrollIntoView({
+    behavior:'smooth'
+  })
+}
 
 </script>
 
