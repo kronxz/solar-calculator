@@ -289,6 +289,26 @@ window.abrirProposta = function(id){
 
 }
   
+function formatarData(data){
+
+let d = new Date(data)
+
+return d.toLocaleDateString("pt-BR") + " " + 
+       d.toLocaleTimeString("pt-BR", {
+         hour: '2-digit',
+         minute: '2-digit'
+       })
+
+}
+
+
+function diasPassados(data){
+  let hoje = new Date()
+  let criado = new Date(data)
+  let diff = hoje - criado
+  return Math.floor(diff / (1000 * 60 * 60 * 24))
+}
+
 function render(){
 
   document.getElementById("novo").innerHTML="<h2>🟡 Novos</h2>"
@@ -297,13 +317,60 @@ function render(){
   document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
 
   leads.forEach(l => {
+let dias = diasPassados(l.data)
 
+let alerta = ""
+let cor = ""
+
+if(dias >= 5){
+  alerta = "🔥 URGENTE"
+  cor = "#ef4444"
+}
+else if(dias >= 2){
+  alerta = "⚠️ Esfriando"
+  cor = "#f59e0b"
+}
+else{
+  alerta = "🟢 Novo"
+  cor = "#22c55e"
+}
+let dias = diasPassados(l.data)
+
+let alerta = ""
+let cor = ""
+
+if(dias >= 5){
+  alerta = "🔥 URGENTE"
+  cor = "#ef4444"
+}
+else if(dias >= 2){
+  alerta = "⚠️ Esfriando"
+  cor = "#f59e0b"
+}
+else{
+  alerta = "🟢 Novo"
+  cor = "#22c55e"
+}
   let card = `
 <div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
 
 <b>${l.nome}</b><br>
 <small>📞 ${l.telefone}</small><br>
-<small>💡 Conta: R$ ${l.valor}</small>
+<small>💡 Conta: R$ ${l.valor}</small><br>
+<small>📅 ${formatarData(l.data)}</small>
+
+<small style="
+color:${cor};
+font-weight:700;
+background:rgba(0,0,0,0.2);
+padding:3px 6px;
+border-radius:6px;
+display:inline-block;
+">
+${alerta}
+</small><br>
+
+<small style="color:${cor}; font-weight:600">${alerta}</small><br>
 
 <button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
 💬 WhatsApp
@@ -345,7 +412,7 @@ window.novoLead = async function(){
     telefone,
     valor,
     status: "novo",
-    data: new Date().toLocaleString()
+    data: new Date().toISOString()
   })
 
 }
