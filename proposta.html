@@ -1715,7 +1715,7 @@ style="width:100%; border-radius:12px; margin-bottom:20px;">
 </div>
 
 <div class="destaque-financeiro">
-💰 Você pode economizar aproximadamente R$ ${dados.economia}/mês
+💰 Você pode economizar aproximadamente <strong id="economia"></strong>/mês
 </div>
 
 <div class="card-projeto">
@@ -2126,15 +2126,26 @@ document.getElementById("numeroProposta").innerText =
 localStorage.setItem("numeroProposta", Number(numero) + 1)
 }
 window.onload = () => {
-  try{
-    setTimeout(() => {
-      document.body.style.display = "block";
-      window.focus();
-      window.print();
-    }, 2000);
-  }catch(e){
-    console.log("Erro ao gerar PDF", e)
-  }
+
+let dados = JSON.parse(localStorage.getItem("propostaAtual"))
+
+if(!dados){
+  alert("Erro: dados não carregados")
+  return
+}
+
+// joga dados
+document.getElementById("consumo").innerText = dados.consumo || "-"
+document.getElementById("geracao").innerText = dados.geracao || "-"
+document.getElementById("consumoAnual").innerText = dados.consumoAnual || "-"
+document.getElementById("geracaoAnual").innerText = dados.geracaoAnual || "-"
+document.getElementById("economia").innerText = "R$ " + dados.economia
+
+// espera renderizar antes de imprimir
+setTimeout(() => {
+  window.print()
+}, 500)
+
 }
   
 </script>
@@ -2157,7 +2168,7 @@ document.getElementById("consumo").innerText = consumo + " kWh"
 document.getElementById("geracao").innerText = geracao + " kWh"
 document.getElementById("consumoAnual").innerText = consumoAnual + " kWh"
 document.getElementById("geracaoAnual").innerText = geracaoAnual + " kWh"
-
+document.getElementById("economia").innerText = "R$ " + (dados.economia || "-")
 }
 </script>
 
