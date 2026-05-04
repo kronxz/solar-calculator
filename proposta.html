@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Proposta Solar</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+:root{
+
+  /* 🔵 AZUL PRINCIPAL (SUA MARCA) */
+  --azul-principal:#1d4ed8;
+
+  /* 🔵 AZUL FORTE (HOVER / DESTAQUE) */
+  --azul-escuro:#1e40af;
+
+  /* 🔵 AZUL SUAVE (FUNDO / DETALHES) */
+  --azul-claro:#60a5fa;
+
+  /* ⚪ BASE */
+  --branco:#ffffff;
+  --fundo:#f8fafc;
+
+  /* 🧠 TEXTO */
+  --texto:#020617;
+  --texto-fraco:#475569;
+
+  /* 💰 VERDE (CTA) */
+  --verde:#22c55e;
+}
+
+body{
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #0b1220, #020617);
+  color:#e5e7eb;
+  padding:20px;
+
+    display:block;
+
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:10px;
+max-width:800px;
+margin:auto;
+}
+
+h2{
+  text-align:center;
+  font-size:32px;
+  margin-top:10px;
+  margin-bottom:10px;
+
+  color:#020617;
+
+  font-weight:800;
+
+  letter-spacing:-0.5px;
+}
+
+.pagina{
+  width:100%;
+  padding:40px;
+  box-sizing:border-box;
+
+  /* 🔥 ESSENCIAL */
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+
+.sobre{
+  background:#ffffff;
+
+  padding:35px;
+  border-radius:16px;
+
+ box-shadow:0 10px 30px rgba(2,6,23,0.08);
+
+  border-left: 4px solid var(--azul-principal);
+
+  padding-right:45px; /* 🔥 ESSENCIAL */
+}
+
+.sobre-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.sobre-header h2{
+  font-size:32px; /* antes estava 36 */
+  color: var(--texto);
+  margin-bottom:10px;
+  font-weight:700;
+
+  line-height:1.2; /* 🔥 IMPORTANTE */
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.sobre-header p{
+  color:#64748b;
+  font-size:16px;
+}
+
+.sobre-grid{
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr; /* 🔥 REDUZ LADO DIREITO */
+  gap:25px; /* 🔥 MENOS ESPAÇO */
+
+  margin-top:20px;
+
+  padding-right:10px; /* 🔥 EMPURRA PRA ESQUERDA */
+}
+
+.sobre-texto p{
+  font-size:16px;
+  color:#334155;
+  line-height:1.7;
+}
+
+.numeros{
+  display:flex;
+  gap:20px;
+  margin-top:30px;
+}
+
+.numero{
+  background:#f8fafc;
+  padding:20px;
+  border-radius:12px;
+
+  text-align:center;
+
+  flex:1;
+
+  border:1px solid #e2e8f0;
+}
+
+.numero strong{
+  display:block;
+  font-size:22px;
+ color: var(--texto);
+}
+
+.numero span{
+  font-size:13px;
+  color:#64748b;
+}
+
+.sobre-cards{
+  display:grid;
+  gap:15px;
+}
+
+.card{
+  background:#ffffff;
+  padding:24px;
+  border-radius:16px;
+
+  border:1px solid #e2e8f0;
+
+  box-shadow:0 10px 30px rgba(2,6,23,0.06);
+
+  transition:0.3s;
+
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:5px;
+  height:100%;
+  background:linear-gradient(
+    180deg,
+    var(--azul-principal),
+    var(--azul-claro)
+  );
+}
+
+.card h3{
+  margin-bottom:8px;
+  color:#020617;
+  font-size:16px;
+  font-weight:700;
+}
+
+.card p{
+  color:#475569;
+  font-size:14.5px;
+  line-height:1.6;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(2,6,23,0.12);
+}
+
+
+.mini-cta{
+  margin-top:30px;
+
+  padding:20px;
+
+  border-radius:12px;
+
+  background:linear-gradient(90deg, #0f172a, #1e293b);
+
+  color:white;
+
+  text-align:center;
+
+  font-size:15px;
+  line-height:1.5;
+}
+  
+h1{
+  margin-bottom:10px;
+}
+/* 🔥 CAPA NÍVEL EMPRESA */
+
+
+
+
+.capa-conteudo{
+  position:relative;
+  z-index:2;
+
+  color:white;
+
+  /* 👇 ADICIONA ISSO */
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+
+.capa-esquerda{
+  max-width:500px;
+  color:white;
+
+  padding:30px;
+  background:rgba(0,0,0,0.55);
+  border-radius:12px;
+
+  backdrop-filter: blur(4px);
+}
+
+.logo-capa{
+  width:120px;
+  margin-bottom:20px;
+}
+
+.capa-esquerda h1{
+  font-size:36px;
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+
+.capa-esquerda h2{
+  font-size:26px;
+  margin-bottom:5px;
+}
+
+.tipo{
+  font-size:16px;
+  opacity:0.85;
+  margin-bottom:20px;
+}
+
+.info-empresa{
+  margin-top:25px;
+  font-size:14px;
+  line-height:1.6;
+  opacity:0.9;
+}
+
+.sub{
+  font-size:16px;
+  opacity:0.85;
+}
+
+
+
+
+/* IMAGEM FUNDO REAL */
+
+
+
+
+/* CONTEÚDO */
+.capa-conteudo{
+  position:relative;
+  z-index:2;
+
+  max-width:520px;
+
+  padding:30px;
+
+  background:rgba(2,6,23,0.55); /* vidro escuro */
+  backdrop-filter: blur(6px);
+
+  border-radius:12px;
+
+  color:white;
+}
+  .capa-conteudo h1{
+  font-size:44px;
+  margin:0;
+  line-height:1.1;
+  letter-spacing:1px;
+}
+
+.capa-conteudo h2{
+  font-size:22px;
+  margin-top:15px;
+}
+
+.sub{
+  margin-top:8px;
+  opacity:0.85;
+  font-size:15px;
+}
+
+/* LOGO */
+.logo-capa{
+  width:120px;
+  margin-bottom:30px;
+}
+
+/* TÍTULOS */
+.capa-conteudo h1{
+  font-size:48px;
+  margin:0;
+  line-height:1.1;
+}
+
+.azul{
+ color:var(--azul-principal);
+}
+
+.capa-conteudo h2{
+  margin-top:20px;
+  font-size:24px;
+}
+
+/* TEXTO */
+.sub{
+  margin-top:10px;
+  opacity:0.8;
+}
+
+.info{
+  margin-top:30px;
+  font-size:15px;
+  line-height:1.6;
+  opacity:0.9;
+}
+.logo-topo{
+  width:60px;
+}
+
+.conteudo-capa-pdf{
+  margin-top:80px;
+}
+
+.titulo h1{
+  font-size:48px;
+  margin:0;
+}
+
+.titulo .azul{
+ color:var(--azul-principal);
+}
+
+.dados{
+  margin-top:30px;
+  font-size:16px;
+  line-height:1.6;
+}
+
+.imagem-capa img{
+  width:100%;
+  border-top-left-radius:30px;
+}
+
+@media print {
+  .fluxo{
+  break-inside: avoid;
+}
+
+.etapa{
+  break-inside: avoid;
+}
+
+  .funcionamento{
+    display:block !important;
+    overflow:visible !important;
+    page-break-inside: avoid;
+  }
+.funcionamento h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.subtitulo{
+  color:#64748b;
+  font-size:16px;
+  font-weight:500;
+
+  margin-bottom:10px;
+}
+.fluxo{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  margin-top:40px;
+}
+.etapa{
+  background:#ffffff;
+  padding:30px;
+  border-radius:14px;
+
+ box-shadow:0 10px 30px rgba(2,6,23,0.08);
+
+  text-align:center;
+  flex:1;
+}
+.etapa p{
+ color: var(--texto);
+  font-size:15.5px;
+  font-weight:500;
+}
+  .etapa h3{
+  font-size:16px;
+  font-weight:600;
+  color: var(--texto);
+  margin-bottom:8px;
+}
+.fluxo::before{
+  content:"";
+  position:absolute;
+  top:38px; /* 🔥 AJUSTE FINO */
+  left:0;
+  right:0;
+  height:3px;
+  background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
+  z-index:0;
+}
+/* 🔹 PADRÃO (página 2, números normais) */
+.numero{
+  background:#f8fafc;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  flex:1;
+  border:1px solid #e2e8f0;
+  position:static; /* 🔥 ESSENCIAL */
+}
+  .numero-fluxo{
+  position:absolute;
+  top:-20px;
+  left:50%;
+  transform:translateX(-50%);
+
+  background:var(--azul-principal);
+color:black;
+
+  width:38px;
+  height:38px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:bold;
+
+  box-shadow:0 6px 15px rgba(37,99,235,0.4);
+
+  z-index:2; /* 🔥 IMPORTANTE */
+}
+.etapa{
+  position:relative;
+}
+
+
+.impacto{
+  margin-top:20px;
+  padding:15px;
+  background:#dcfce7;
+  color:#166534;
+  border-left:4px solid #22c55e;
+  border-radius:8px;
+  font-weight:600;
+  text-align:center;
+}
+}
+.funcionamento h2{
+  text-align:center;
+  font-size:30px;
+  margin-bottom:10px;
+  color: var(--texto);/* FORTE */
+  font-weight:700;
+}
+
+.passos{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+@media print {
+
+  .passos{
+    display:block !important;
+  }
+
+  .passo{
+    display:block;
+    margin-bottom:20px;
+  }
+
+}
+.passo{
+  background:#f1f5f9;
+  padding:20px;
+  border-radius:12px;
+}
+
+.passo h3{
+  margin-bottom:10px;
+  color: var(--texto);
+}
+
+.passo p{
+  color:#334155;
+  font-size:15px;
+  line-height:1.5;
+}
+
+.frase-impacto{
+  margin-top:30px;
+  background:#0f172a;
+  color:white;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+/* 🔥 BENEFÍCIOS */
+
+.beneficios h2{
+  text-align:center;
+  font-size:30px;
+  margin-bottom:30px;
+
+  color:#020617; /* 🔥 MAIS FORTE */
+  font-weight:800;
+
+  letter-spacing:0.5px;
+}
+
+.grid-beneficios{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.beneficio{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  padding:22px;
+  border-radius:16px;
+
+  box-shadow:0 8px 25px rgba(2,6,23,0.05);
+
+  transition:0.3s;
+}
+
+.beneficio h3{
+  margin-bottom:10px;
+ color: var(--texto);
+}
+
+.beneficio p{
+  color:#334155;
+  font-size:15px;
+  line-height:1.5;
+}
+
+.impacto-final{
+  margin-top:30px;
+  background:#0f172a;
+  color:white;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+
+
+/* 🔥 EQUIPAMENTOS */
+
+.equipamento{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(2,6,23,0.08);
+  margin-bottom:20px;
+}
+  
+.equipamentos h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:30px;
+}
+
+.grid-equipamentos{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.equipamento{
+  background:#ffffff;
+  border:1px solid #cbd5e1;
+  padding:20px;
+  border-radius:12px;
+ color: var(--texto);
+}
+.equipamento h3{
+  margin-bottom:10px;
+  color: var(--texto);
+}
+
+.equipamento p{
+  font-size:15px;
+  color:#334155;
+  margin-bottom:10px;
+}
+
+.equipamento ul{
+  padding-left:20px;
+  color:#475569;
+}
+
+/* 🔥 FINANCEIRO */
+
+.financeira h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:30px;
+}
+
+.grid-financeiro{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.card-financeiro{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  padding:25px;
+  border-radius:14px;
+  text-align:center;
+
+  box-shadow:0 10px 30px rgba(2,6,23,0.08);
+
+  transition:0.3s;
+}
+
+.card-financeiro span{
+  display:block;
+  font-size:14px;
+  color:#64748b;
+  margin-bottom:10px;
+}
+
+.card-financeiro strong{
+  font-size:26px;
+  color:#020617;
+}
+
+.card-financeiro:hover{
+  transform:translateY(-4px);
+}
+
+.card-financeiro.destaque{
+  background:#0f172a;
+  color:white;
+}
+
+.card-financeiro.destaque strong{
+  color:white;
+}
+
+/* 🔥 FECHAMENTO */
+
+.fechamento{
+  text-align:center;
+}
+
+.fechamento h2{
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+.texto-fechamento{
+  font-size:16px;
+  color:#334155;
+  margin-bottom:10px;
+}
+
+.cta-box{
+  margin-top:30px;
+  background:#0f172a;
+  color:white;
+  padding:25px;
+  border-radius:12px;
+}
+
+#btnWhats{
+  display:inline-block;
+  margin-top:15px;
+  background:#22c55e;
+  color:white;
+  padding:15px 25px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+@media print {
+
+  body{
+    margin:0;
+    padding:0;
+    background:white !important;
+  }
+
+  
+.explicacao-extra *{
+    color:#0f172a !important;
+  }
+
+}
+  .sobre{
+  position:relative;
+  box-shadow:none !important;
+  border-left:none !important;
+}
+.sobre::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:6px;
+  height:calc(100% - 2px);
+  background:var(--azul-principal);
+color:black;
+}
+/* 🔥 CORREÇÃO DO BUG DA LINHA VAZANDO */
+.pagina{
+  overflow:visible;
+}
+  
+
+
+  /* 👇 COLOCA AQUI (LOGO DEPOIS) */
+  
+
+  /* 👇 TEXTO */
+  
+.capa-conteudo{
+  position:absolute !important;
+  bottom:80px;
+  left:80px;
+
+  max-width:520px;
+
+  padding:30px;
+
+  background:#020617 !important; /* 👈 FUNDO REAL (ESSENCIAL) */
+
+  color:white !important;
+
+  border-radius:12px;
+
+  z-index:999 !important;
+
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.pagina{
+  width:100%;
+  padding:40px;
+  box-sizing:border-box;
+
+  min-height:100vh;
+  height:auto;
+
+  display:block;
+
+  /* 🔥 ESSENCIAL */
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+
+
+  .pagina::before,
+.pagina::after{
+  content:none !important;
+  display:none !important;
+}
+.frase-autoridade{
+  margin-top:20px;
+  margin-bottom:25px;
+
+  padding:18px;
+
+  background:#0f172a;
+  color:white;
+
+  border-radius:10px;
+
+  font-size:15px;
+  line-height:1.5;
+}
+  .prova-social{
+  margin-top:20px;
+
+  font-size:14px;
+  color:#475569;
+
+  border-left:3px solid var(--azul-principal);
+  padding-left:10px;
+}
+  .frase-autoridade{
+  margin-top:25px;
+  margin-bottom:30px;
+}
+
+.prova-social{
+  margin-top:25px;
+}
+
+  .sobre{
+  page-break-inside: avoid;
+}
+.funcionamento-header{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.funcionamento-header h2{
+  font-size:30px;
+  color: var(--texto);
+  margin-bottom:10px;
+}
+
+.funcionamento-header p{
+  color:#64748b;
+  font-size:15px;
+}
+
+.linha-processo{
+  height:4px;
+  background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
+  margin:30px 0 40px;
+  border-radius:10px;
+}
+
+.passos{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:25px;
+}
+
+.passo{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  padding:25px;
+  border-radius:14px;
+  position:relative;
+}
+
+.numero-passo{
+  position:absolute;
+  top:-12px;
+  left:-12px;
+  background:var(--azul-principal);
+color:black;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.passo h3{
+  margin-bottom:10px;
+  color: var(--texto);
+}
+
+.passo p{
+  font-size:14px;
+  color:#475569;
+}
+
+.frase-impacto{
+  margin-top:40px;
+  padding:22px;
+
+  background:#020617;
+
+  color:#ffffff;
+
+  text-align:center;
+
+  border-radius:12px;
+
+  font-size:16px;
+  font-weight:600;
+
+  letter-spacing:0.2px;
+}
+  .mini-cta{
+  page-break-inside: avoid;
+}
+  .explicacao-topo{
+  max-width:700px;
+  margin:0 auto 30px;
+  text-align:center;
+  color:#334155;
+  font-size:15px;
+  line-height:1.6;
+}
+  .bloco-autoridade{
+  margin-top:30px;
+  padding:18px;
+  background:#f1f5f9;
+  border-left:3px solid var(--azul-principal);
+  color: var(--texto);
+  font-size:15px;
+  line-height:1.5;
+}
+.linha-destaque{
+  width:80px;
+  height:3px;
+  background:var(--azul-principal);
+  margin:20px auto 30px;
+  border-radius:10px;
+}
+
+.grid-projeto{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+
+.card-projeto{
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(2,6,23,0.08);
+}
+
+.card-projeto span{
+  display:block;
+  font-size:14px;
+  color:#64748b;
+}
+
+.card-projeto strong{
+  font-size:20px;
+  color:#020617;
+}
+
+.projeto h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.projeto p{
+  text-align:center;
+  color:#64748b;
+}  
+.grid-comparacao{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  margin-top:30px;
+}
+
+.box{
+  padding:25px;
+  border-radius:14px;
+  text-align:center;
+  font-size:20px;
+  font-weight:600;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.box strong{
+  display:block;
+  font-size:28px;
+  margin-top:10px;
+}
+.box.vermelho{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.box.verde{
+  background:#dcfce7;
+  color:#166534;
+}
+
+
+
+.pagina p{
+  font-size:15.5px;
+  line-height:1.7;
+  color:#334155;
+}
+
+.pagina h2,
+.pagina h3{
+  color:#020617 !important;
+  font-weight:800;
+}
+
+.subtitulo,
+.explicacao-topo{
+  color:#334155 !important;
+}
+
+ #grafico{
+  height:500px !important;
+  max-height:500px !important;
+}
+  .sistema{
+  gap:20px;
+}
+
+#dados{
+  margin-bottom:10px;
+}
+/* 🔥 DEIXAR MAIS PROFISSIONAL */
+
+.pagina{
+  padding:25px 30px;
+}
+
+h2{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.card,
+.beneficio,
+.equipamento,
+.card-financeiro{
+  box-shadow:0 10px 30px rgba(2,6,23,0.08);
+}
+
+/* 🔥 COMPARAÇÃO MAIS FORTE */
+
+.box p{
+  margin-top:10px;
+  font-size:14px;
+}
+
+/* 🔥 IMPACTO MAIS VISUAL */
+
+.impacto{
+  font-size:16px;
+  font-weight:600;
+}
+
+/* 🔥 DADOS SISTEMA */
+
+#dados p{
+  margin:5px 0;
+  font-size:15px;
+}
+.resumo-retorno{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:30px;
+}
+
+.box-retorno{
+  background:#0f172a;
+  color:white;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.box-retorno span{
+  display:block;
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:8px;
+}
+
+.box-retorno strong{
+  font-size:22px;
+}
+
+.selos{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:15px 0 10px;
+  flex-wrap:wrap;
+}
+
+.selos div{
+  background:#0f172a;
+  color:white;
+  padding:8px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:500;
+}
+
+  .destaque-financeiro{
+  margin:15px 0 20px;
+  padding:15px;
+  background:#dcfce7;
+  color:#166534;
+  border-left:4px solid #22c55e;
+  border-radius:8px;
+  font-weight:600;
+  text-align:center;
+}
+.prova-social{
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
+  text-align:center;
+}
+
+.prova-social div{
+  background:#f1f5f9;
+  padding:15px;
+  border-radius:10px;
+  width:30%;
+  font-size:14px;
+}
+
+.explicacao-extra{
+
+  margin-top:25px;
+  padding:28px;
+
+  background:linear-gradient(180deg, #f8fafc, #eef2ff);
+
+  border-left:6px solid var(--azul-principal);
+
+  border-radius:14px;
+
+  font-size:15.5px;
+  line-height:1.8;
+
+  color:#0f172a;
+
+  box-shadow:0 15px 35px rgba(2,6,23,0.08);
+}
+.explicacao-extra{
+  counter-reset: passo;
+}
+
+.explicacao-extra br{
+  display:block;
+  margin-bottom:8px;
+}
+
+.explicacao-extra strong{
+  display:block;
+  font-size:17px;
+  margin-bottom:12px;
+  color:var(--azul-principal);
+}
+
+ .card strong{
+  color:#020617;
+  font-weight:700;
+  font-size:22px;
+}
+  .comparacao h2{
+  text-align:center;
+  font-size:30px;
+  margin-bottom:10px;
+
+  color:#020617; /* 🔥 FORTE */
+  font-weight:800;
+}
+  .comparacao{
+  border-left:3px solid var(--azul-principal);
+  padding-top:20px;
+}
+  
+  
+}
+
+.impacto-financeiro{
+  background:linear-gradient(135deg,#022c22,#064e3b);
+  color:white;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+
+.impacto-financeiro h2{
+  font-size:30px;
+  margin-bottom:20px;
+}
+
+.impacto-financeiro .valor{
+  font-size:42px;
+  font-weight:800;
+  margin:10px 0;
+}
+
+.economia{
+  margin-top:20px;
+  font-size:22px;
+  color:#22c55e;
+  font-weight:700;
+}
+
+.retorno{
+  margin-top:15px;
+  font-size:18px;
+  opacity:0.9;
+}
+.capa-azume{
+  position:relative;
+  height:100vh;
+  color:white;
+  overflow:hidden;
+  -webkit-print-color-adjust: exact;
+}
+
+.capa-azume .bg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.capa-azume .overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, rgba(2,6,23,0.95) 20%, rgba(2,6,23,0.4));
+  z-index:1;
+}
+
+.conteudo{
+  position:relative;
+  z-index:2;
+  padding:60px;
+  max-width:400px;
+}
+
+.logo{
+  width:90px;
+  margin-bottom:30px;
+}
+
+h1{
+  font-size:36px;
+  margin:0;
+}
+
+h2{
+  font-size:36px;
+  color:#3b82f6;
+  margin:0 0 20px 0;
+}
+
+.linha{
+  width:60px;
+  height:3px;
+  background:#3b82f6;
+  margin:20px 0;
+}
+
+.sub{
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:30px;
+}
+
+.dados p{
+  margin:6px 0;
+  font-size:14px;
+}
+.impacto-novo{
+  background:#ffffff;
+  border-radius:16px;
+  padding:40px;
+}
+
+.grid-impacto{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:30px;
+}
+
+.card-impacto{
+  padding:25px;
+  border-radius:14px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.card-impacto.vermelho{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.card-impacto.verde{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.destaque-impacto{
+  margin-top:30px;
+  padding:20px;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  border-radius:12px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.projecao{
+  margin-top:25px;
+  text-align:center;
+  font-size:16px;
+}
+
+
+
+ 
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="pagina capa-azume">
+
+  <img src="fundo.jpg" class="bg">
+
+  <div class="overlay"></div>
+
+  <div class="conteudo">
+
+    <img src="logo.png" class="logo">
+
+    <h1>PROPOSTA</h1>
+    <h2>COMERCIAL</h2>
+
+    <div class="linha"></div>
+
+    <p class="sub">Sistema de Energia Solar Fotovoltaica</p>
+
+    <div class="dados">
+
+      <p><strong>Cliente:</strong> <span id="clienteNome">-</span></p>
+
+      <p><strong>Cidade:</strong> <span id="cidade">-</span></p>
+
+      <p><strong>Responsável:</strong> Marcos Felipe Machado de Almeida</p>
+
+      <p><strong>Telefone:</strong> (21) 97238-1004</p>
+
+      <p><strong>Nº Proposta:</strong> <span id="numeroProposta">#0001</span></p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+// 🔥 PEGAR DADOS DO CRM
+let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
+
+if(dados){
+
+  if(document.getElementById("clienteNome")){
+    document.getElementById("clienteNome").innerText = dados.nome || "-"
+  }
+
+  if(document.getElementById("cidade")){
+    document.getElementById("cidade").innerText = dados.cidade || "Maricá - RJ"
+  }
+
+}
+
+// 🔢 NUMERO PROPOSTA AUTO
+let numero = Number(localStorage.getItem("numeroProposta") || 1)
+
+let numeroEl = document.getElementById("numeroProposta")
+
+if(numeroEl){
+  numeroEl.innerText = "#" + String(numero).padStart(4, '0')
+}
+
+localStorage.setItem("numeroProposta", Number(numero) + 1)
+
+</script>
+
+  <div class="pagina impacto-novo">
+
+  <h2>💰 O dinheiro que você está deixando na mesa</h2>
+
+  <p class="subtitulo">
+    Veja na prática quanto a energia solar pode mudar sua realidade financeira
+  </p>
+
+  <div class="grid-impacto">
+
+    <div class="card-impacto vermelho">
+      <span>Hoje você paga</span>
+      <strong id="contaAtual">R$ -</strong>
+      <p>Esse valor sai todo mês sem retorno</p>
+    </div>
+
+    <div class="card-impacto verde">
+      <span>Com energia solar</span>
+      <strong id="contaSolar">R$ -</strong>
+      <p>Redução imediata na sua conta</p>
+    </div>
+
+  </div>
+
+  <div class="destaque-impacto">
+    💸 Economia mensal de <strong id="economiaMensal">R$ -</strong>
+  </div>
+
+  <div class="projecao">
+
+    <p>📅 Em 1 ano: <strong id="economiaAno">R$ -</strong></p>
+    <p>🚀 Em 25 anos: <strong id="economia25">R$ -</strong></p>
+    <p>⏱ Retorno em: <strong id="payback">-</strong></p>
+
+  </div>
+
+</div>
+
+<div class="pagina comparacao">
+
+<h2>⚠️ Quanto você está perdendo sem energia solar</h2>
+
+<p class="explicacao-topo">
+Enquanto você não tem energia solar, continua pagando energia todos os meses sem retorno.
+</p>
+
+<div class="grid-comparacao">
+
+  <div class="box vermelho">
+    <span>Sem energia solar</span>
+    <strong id="perdaMensal"></strong>
+    <p>Dinheiro pago todo mês sem retorno</p>
+  </div>
+
+  <div class="box verde">
+    <span>Com energia solar</span>
+    <strong id="economiaReal"></strong>
+    <p>Valor que fica no seu bolso</p>
+  </div>
+
+</div>
+
+<div class="impacto">
+💸 Em 1 ano você perde: <strong id="perdaAno"></strong>
+</div>
+
+<div class="impacto">
+🚨 Em 5 anos você perde: <strong id="perda5anos"></strong>
+</div>
+
+<div class="impacto-final">
+🔥 Quanto mais você espera, mais dinheiro perde para a concessionária.
+</div>
+
+</div>
+
+
+<div class="pagina sobre">
+
+<div class="sobre-header">
+<h2>Mais de 30 anos de experiência transformando energia em economia</h2>
+<p>Projetos elétricos e solares com foco em resultado real, segurança e retorno financeiro</p>
+</div>
+
+<div class="sobre-grid">
+
+  <div class="sobre-texto">
+
+    <p>
+      A <strong>MF Soluções Elétricas</strong> é uma empresa com sólida experiência na área elétrica,
+      atuando com projetos e instalações de alto padrão.
+    </p>
+
+    <p>
+      Expandimos nossa atuação para a energia solar com o objetivo de oferecer soluções modernas,
+      eficientes e economicamente vantajosas para nossos clientes.
+    </p>
+
+    <p>
+      Nosso compromisso é entregar sistemas seguros, com alta performance e retorno financeiro real,
+      sempre com atendimento técnico especializado.
+    </p>
+<div class="frase-autoridade">
+ Você não está comprando placas solares. Está investindo em economia real com quem tem experiência comprovada em campo.
+</div>
+    <div class="prova-social">
+  <div><strong>+300</strong><br>Clientes atendidos</div>
+  <div><strong>+30 anos</strong><br>Experiência</div>
+  <div><strong>100%</strong><br>Projetos aprovados</div>
+</div>
+    <div class="numeros">
+
+      <div class="numero">
+        <strong>+30 anos</strong>
+        <span>Experiência elétrica</span>
+      </div>
+
+      <div class="numero">
+        <strong>+300</strong>
+        <span>Projetos realizados</span>
+      </div>
+
+      <div class="numero">
+        <strong>100%</strong>
+        <span>Foco em qualidade</span>
+      </div>
+
+    </div>
+
+  </div>
+  
+  
+  <div class="sobre-cards">
+
+    <div class="card">
+     <h3>⚡ Especialistas em energia solar</h3>
+<p>Dimensionamento preciso para máxima geração e retorno financeiro</p>
+    </div>
+
+    <div class="card">
+<h3>🔧 Instalação profissional</h3>
+<p>Padrão técnico elevado, garantindo segurança e durabilidade do sistema</p>
+    </div>
+
+    <div class="card">
+     <h3>📊 Projeto personalizado</h3>
+<p>Sistema adaptado ao seu consumo para evitar desperdício e maximizar economia</p>
+    </div>
+
+    <div class="card">
+      <h3>💰 Economia real</h3>
+<p>Redução significativa na conta de energia já nos primeiros meses</p>
+    </div>
+
+    
+  </div>
+
+</div>
+ <div class="mini-cta">
+  Agora que você já viu a qualidade do nosso trabalho, veja na próxima página quanto esse sistema pode economizar no seu bolso.
+</div>
+</div> 
+
+
+  
+<div class="pagina funcionamento">
+
+<h2>Como funciona a energia solar na prática</h2>
+
+<p class="subtitulo">
+  Entenda como você começa a economizar desde o primeiro mês
+</p>
+
+<div class="explicacao-topo">
+  Esse processo acontece automaticamente todos os dias no seu sistema, sem necessidade de intervenção, garantindo economia contínua e previsível na sua conta de energia.
+</div>
+  
+<div class="linha-destaque"></div>
+  
+<div class="explicacao-extra" style="
+  background:#f8fafc !important;
+  color:#0f172a !important;
+  border-left:6px solid #1d4ed8 !important;
+  border-radius:12px;
+  padding:25px;
+">
+
+<strong>Como você economiza com energia solar:</strong><br><br>
+
+1. Os painéis solares captam a luz do sol e geram energia elétrica gratuita<br><br>
+
+2. O inversor transforma essa energia em padrão utilizável na sua casa<br><br>
+
+3. A energia é consumida em tempo real, reduzindo sua conta imediatamente<br><br>
+
+4. O excedente vai para a rede e vira crédito na concessionária<br><br>
+
+5. O relógio bidirecional registra toda a energia injetada na rede<br><br>
+
+6. Você acompanha tudo pelo aplicativo em tempo real<br><br>
+
+7. Resultado: economia mensal, valorização do imóvel e proteção contra aumentos<br>
+
+</div>
+  
+  <div class="fluxo">
+
+    <div class="etapa">
+    <div class="numero-fluxo">1</div>
+      <h3>☀️ Geração</h3>
+      <p>Painéis captam a luz do sol e geram energia elétrica.</p>
+    </div>
+
+    
+
+    <div class="etapa">
+     <div class="numero-fluxo">2</div>
+      <h3>🔄 Conversão</h3>
+      <p>O inversor transforma em energia utilizável.</p>
+    </div>
+
+
+
+    <div class="etapa">
+    <div class="numero-fluxo">3</div>
+      <h3>⚡ Consumo</h3>
+      <p>Você usa a energia em tempo real e reduz a conta.</p>
+    </div>
+
+  
+
+    <div class="etapa">
+    <div class="numero-fluxo">4</div>
+      <h3>🏦 Créditos</h3>
+      <p>O excedente vira crédito para usar à noite.</p>
+    </div>
+
+  </div>
+
+  <div class="bloco-autoridade">
+  <strong>Projeto dimensionado com precisão técnica:</strong><br><br>
+  Diferente de sistemas genéricos, este projeto foi calculado com base no seu consumo real, buscando o máximo aproveitamento da geração e o melhor retorno financeiro possível ao longo dos anos.
+</div>
+ 
+  <div class="impacto">
+   Você continua conectado à rede, mas passa a gerar sua própria energia e reduzir drasticamente sua conta todos os meses.
+  </div>
+
+</div>
+
+<div class="beneficios">
+
+  <h2>Por que investir em energia solar?</h2>
+
+  <div class="grid-beneficios">
+
+    <div class="beneficio">
+      <h3>💰 Economia imediata</h3>
+      <p>Reduza em até 95% sua conta de energia desde o primeiro mês.</p>
+    </div>
+
+    <div class="beneficio">
+      <h3>📈 Valorização do imóvel</h3>
+      <p>Imóveis com energia solar podem valorizar até 10% no mercado.</p>
+    </div>
+
+    <div class="beneficio">
+      <h3>🛡 Proteção contra aumentos</h3>
+      <p>Fique protegido contra os constantes reajustes da energia elétrica.</p>
+    </div>
+
+    <div class="beneficio">
+      <h3>🌱 Energia limpa</h3>
+      <p>Reduza sua emissão de carbono e contribua com o meio ambiente.</p>
+    </div>
+    <div class="beneficio">
+
+    <h3>💳 Financiamento facilitado</h3>
+    <p>Invista em energia solar com parcelas acessíveis e pague com a própria economia gerada.</p>
+    </div>
+
+    <div class="beneficio">
+    <h3>📊 Proteção contra inflação energética</h3>
+    <p>A energia elétrica sobe todos os anos. Com energia solar, você se protege desses aumentos.</p>
+    </div>
+
+    <div class="beneficio">
+    <h3>🔒 Segurança do investimento</h3>
+    <p>Energia solar é um dos investimentos mais seguros e previsíveis do mercado atual.</p>
+    </div>
+
+    <div class="beneficio">
+    <h3>📈 Retorno garantido</h3>
+    <p>Seu sistema se paga em poucos anos e continua gerando lucro por décadas.</p>
+    </div>
+
+  </div>
+
+  <div class="impacto-final">
+
+<div class="bloco-autoridade">
+💡 Nos últimos anos, a energia elétrica tem sofrido reajustes constantes.
+Com um sistema solar, você se protege desses aumentos e transforma um custo variável em um investimento previsível.
+</div>
+    Investir em energia solar não é custo. É economia e patrimônio.
+  </div>
+<div class="impacto">
+🚀 Você transforma sua conta de luz em um investimento que retorna todos os meses.
+</div>
+</div>
+
+<div class="pagina equipamentos">
+
+  <h2>Equipamentos do Sistema</h2>
+
+<p style="text-align:center; margin-bottom:20px;">
+Equipamentos selecionados com alto padrão de qualidade, garantindo eficiência, durabilidade e máximo retorno financeiro.
+</p>
+
+<img src="https://images.unsplash.com/photo-1509391366360-2e959784a276"
+style="width:100%; border-radius:12px; margin-bottom:20px;">
+  
+<div class="grid-equipamentos">
+
+<div class="equipamento">
+
+<h3>🔲 Módulos Fotovoltaicos</h3>
+<p><strong>Marca:</strong> JA Solar / Canadian / Trina</p>
+<p><strong>Potência:</strong> 700 W</p>
+<p><strong>Quantidade:</strong> 7 unidades</p>
+<p><strong>Garantia:</strong> 25 anos</p>
+
+</div>
+
+
+<div class="equipamento">
+
+<h3>⚙️ Inversor Solar</h3>
+<p><strong>Marca:</strong> Deye / Growatt / Solis</p>
+<p><strong>Potência:</strong> 5 kW</p>
+<p><strong>Monitoramento:</strong> Wi-Fi</p>
+<p><strong>Garantia:</strong> 5 anos</p>
+
+</div>
+
+
+<div class="equipamento">
+
+<h3>🔧 Materiais Inclusos</h3>
+<p>✔ Estrutura para telhado cerâmico</p>
+<p>✔ Cabos solares (aprox. 50m)</p>
+<p>✔ Conectores MC4</p>
+<p>✔ DPS e disjuntores</p>
+<p>✔ String box completa</p>
+
+</div>
+
+
+<div class="equipamento">
+
+<h3>📡 Monitoramento</h3>
+<p>✔ Aplicativo em tempo real</p>
+<p>✔ Acompanhamento da geração</p>
+<p>✔ Relatórios de desempenho</p>
+
+</div>
+</div>
+ 
+
+</div>
+
+  <div class="pagina projeto">
+
+<h2>Seu projeto de energia solar</h2>
+
+<div class="selos">
+  <div>💰 Economia imediata</div>
+  <div>⚡ Retorno garantido</div>
+  <div>📈 Valorização do imóvel</div>
+</div>    
+    
+<p>Este sistema foi dimensionado com base no seu consumo real de energia.</p>
+
+
+<div class="grid-projeto">
+
+<div class="card-projeto">
+<span>Seu consumo atual</span>
+<strong id="consumo">-</strong>
+</div>
+
+<div class="destaque-financeiro">
+💰 Você pode economizar aproximadamente <strong id="ecoTexto"></strong>/mês
+</div>
+<div class="card-projeto">
+<span>Geração estimada mensal</span>
+<strong id="geracao">-</strong>
+</div>
+
+<div class="card-projeto">
+<span>Consumo anual</span>
+<strong id="consumoAnual">-</strong>
+</div>
+
+<div class="card-projeto">
+<span>Geração anual estimada</span>
+<strong id="geracaoAnual">-</strong>
+</div>
+
+<div class="card-projeto">
+<span>Potência do sistema</span>
+<strong>4.39 kWp</strong>
+</div>
+
+<div class="card-projeto">
+<span>Quantidade de módulos</span>
+<strong>7 unidades</strong>
+</div>
+
+<div class="card-projeto">
+<span>Vida útil do sistema</span>
+<strong>25+ anos</strong>
+</div>
+
+<div class="card-projeto">
+<span>Eficiência do sistema</span>
+<strong>Alta performance</strong>
+</div>
+
+</div>
+</div>
+
+<div class="comparacao">
+
+<h2>Comparativo de economia com energia solar</h2>
+
+<p class="explicacao-topo">
+Hoje você paga energia todos os meses. Com o sistema solar, esse custo praticamente desaparece.
+</p>
+<div class="bloco-autoridade">
+⚠️ A cada ano que passa sem energia solar, você continua pagando valores cada vez mais altos para a concessionária.
+<br><br>
+Com energia solar, você inverte esse cenário e passa a economizar todos os meses.
+</div>
+<div class="grid-comparacao">
+
+  <div class="box vermelho">
+    <span>Hoje (sem solar)</span>
+    <strong id="contaSem"></strong>
+    <p>Valor que você paga todo mês sem retorno</p>
+  </div>
+
+  <div class="box verde">
+    <span>Com energia solar</span>
+    <strong id="contaCom"></strong>
+    <p>Economia gerada todos os meses</p>
+  </div>
+
+</div>
+
+<div class="impacto">
+💰 Em poucos anos, o sistema se paga e passa a gerar lucro para você.
+</div>
+
+<div class="bloco-autoridade">
+Enquanto você continua pagando energia, esse dinheiro está indo embora.
+Com energia solar, ele volta para o seu bolso todos os meses.
+</div>
+
+<div class="impacto-final">
+🚀 Quanto antes você instalar, mais cedo começa a economizar e gerar lucro.
+</div>  
+  
+</div>
+  
+  
+<div class="pagina financeira">
+
+  <h2>Análise financeira</h2>
+
+  <div class="bloco-autoridade">
+
+💡 Comparação real de cenário:
+
+Sem energia solar, você continuará pagando valores crescentes todos os anos.
+
+Com energia solar, você reduz drasticamente esse custo e transforma sua conta em investimento.
+
+</div>
+
+<div class="destaque-financeiro">
+💰 Esse sistema se paga sozinho e depois passa a gerar lucro todos os meses.
+</div>
+  
+  <div class="grid-financeiro">
+
+    <div class="card-financeiro">
+      <span>Economia mensal</span>
+      <strong id="ecoMensal"></strong>
+    </div>
+
+    <div class="card-financeiro">
+      <span>Economia anual</span>
+      <strong id="ecoAnual"></strong>
+    </div>
+
+    <div class="card-financeiro">
+      <span>Economia em 25 anos</span>
+      <strong id="ecoTotal"></strong>
+    </div>
+
+    <div class="card-financeiro destaque">
+      <span>Lucro após payback</span>
+      <strong id="lucro"></strong>
+    </div>
+
+  </div>
+
+  <div class="frase-impacto">
+    Após o retorno do investimento, o sistema continua gerando economia por décadas.
+  </div>
+  
+<div class="bloco-autoridade">
+Enquanto você paga sua conta de energia, esse valor não retorna para você.
+Com o sistema solar, esse mesmo valor se transforma em economia e patrimônio ao longo dos anos.
+</div>
+  
+</div>
+
+<div class="destaque-financeiro">
+  Economia anual: <strong id="economiaAnual"></strong>
+</div>
+  
+<div class="pagina sistema">
+
+ <h2>Projeção do seu retorno financeiro</h2>
+
+<p class="explicacao-topo">
+Veja como o seu investimento em energia solar se transforma em economia ao longo dos anos.
+</p>
+
+<div id="dados"></div>
+
+<div class="bloco-autoridade">
+📈 Este gráfico representa o crescimento da sua economia ao longo do tempo.
+Após o payback, todo o valor gerado é lucro direto para você.
+</div>
+
+<canvas id="grafico"></canvas>
+
+  <div class="resumo-retorno">
+
+  <div class="box-retorno">
+    <span>Tempo de retorno</span>
+    <strong id="paybackTexto"></strong>
+  </div>
+
+  <div class="box-retorno">
+    <span>Lucro em 25 anos</span>
+    <strong id="lucro25"></strong>
+  </div>
+
+    
+</div>
+  <div class="impacto">
+📊 Após o payback, o sistema passa a gerar lucro líquido todos os meses para você.
+</div>
+<div class="impacto">
+🚀 Quanto antes você instalar, mais cedo começa a lucrar.
+</div>
+
+<script>
+
+
+const moeda = v => "R$ " + Number(v || 0).toLocaleString("pt-BR")
+
+let consumoEl = document.getElementById("consumo")
+if(consumoEl){
+  consumoEl.innerText = dados.consumo || "-"
+}
+let consumoAnualEl = document.getElementById("consumoAnual")
+if(consumoAnualEl){
+  consumoAnualEl.innerText = dados.consumoAnual || "-"
+}
+
+let geracaoAnualEl = document.getElementById("geracaoAnual")
+if(geracaoAnualEl){
+  geracaoAnualEl.innerText = dados.geracaoAnual || "-"
+}
+
+let geracaoEl = document.getElementById("geracao")
+if(geracaoEl){
+  geracaoEl.innerText = dados.geracao || "-"
+}
+let kwpEl = document.getElementById("kwp")
+if(kwpEl){
+  kwpEl.innerText = dados.kwp ? dados.kwp + " kWp" : "-"
+}
+let placasEl = document.getElementById("placas")
+if(placasEl){
+  placasEl.innerText = dados.placas || "-"
+}
+let contaSemEl = document.getElementById("contaSem")
+if(contaSemEl){
+  contaSemEl.innerText = "R$ " + (dados.conta || dados.economia || "-")
+}
+
+let contaComEl = document.getElementById("contaCom")
+if(contaComEl){
+  contaComEl.innerText = "-"
+}
+
+// 🔥 MÓDULOS
+let mod = document.getElementById("potenciaModulo")
+if(mod){
+  mod.innerText = dados.potenciaPlaca || "-"
+}
+
+let qtd = document.getElementById("quantidadeModulos")
+if(qtd){
+  qtd.innerText = dados.placas || "-"
+}
+
+// 🔥 INVERSOR
+let inv = document.getElementById("potenciaInversor")
+if(inv){
+  inv.innerText = sugerirInversor(dados.kwp)
+}
+
+// 🔥 INVERSOR AUTOMÁTICO (mesma lógica do simulador)
+function sugerirInversor(kwp){
+  if(kwp<=3) return "3 kW"
+  if(kwp<=5) return "5 kW"
+  if(kwp<=8) return "8 kW"
+  if(kwp<=10) return "10 kW"
+  return "15 kW"
+}
+
+  
+if(!dados || !dados.kwp){
+  console.log("Sem dados da proposta")
+}
+
+let telefone = dados.telefone || ""
+
+if(telefone){
+  let msg = "Olá, vi minha proposta de energia solar e gostaria de avançar."
+  let link = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg)
+
+  let btn = document.getElementById("btnWhats")
+  if(btn){
+    btn.href = link
+  }
+}
+  
+let clienteEl = document.getElementById("clienteNome")
+if(clienteEl){
+  clienteEl.innerText = dados.nome || "Cliente"
+}
+
+let cidadeEl = document.getElementById("cidade")
+if(cidadeEl){
+  cidadeEl.innerText = dados.cidade || ""
+}
+
+let contaBase = Number(dados.valor || dados.conta || dados.economia || 0)
+let economia = Number(dados.economia || 0)
+let kwp = Number(dados.kwp || 0)
+let investimento = kwp * 3500
+
+let payback = economia > 0 ? investimento / (economia * 12) : 0
+
+let economiaAnual = economia * 12
+let economiaTotal = economiaAnual * 25
+let lucro = economiaTotal - investimento
+
+// =========================
+// 💰 PÁGINA VERDE DINÂMICA
+// =========================
+
+// conta atual (usa valor da conta ou economia como fallback)
+let contaAtual = contaBase
+
+// conta com solar (mínimo da concessionária ~10%)
+let contaSolar = contaAtual * 0.1
+
+// economia mensal real
+let economiaMensal = contaAtual - contaSolar
+
+// =========================
+// 🚨 PERDA DE DINHEIRO
+// =========================
+
+let perdaMensal = contaAtual
+let perdaAno = perdaMensal * 12
+let perda5anos = perdaAno * 5
+
+let perdaMensalEl = document.getElementById("perdaMensal")
+if(perdaMensalEl){
+  perdaMensalEl.innerText = moeda(perdaMensal)
+}
+
+let economiaRealEl = document.getElementById("economiaReal")
+if(economiaRealEl){
+  economiaRealEl.innerText = moeda(economiaMensal)
+}
+
+let perdaAnoEl = document.getElementById("perdaAno")
+if(perdaAnoEl){
+  perdaAnoEl.innerText = moeda(perdaAno)
+}
+
+let perda5anosEl = document.getElementById("perda5anos")
+if(perda5anosEl){
+  perda5anosEl.innerText = moeda(perda5anos)
+}
+
+
+
+// payback
+payback = economiaMensal > 0 ? investimento / (economiaMensal * 12) : 0
+
+// projeções
+let economiaAno = economiaMensal * 12
+let economia25 = economiaAno * 25
+
+
+
+// jogar na tela
+let contaAtualEl = document.getElementById("contaAtual")
+if(contaAtualEl){
+  contaAtualEl.innerText = moeda(contaAtual)
+}
+
+let contaSolarEl = document.getElementById("contaSolar")
+if(contaSolarEl){
+  contaSolarEl.innerText = moeda(contaSolar)
+}
+
+let economiaMensalEl = document.getElementById("economiaMensal")
+if(economiaMensalEl){
+  economiaMensalEl.innerText = moeda(economiaMensal)
+}
+
+let economiaAnoEl = document.getElementById("economiaAno")
+if(economiaAnoEl){
+  economiaAnoEl.innerText = moeda(economiaAno)
+}
+
+let economia25El = document.getElementById("economia25")
+if(economia25El){
+  economia25El.innerText = moeda(economia25)
+}
+
+let paybackEl = document.getElementById("payback")
+if(paybackEl){
+  paybackEl.innerText = payback.toFixed(1) + " anos"
+}
+
+
+  let paybackTextoEl = document.getElementById("paybackTexto")
+if(paybackTextoEl){
+  paybackTextoEl.innerText = payback.toFixed(1) + " anos"
+}
+
+let lucro25El = document.getElementById("lucro25")
+if(lucro25El){
+  lucro25El.innerText = "R$ " + lucro.toFixed(0)
+}
+
+let ecoMensalEl = document.getElementById("ecoMensal")
+if(ecoMensalEl){
+  ecoMensalEl.innerText = "R$ " + economia
+}
+
+// 💰 TEXTO DINÂMICO NA PÁGINA DO PROJETO
+let ecoTextoEl = document.getElementById("ecoTexto")
+if(ecoTextoEl){
+  ecoTextoEl.innerText = "R$ " + economia
+}
+
+let ecoAnualEl = document.getElementById("ecoAnual")
+if(ecoAnualEl){
+  ecoAnualEl.innerText = "R$ " + economiaAnual.toFixed(0)
+}
+
+let ecoTotalEl = document.getElementById("ecoTotal")
+if(ecoTotalEl){
+  ecoTotalEl.innerText = "R$ " + economiaTotal.toFixed(0)
+}
+
+let lucroEl = document.getElementById("lucro")
+if(lucroEl){
+  lucroEl.innerText = "R$ " + lucro.toFixed(0)
+}
+  
+let dadosEl = document.getElementById("dados")
+
+if(dadosEl){
+  dadosEl.innerHTML = `
+<p><strong>Cliente:</strong> ${dados.nome || "-"}</p>
+<p><strong>Sistema:</strong> ${dados.sistema || "-"}</p>
+<p><strong>Potência:</strong> ${dados.kwp || "-"} kWp</p>
+<p><strong>Módulos:</strong> ${dados.placas || "-"}</p>
+<p><strong>Economia mensal:</strong> R$ ${economia}</p>
+<p><strong>Investimento:</strong> R$ ${investimento.toFixed(0)}</p>
+<p><strong>Payback:</strong> ${payback.toFixed(1)} anos</p>
+`
+}
+
+// =========================
+// 📊 GRÁFICO PROFISSIONAL (BLINDADO)
+// =========================
+
+function criarGraficoRetorno() {
+
+  const canvas = document.getElementById("grafico")
+  if (!canvas) return
+
+  try {
+
+    const anos = Array.from({ length: 25 }, (_, i) => i + 1)
+
+    const fluxo = anos.map(ano => {
+      const crescimento = Math.pow(1.05, ano)
+      return (economia * 12 * crescimento * ano) - investimento
+    })
+
+    const paybackAno = payback > 0 ? Math.ceil(payback) : null
+
+    const pontosPayback = anos.map((ano, i) => {
+      return ano === paybackAno ? fluxo[i] : null
+    })
+
+    const ctx = canvas.getContext("2d")
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400)
+    gradient.addColorStop(0, "rgba(34,197,94,0.4)")
+    gradient.addColorStop(1, "rgba(239,68,68,0.1)")
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: anos,
+        datasets: [
+          {
+            label: "Retorno acumulado (R$)",
+            data: fluxo,
+            borderColor: "#22c55e",
+            backgroundColor: gradient,
+            tension: 0.4,
+            fill: true,
+            borderWidth: 3,
+            pointRadius: 0
+          },
+          {
+            label: "Payback",
+            data: pontosPayback,
+            borderColor: "#ef4444",
+            pointBackgroundColor: "#ef4444",
+            pointRadius: 6,
+            showLine: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: "index",
+          intersect: false
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => "R$ " + Number(ctx.raw).toLocaleString("pt-BR")
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              stepSize: 1
+            }
+          },
+          y: {
+            ticks: {
+              callback: value => "R$ " + Number(value).toLocaleString("pt-BR")
+            }
+          }
+        }
+      }
+    })
+
+  } catch (e) {
+    console.log("Erro no gráfico:", e)
+  }
+}
+
+// 🔥 EXECUTA
+criarGraficoRetorno()
+  
+
+
+ 
+  
+</script>
+
+
+
+
+
+</body>
+</html>

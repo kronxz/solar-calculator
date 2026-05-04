@@ -1,0 +1,22 @@
+<button onclick="gerar()">GERAR PDF</button>
+
+<script>
+function gerar(){
+
+fetch('http://localhost:3000/gerar-pdf', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    nome: "Cliente Teste",
+    cidade: "Maricá",
+    economia: 500,
+    investimento: 15000
+  })
+})
+.then(res => res.text())
+.then(res => alert(res))
+
+}
+</script>
