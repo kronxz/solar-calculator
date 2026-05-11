@@ -677,19 +677,29 @@ display:none;
         campo.value = valor
       }
 
-      function calculateInvestment(kwp) {
+      function calculateInvestment(kwp){
 
-        if (kwp <= 4) {
-          return kwp * 4200
-        }
+  kwp = parseFloat(kwp)
 
-        if (kwp <= 8) {
-          return kwp * 3900
-        }
+  // até 8 kWp
+  if(kwp <= 8){
+    return kwp * 3000
+  }
 
-        return kwp * 3500
+  // 8 até 15 kWp
+  if(kwp <= 15){
+    return kwp * 2700
+  }
 
-      }
+  // 15 até 25 kWp
+  if(kwp <= 25){
+    return kwp * 2400
+  }
+
+  // acima de 25 kWp
+  return kwp * 2200
+
+}
 
 
       function systemCard(name, kwp, hsp, tariff, potenciaPlaca) {
@@ -712,7 +722,9 @@ display:none;
 
         let panels = Math.ceil((kwp * 1000) / potenciaPlaca)
 
-        let generation = kwp * hsp * 30 * 0.80
+        const kwpReal = (panels * potenciaPlaca) / 1000
+
+        let generation = kwpReal * hsp * 30 * 0.80
 
         // 💰 valor REAL produzido
         let savingReal = generation * tariff
@@ -724,14 +736,14 @@ display:none;
         let excedente = Math.max(0, savingReal - bill)
 
         // 💸 investimento
-        let investment = calculateInvestment(kwp)
+        let investment = calculateInvestment(kwpReal)
 
         // ⏳ payback real
         let payback = investment / (saving * 12)
 
-        let inverter = inverterSuggestion(kwp)
+        let inverter = inverterSuggestion(kwpReal)
         let inverterKw = parseFloat(inverter)
-        let overload = (kwp / inverterKw) * 100
+        let overload = (kwpReal / inverterKw) * 100
         let statusOverload = ""
         let corOverload = ""
 
@@ -768,7 +780,7 @@ ${descricaoPlano}
 ${panels} módulos<br>
 Potência do módulo: ${potenciaPlaca} W<br>
 
-${kwp.toFixed(2)} kWp<br>
+${kwpReal.toFixed(2)} kWp
 
 Geração: ${generation.toFixed(0)} kWh/mês<br>
 
@@ -962,32 +974,74 @@ Gerar proposta detalhada 📄
         // 🔥 FIREBASE
         if (typeof salvarLeadFirebase === "function") {
 
-          salvarLeadFirebase({
+          let kwpCalc = baseKwp * 1.1
 
-            nome: nome.value,
-            telefone: telefone.value,
-            endereco: endereco.value,
+let placasCalc = Math.ceil(
+  (kwpCalc * 1000) / potenciaPlaca
+)
 
-            valor: parseFloat(bill.value),
+let economiaCalc =
+kwpCalc * hsp * 30 * 0.80 * tariff
 
-            tarifa: tariff,
-            hsp,
-            potenciaPlaca,
+let investimentoCalc =
+calculateInvestment(kwpCalc)
 
-            geracao: generation,
+let paybackCalc =
+investimentoCalc / (economiaCalc * 12)
 
-            kitsDisponiveis: {
-              essencial: kitEssencial,
-              recomendado: kitRecomendado,
-              premium: kitPremium
-            },
+let inversorCalc =
+inverterSuggestion(kwpCalc)
 
-            status: "novo",
-            tipo: "simulacao",
+let overloadCalc =
+(kwpCalc / parseFloat(inversorCalc)) * 100
 
-            data: new Date().toISOString()
+salvarLeadFirebase({
 
-          })
+  nome: nome.value,
+  telefone: telefone.value,
+  endereco: endereco.value,
+
+  valor: parseFloat(bill.value),
+
+  consumo: consumption.toFixed(0),
+
+  tarifa: tariff,
+
+  hsp,
+
+  sistema: "Recomendado",
+
+  kwp: kwpCalc.toFixed(2),
+
+  placas: placasCalc,
+
+  potenciaPlaca,
+
+  geracao: generation,
+
+  economia: economiaCalc.toFixed(0),
+
+  investimento: investimentoCalc.toFixed(0),
+
+  payback: paybackCalc.toFixed(1),
+
+  inversor: inversorCalc,
+
+  overload: overloadCalc.toFixed(0),
+
+  kitsDisponiveis: {
+    essencial: kitEssencial,
+    recomendado: kitRecomendado,
+    premium: kitPremium
+  },
+
+  status: "novo",
+
+  tipo: "simulacao",
+
+  data: new Date().toISOString()
+
+})
 
         } else {
 
@@ -1095,6 +1149,32 @@ Gerar proposta detalhada 📄
 
       function enviarKit(nomeSistema, kwp, placas, economia) {
 
+        let tariff = parseFloat(document.getElementById("tariff").value)
+
+let hsp = parseFloat(document.getElementById("city").value)
+
+let bill = parseFloat(document.getElementById("bill").value)
+
+let potenciaPlaca =
+parseFloat(document.getElementById("potenciaPlaca").value)
+
+const kwpReal = (placas * potenciaPlaca) / 1000
+
+let consumo = bill / tariff
+
+let geracao = kwpReal * hsp * 30 * 0.80
+
+let investimento =
+calculateInvestment(parseFloat(kwpReal))
+
+let payback =
+investimento / (economia * 12)
+
+let inversor =
+inverterSuggestion(parseFloat(kwpReal))
+
+let overload =
+(parseFloat(kwpReal) / parseFloat(inversor)) * 100
 
 
         if (typeof gtag === "function") {
@@ -1112,12 +1192,12 @@ Gerar proposta detalhada 📄
           telefoneWhatsapp = "55" + telefoneWhatsapp
         }
         let endereco = document.getElementById("endereco").value
-        let bill = document.getElementById("bill").value
+        
 
 
         // SALVAR LEAD NO CRM
 
-        let potenciaPlaca = document.getElementById("potenciaPlaca").value
+       
 
         let leads = JSON.parse(localStorage.getItem("leads")) || []
         let estatisticas = JSON.parse(localStorage.getItem("estatisticas")) || {
@@ -1154,9 +1234,6 @@ Gerar proposta detalhada 📄
         )
 
 
-        let tariff = document.getElementById("tariff").value
-        let hsp = document.getElementById("city").value
-
         leads.push({
           nome,
           telefone,
@@ -1170,27 +1247,56 @@ Gerar proposta detalhada 📄
         localStorage.setItem("leads", JSON.stringify(leads))
 
         if (typeof salvarLeadFirebase === "function") {
-          salvarLeadFirebase({
-            nome,
-            telefone,
-            endereco,
-            valor: bill,
-            sistema: nomeSistema,
-            geracao: kwp * hsp * 30,
-            kwp,
-            placas,
-            potenciaPlaca,
-            economia,
-            investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
-            tarifa: tariff,
-            hsp: hsp,
-            status: "novo",
-            tipo: "escolhido",
-            data: new Date().toISOString()
-          });
-        } else {
+
+  salvarLeadFirebase({
+
+    nome,
+    telefone,
+    endereco,
+
+    sistema: nomeSistema,
+
+    valor: bill,
+
+    consumo: consumo.toFixed(0),
+
+    tarifa,
+
+    hsp,
+
+    kwp: parseFloat(kwpReal),
+
+    placas: parseInt(placas),
+
+    potenciaPlaca,
+
+    geracao: geracao.toFixed(0),
+
+    economia: parseFloat(economia),
+
+    investimento: investimento.toFixed(0),
+
+    payback: payback.toFixed(1),
+
+    inversor,
+
+    overload: overload.toFixed(0),
+
+    status: "novo",
+
+    tipo: "escolhido",
+
+    data: new Date().toISOString()
+
+  });
+
+} else {
+
+  console.log("🔥 Firebase ainda não carregou");
+
+}
           console.log("🔥 Firebase ainda não carregou");
-        }
+        
 
         let seuNumero = "5521972381004"
 
@@ -1222,14 +1328,14 @@ Gerar proposta detalhada 📄
 
 
         if (/Android|iPhone/i.test(navigator.userAgent)) {
-          window.location.href = url
-        } else {
-          window.open(url, "_blank")
-        }
+  window.location.href = url
+} else {
+  window.open(url, "_blank")
+}
 
-      }
+} // <-- FECHA enviarKit
 
-      function gerarProposta(nomeSistema, kwp, placas, economia) {
+function gerarProposta(nomeSistema, kwp, placas, economia) {
 
         let estatisticas = JSON.parse(localStorage.getItem("estatisticas")) || {
 
@@ -1280,13 +1386,14 @@ Gerar proposta detalhada 📄
             telefone,
             endereco,
             valor: bill,
-            geracao: kwp * hsp * 30,
+            geracao: ((placas * potenciaPlaca) / 1000) * hsp * 30 * 0.80,
             sistema: nomeSistema,
             kwp,
             placas,
             potenciaPlaca,
             economia,
-            investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
+            investimento:
+calculateInvestment(parseFloat(kwpReal)).toFixed(0),
             status: "novo",
             tipo: "proposta",
             data: new Date().toISOString()
@@ -1299,7 +1406,15 @@ Gerar proposta detalhada 📄
 
 
         let consumo = (bill / tariff).toFixed(0)
-        let geracao = (kwp * hsp * 30).toFixed(0)
+
+        const kwpReal = (placas * potenciaPlaca) / 1000
+
+       let geracao =
+       (kwpReal * hsp * 30 * 0.80).toFixed(0)
+       
+
+       let inversor =
+       inverterSuggestion(parseFloat(kwpReal))
 
         let consumoAnual = (consumo * 12).toFixed(0)
         let geracaoAnual = (geracao * 12).toFixed(0)
@@ -1314,9 +1429,11 @@ Gerar proposta detalhada 📄
 
           sistema: nomeSistema,
 
-          kwp: parseFloat(kwp),
+          kwp: parseFloat(kwpReal),
 
           placas: parseInt(placas),
+
+          inversor,
 
           modulos: parseInt(placas),
 
@@ -1324,7 +1441,8 @@ Gerar proposta detalhada 📄
 
           economia: parseFloat(economia),
 
-          investimento: calculateInvestment(parseFloat(kwp)).toFixed(0),
+          investimento:
+calculateInvestment(parseFloat(kwpReal)).toFixed(0),
 
           consumo: consumo + " kWh",
 
@@ -1339,10 +1457,7 @@ Gerar proposta detalhada 📄
         // 🔥 AQUI ENTRA O BACKEND (PDF)
         // 🔥 GERAR PDF DIRETO (SEM BACKEND)
 
-        // 🔥 SCROLL SUAVE
-        document.querySelector('.container').scrollIntoView({
-          behavior: 'smooth'
-        })
+    
 
         // 🔥 MENSAGEM PROFISSIONAL
         alert(
@@ -1382,54 +1497,68 @@ Em breve entraremos em contato pelo WhatsApp informado para apresentar todos os 
 
       const auth = getAuth();
 
-      window.salvarLeadFirebase = async function (dados) {
-        try {
+    
 
           
 
-await addDoc(collection(db, "leads"), {
+window.salvarLeadFirebase = async function (dados) {
 
-  userId: "gddlz2h2xrgcPvJyHMVYzdhfgCr2",
-capturadoPublicamente: true,
+  try {
 
-          await addDoc(collection(db, "leads"), {
+    await addDoc(collection(db, "leads"), {
 
-            // 🔥 DADOS DO CLIENTE
-            nome: dados.nome || "",
-            telefone: dados.telefone || "",
-            endereco: dados.endereco || "",
+      // CLIENTE
+      nome: dados.nome || "",
+      telefone: dados.telefone || "",
+      endereco: dados.endereco || "",
 
-            // 🔥 DADOS ENERGIA
-            valor: Number(dados.valor || 0),
-            kwp: Number(dados.kwp || 0),
-            placas: Number(dados.placas || 0),
-            potenciaPlaca: Number(dados.potenciaPlaca || 0),
+      // CONSUMO
+      valor: Number(dados.valor || 0),
+      consumo: Number(dados.consumo || 0),
+      tarifa: Number(dados.tarifa || 0),
+      hsp: Number(dados.hsp || 0),
 
-            // 🔥 FINANCEIRO
-            economia: Number(dados.economia || 0),
-            investimento: Number(dados.investimento || 0),
+      // SISTEMA
+      sistema: dados.sistema || "",
+      kwp: Number(dados.kwp || 0),
+      placas: Number(dados.placas || 0),
+      potenciaPlaca: Number(dados.potenciaPlaca || 0),
 
-            // 🔥 SISTEMA
-            sistema: dados.sistema || "",
+      // GERAÇÃO
+      geracao: Number(dados.geracao || 0),
 
-            kitsDisponiveis: dados.kitsDisponiveis || {},
+      // FINANCEIRO
+      economia: Number(dados.economia || 0),
+      investimento: Number(dados.investimento || 0),
+      payback: Number(dados.payback || 0),
 
-            // 🔥 CONTEXTO
-            status: dados.status || "novo",
-            tipo: dados.tipo || "simulacao",
+      // EQUIPAMENTOS
+      inversor: dados.inversor || "",
+      overload: Number(dados.overload || 0),
 
-            // 🔥 CONTROLE
-            userId: user.uid,
-            data: new Date().toISOString()
+      // KITS
+      kitsDisponiveis: dados.kitsDisponiveis || {},
 
-          })
+      // CONTROLE
+      status: dados.status || "novo",
+      tipo: dados.tipo || "simulacao",
 
-          console.log("✅ Lead salvo no Firebase")
+      userId: "gddlz2h2xrgcPvJyHMVYzdhfgCr2",
+      capturadoPublicamente: true,
 
-        } catch (e) {
-          console.error("❌ Erro ao salvar:", e)
-        }
-      };
+      data: new Date().toISOString()
+
+    });
+
+    console.log("✅ Lead salvo no Firebase");
+
+  } catch (e) {
+
+    console.error("❌ Erro ao salvar:", e);
+
+  }
+
+};
 
     </script>
   </div>

@@ -760,24 +760,134 @@ color:white;
       }
 
 
-      alert(`
-👤 Cliente: ${lead.nome}
-📅 ${lead.data ? formatarData(lead.data) : ""}
+     const modal = document.createElement("div")
 
-📞 Telefone: ${lead.telefone || "Não informado"}
-📍 Endereço: ${lead.endereco || "Não informado"}
+modal.style.position = "fixed"
+modal.style.top = "50%"
+modal.style.left = "50%"
+modal.style.transform = "translate(-50%, -50%)"
 
-⚡ Sistema: ${lead.sistema || "-"}
-🔋 Potência: ${lead.kwp || "-"} kWp
-🔢 Módulos: ${lead.placas || "-"}
+modal.style.width = "900px"
+modal.style.maxWidth = "95vw"
 
-💰 Economia: R$ ${lead.economia || "-"}
-💵 Investimento: R$ ${lead.investimento || "-"}
+modal.style.height = "90vh"
 
-📜 Histórico:
+modal.style.background = "#111827"
+modal.style.color = "white"
+
+modal.style.padding = "30px"
+
+modal.style.borderRadius = "20px"
+
+modal.style.zIndex = "999999"
+
+modal.style.boxShadow = "0 0 40px rgba(0,0,0,0.7)"
+
+modal.style.fontFamily = "Arial"
+
+modal.style.lineHeight = "1.8"
+
+modal.style.overflow = "hidden"
+
+modal.style.pointerEvents = "auto"
+
+modal.innerHTML = `
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+">
+
+<h2 style="margin:0">
+📊 Detalhes do Lead
+</h2>
+
+<button id="fecharModalDetalhes" style="
+background:#ef4444;
+border:none;
+color:white;
+padding:10px 16px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+width:auto;
+">
+Fechar
+</button>
+
+</div>
+
+<div style="
+height:calc(100% - 80px);
+overflow:auto;
+padding-right:10px;
+font-size:16px;
+">
+
+👤 Cliente: ${lead.nome}<br><br>
+
+📅 ${lead.data ? formatarData(lead.data) : ""}<br><br>
+
+📞 Telefone: ${lead.telefone || "Não informado"}<br><br>
+
+📍 Endereço: ${lead.endereco || "Não informado"}<br><br>
+
+⚡ Sistema: ${lead.sistema || "-"}<br><br>
+
+🔋 Potência: ${lead.kwp || "-"} kWp<br><br>
+
+🔢 Módulos: ${lead.placas || "-"}<br><br>
+
+💰 Economia: R$ ${lead.economia || "-"}<br><br>
+
+💵 Investimento: R$ ${lead.investimento || "-"}<br><br>
+
+⚡ Consumo: ${lead.consumo || "-"} kWh<br><br>
+
+💡 Conta de luz: R$ ${lead.valor || "-"}<br><br>
+
+📈 Geração: ${lead.geracao || "-"} kWh/mês<br><br>
+
+🔌 Potência da placa: ${lead.potenciaPlaca || "-"} W<br><br>
+
+⚙️ Inversor: ${lead.inversor || "-"}<br><br>
+
+📊 Overload: ${lead.overload || "-"}%<br><br>
+
+⏳ Payback: ${lead.payback || "-"} anos<br><br>
+
+🌞 HSP: ${lead.hsp || "-"}<br><br>
+
+💸 Tarifa: R$ ${lead.tarifa || "-"}<br><br>
+
+📜 Histórico:<br><br>
+
 ${historicoTexto || "Sem histórico"}
-`)
-    }
+
+</div>
+`
+
+document.body.appendChild(modal)
+
+setTimeout(() => {
+
+  const botaoFechar =
+    document.getElementById("fecharModalDetalhes")
+
+  if(botaoFechar){
+
+    botaoFechar.addEventListener("click", () => {
+      modal.remove()
+    })
+
+  }
+
+}, 100)
+
+
+}
 
 
 
@@ -881,7 +991,7 @@ lead.geracaoMensal || 1200
 
       document.getElementById("novo").innerHTML = "<h2>🟡 Novos</h2>"
       document.getElementById("contato").innerHTML = "<h2>🔵 Contato</h2>"
-      document.getElementById("numeroProposta").innerHTML = "<h2>🟠 Proposta</h2>"
+      document.getElementById("proposta").innerHTML = "<h2>🟠 Proposta</h2>"
       document.getElementById("fechado").innerHTML = "<h2>🟢 Fechado</h2>"
 
       let ativos = leads.filter(l => !l.deletado)
@@ -1366,4 +1476,4 @@ Fechados: ${e.premiumFechados || 0}
 
 </body>
 
-</html>>
+</html>

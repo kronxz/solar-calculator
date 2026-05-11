@@ -3334,95 +3334,346 @@ padding-top:120px;
 
 <script>
 
-lead = JSON.parse(localStorage.getItem("leadSelecionado"))
+window.lead = JSON.parse(localStorage.getItem("leadSelecionado")) || {}
 
 console.log("LEAD:", lead)
 
-if(lead){
+console.table(lead)
 
-  // =========================
-  // DADOS BASE
-  // =========================
+for(const chave in lead){
 
-  const consumo = Number(lead.consumo || lead.consumoMensal || 500)
+  console.log(
+    chave,
+    ":",
+    lead[chave]
+  )
 
-  const tarifa = 1.35
+}
 
-  const fatorPerda = 0.80
 
+// =========================
+// MOTOR DO SISTEMA
+// =========================
+
+function calcularSistema(lead){
+
+  const tarifa = 1.45
   const irradiacao = 5.2
+  const perda = 0.80
 
-  // =========================
-  // CÁLCULO SISTEMA
-  // =========================
+  // VALOR DA CONTA
+  const valorConta =
+    Number(lead.valor || 0)
 
+  // CONSUMO ESTIMADO
+  const consumoMensal =
+    valorConta / tarifa
+
+  // ANUAL
+  const consumoAnual =
+    consumoMensal * 12
+
+  // POTÊNCIA DO SISTEMA
+  const kwp =
+    Number(lead.kwp || 0)
+
+  // POTÊNCIA DA PLACA
+  const potenciaPlaca =
+    Number(lead.potenciaPlaca || 550)
+
+  // QUANTIDADE DE PLACAS
+  const placas =
+    Number(lead.placas || 0)
+
+  // GERAÇÃO
   const geracaoMensal =
-    consumo * 1.2
+    kwp * irradiacao * 30 * perda
 
   const geracaoAnual =
     geracaoMensal * 12
 
-  const kwp =
-    geracaoMensal / (irradiacao * 30 * fatorPerda)
-
-  const potenciaPlaca = 550
-
-  const placas =
-    Math.ceil((kwp * 1000) / potenciaPlaca)
-
+  // ECONOMIA
   const economiaMensal =
-    consumo * tarifa
+  valorConta * 0.90
 
   const economiaAnual =
     economiaMensal * 12
 
-  // =========================
-  // PREENCHER HTML
-  // =========================
+  return {
+
+    valorConta,
+
+    consumoMensal,
+    consumoAnual,
+
+    kwp,
+
+    potenciaPlaca,
+    placas,
+
+    geracaoMensal,
+    geracaoAnual,
+
+    economiaMensal,
+    economiaAnual
+
+  }
+
+}
+
+// =========================
+// PREENCHER PÁGINA
+// =========================
+
+function preencherProjeto(dados){
 
   document.getElementById("consumoMensal").innerText =
-    consumo.toFixed(0) + " kWh"
+    dados.consumoMensal.toFixed(0) + " kWh"
 
   document.getElementById("consumoAnual").innerText =
-    geracaoAnual.toFixed(0) + " kWh"
+    dados.consumoAnual.toFixed(0) + " kWh"
 
   document.getElementById("geracaoMensal").innerText =
-    geracaoMensal.toFixed(0) + " kWh"
+    dados.geracaoMensal.toFixed(0) + " kWh"
 
   document.getElementById("geracaoAnual").innerText =
-    geracaoAnual.toFixed(0) + " kWh"
+    dados.geracaoAnual.toFixed(0) + " kWh"
 
   document.getElementById("kwp").innerText =
-    kwp.toFixed(2) + " kWp"
+    dados.kwp.toFixed(2) + " kWp"
 
   document.getElementById("placas").innerText =
-    placas
+    dados.placas
 
   document.getElementById("ecoTexto").innerText =
-    "R$ " + economiaMensal.toFixed(2)
+    "R$ " + dados.economiaMensal.toFixed(2)
 
-  // =========================
-  // EQUIPAMENTOS
-  // =========================
+}
 
-  const inversor =
-    kwp <= 3 ? "3kW" :
-    kwp <= 5 ? "5kW" :
-    kwp <= 8 ? "8kW" :
-    kwp <= 10 ? "10kW" :
-    "30kW"
+// =========================
+// EQUIPAMENTOS
+// =========================
+
+function preencherEquipamentos(dados){
+
 
   document.getElementById("equip-potencia-placa").innerText =
-    potenciaPlaca
+    dados.potenciaPlaca
 
   document.getElementById("equip-quantidade-placas").innerText =
-    placas
+    dados.placas
 
   document.getElementById("equip-inversor").innerText =
-    inversor
+dados.inversor
 
   document.getElementById("infoPotencia").innerText =
-    kwp.toFixed(2) + " kWp"
+    dados.kwp.toFixed(2) + " kWp"
+
+}
+
+// =========================
+// EXECUTAR
+// =========================
+
+if(lead){
+
+  const dados =
+    calcularSistema(lead)
+
+  preencherProjeto(dados)
+
+  preencherEquipamentos(dados)
+
+  console.log("DADOS FINAIS:", dados)
+
+}
+
+
+// ========================================
+// FINANCEIRO
+// ========================================
+
+const contaSemSistema =
+lead.valor
+
+const contaComSistema =
+lead.valor - lead.economia
+
+document.getElementById("semSistema").innerText =
+  "R$ " +
+  contaSemSistema.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  })
+
+document.getElementById("comSistema").innerText =
+  "R$ " +
+  Math.max(contaComSistema, 0).toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  })
+
+document.getElementById("anoSemSistema").innerText =
+  "R$ " +
+  (contaSemSistema * 12).toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  })
+
+document.getElementById("anoComSistema").innerText =
+  "R$ " +
+  (Math.max(contaComSistema, 0) * 12).toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  })
+
+const economiaMensal = lead.economia
+const economiaAnual = economiaMensal * 12
+
+document.getElementById("economiaMensalTexto").innerText =
+  "R$ " +
+  economiaMensal.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  })
+
+document.getElementById("economiaAnualTexto").innerText =
+  "R$ " +
+  economiaAnual.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  })
+
+
+// ========================================
+// PROJEÇÃO
+// ========================================
+
+const projecao = document.getElementById("projecaoFinanceira")
+
+if(projecao){
+
+  projecao.innerHTML = `
+  
+    <div>
+      Em 1 ano:
+      <strong style="color:#16a34a;">
+        R$ ${economiaAnual.toLocaleString("pt-BR", {
+          minimumFractionDigits:2
+        })}
+      </strong>
+    </div>
+
+    <div>
+      Em 5 anos:
+      <strong style="color:#16a34a;">
+        R$ ${(economiaAnual * 5).toLocaleString("pt-BR", {
+          minimumFractionDigits:2
+        })}
+      </strong>
+    </div>
+
+    <div>
+      Em 25 anos:
+      <strong style="color:#16a34a;">
+        R$ ${(economiaAnual * 25).toLocaleString("pt-BR", {
+          minimumFractionDigits:2
+        })}
+      </strong>
+    </div>
+
+  `
+}
+
+
+// ========================================
+// GRÁFICO SISTEMA
+// ========================================
+
+const ctxSistema =
+  document.getElementById("graficoSistema")
+
+if(ctxSistema){
+
+  new Chart(ctxSistema, {
+
+    type: "bar",
+
+    data: {
+
+      labels: [
+        "Consumo",
+        "Geração"
+      ],
+
+      datasets: [{
+
+        label: "kWh/mês",
+
+        data: [
+  lead.consumo,
+  lead.geracao / 12
+]
+
+      }]
+
+    },
+
+    options: {
+
+      responsive: true,
+      maintainAspectRatio: false
+
+    }
+
+  })
+
+}
+
+
+// ========================================
+// GRÁFICO FINANCEIRO
+// ========================================
+
+const ctxFinanceiro =
+  document.getElementById("graficoFinanceiro")
+
+if(ctxFinanceiro){
+
+  new Chart(ctxFinanceiro, {
+
+    type: "line",
+
+    data: {
+
+      labels: [
+        "Ano 1",
+        "Ano 5",
+        "Ano 10",
+        "Ano 15",
+        "Ano 20",
+        "Ano 25"
+      ],
+
+      datasets: [{
+
+        label: "Economia acumulada",
+
+        data: [
+          economiaAnual,
+          economiaAnual * 5,
+          economiaAnual * 10,
+          economiaAnual * 15,
+          economiaAnual * 20,
+          economiaAnual * 25
+        ]
+
+      }]
+
+    },
+
+    options: {
+
+      responsive: true,
+      maintainAspectRatio: false
+
+    }
+
+  })
 
 }
 
