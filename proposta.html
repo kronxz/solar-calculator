@@ -1141,6 +1141,11 @@
       max-height: 500px !important;
     }
 
+    #graficoSistema{
+  width:100% !important;
+  height:320px !important;
+}
+
     .sistema {
       gap: 20px;
     }
@@ -2485,7 +2490,7 @@ z-index:20;
             <strong>Fabricante:</strong> DEYE<br>
 
             <strong>Potência:</strong>
-            <span id="equip-inversor"></span><br>
+<span id="equip-inversor"></span> kW<br>
 
             <strong>Garantia:</strong> 5 Anos<br>
 
@@ -2966,7 +2971,18 @@ padding-top:120px;
       justify-content:space-between;
       ">
             <strong>Valor do sistema:</strong>
-            <span id="valorSistemaTexto">-</span>
+
+<span id="valorSistema">-</span>
+
+          </div>
+          
+           <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+          <strong>Reajuste anual de energia:</strong>
+<span id="reajusteEnergia">-</span>
+
           </div>
 
           <div style="
@@ -2975,6 +2991,7 @@ padding-top:120px;
       ">
             <strong>Payback:</strong>
             <span id="paybackTexto">-</span>
+
           </div>
 
           <div style="
@@ -2983,6 +3000,7 @@ padding-top:120px;
       ">
             <strong>ROI:</strong>
             <span id="roiTexto">-</span>
+
           </div>
 
           <div style="
@@ -2991,7 +3009,18 @@ padding-top:120px;
       ">
             <strong>TIR:</strong>
             <span id="tirTexto">-</span>
+
           </div>
+
+           <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+      <strong>Valor kWh Sistema FV:</strong>
+<span id="valorKwhSistema">-</span>
+
+</div>
+
 
           <div style="
       display:flex;
@@ -3456,6 +3485,7 @@ function preencherProjeto(dados){
 
 function preencherEquipamentos(dados){
 
+  console.log("DADOS EQUIPAMENTOS:", dados)
 
   document.getElementById("equip-potencia-placa").innerText =
     dados.potenciaPlaca
@@ -3471,11 +3501,21 @@ dados.inversor
 
 }
 
+
+
+
+
 // =========================
 // EXECUTAR
 // =========================
 
 if(lead){
+
+document.getElementById("nomeCliente").innerText =
+  lead.nome || "Cliente"
+
+document.getElementById("cidadeCliente").innerText =
+  lead.endereco || ""
 
   const dados =
     calcularSistema(lead)
@@ -3584,45 +3624,6 @@ if(projecao){
 // GRÁFICO SISTEMA
 // ========================================
 
-const ctxSistema =
-  document.getElementById("graficoSistema")
-
-if(ctxSistema){
-
-  new Chart(ctxSistema, {
-
-    type: "bar",
-
-    data: {
-
-      labels: [
-        "Consumo",
-        "Geração"
-      ],
-
-      datasets: [{
-
-        label: "kWh/mês",
-
-        data: [
-  lead.consumo,
-  lead.geracao / 12
-]
-
-      }]
-
-    },
-
-    options: {
-
-      responsive: true,
-      maintainAspectRatio: false
-
-    }
-
-  })
-
-}
 
 
 // ========================================
@@ -3677,13 +3678,49 @@ if(ctxFinanceiro){
 
 }
 
+
+
+
+
+
 </script>
 
 
+<script type="module">
 
-<script type="module" src="./js/app.js"></script>
+import { criarGraficoSistema }
+from './js/graficos.js'
 
 
+
+import {
+  preencherIndicadoresViabilidade,
+  criarGraficoViabilidade
+} from "./js/viabilidade.js"
+
+
+if(lead){
+
+  const dados =
+calcularSistema(lead)
+
+preencherProjeto(dados)
+
+preencherEquipamentos(dados)
+
+
+criarGraficoFinanceiro(dados)
+
+preencherProjecaoFinanceira(dados)
+
+preencherAnaliseFinanceira(dados)
+
+preencherIndicadoresViabilidade(dados)
+
+criarGraficoViabilidade(dados)
+
+}
+</script>
 
 
 </body>
