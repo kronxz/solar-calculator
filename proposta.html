@@ -1,2165 +1,3440 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Proposta Solar</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <title>Proposta Solar</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
+  <style>
+    .pagina {
+      width: 794px;
+      min-height: 1123px;
+      /* 🔥 MUDA AQUI */
+      height: auto;
+      /* 🔥 ESSENCIAL */
 
-:root{
+      margin: 0 auto;
+      background: #ffffff;
 
-  /* 🔵 AZUL PRINCIPAL (SUA MARCA) */
-  --azul-principal:#1d4ed8;
+      position: relative;
+      box-sizing: border-box;
 
-  /* 🔵 AZUL FORTE (HOVER / DESTAQUE) */
-  --azul-escuro:#1e40af;
+      overflow: visible;
+      /* 🔥 MUDA AQUI */
 
-  /* 🔵 AZUL SUAVE (FUNDO / DETALHES) */
-  --azul-claro:#60a5fa;
+      page-break-after: always;
+    }
 
-  /* ⚪ BASE */
-  --branco:#ffffff;
-  --fundo:#f8fafc;
 
-  /* 🧠 TEXTO */
-  --texto:#020617;
-  --texto-fraco:#475569;
+    :root {
 
-  /* 💰 VERDE (CTA) */
-  --verde:#22c55e;
-}
+      /* 🔵 AZUL PRINCIPAL (SUA MARCA) */
+      --azul-principal: #1d4ed8;
 
-body{
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, #0b1220, #020617);
-  color:#e5e7eb;
-  padding:20px;
+      /* 🔵 AZUL FORTE (HOVER / DESTAQUE) */
+      --azul-escuro: #1e40af;
 
-    display:block;
+      /* 🔵 AZUL SUAVE (FUNDO / DETALHES) */
+      --azul-claro: #60a5fa;
 
-}
+      /* ⚪ BASE */
+      --branco: #ffffff;
+      --fundo: #f8fafc;
 
-.box{
-background:white;
-padding:20px;
-border-radius:10px;
-max-width:800px;
-margin:auto;
-}
+      /* 🧠 TEXTO */
+      --texto: #020617;
+      --texto-fraco: #475569;
 
-h2{
-  text-align:center;
-  font-size:32px;
-  margin-top:10px;
-  margin-bottom:10px;
+      /* 💰 VERDE (CTA) */
+      --verde: #22c55e;
+    }
 
-  color:#020617;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #0b1220, #020617);
+      color: #e5e7eb;
+      padding: 20px;
 
-  font-weight:800;
+      display: block;
 
-  letter-spacing:-0.5px;
-}
+    }
 
-.pagina{
-  width:100%;
-  padding:40px;
-  box-sizing:border-box;
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+    }
 
-  /* 🔥 ESSENCIAL */
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-top: 10px;
+      margin-bottom: 10px;
 
+      color: #020617;
 
-.sobre{
-  background:#ffffff;
+      font-weight: 800;
 
-  padding:35px;
-  border-radius:16px;
+      letter-spacing: -0.5px;
+    }
 
- box-shadow:0 10px 30px rgba(2,6,23,0.08);
 
-  border-left: 4px solid var(--azul-principal);
 
-  padding-right:45px; /* 🔥 ESSENCIAL */
-}
-
-.sobre-header{
-  text-align:center;
-  margin-bottom:40px;
-}
-
-.sobre-header h2{
-  font-size:32px; /* antes estava 36 */
-  color: var(--texto);
-  margin-bottom:10px;
-  font-weight:700;
-
-  line-height:1.2; /* 🔥 IMPORTANTE */
-  max-width:700px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-.sobre-header p{
-  color:#64748b;
-  font-size:16px;
-}
-
-.sobre-grid{
-  display:grid;
-  grid-template-columns:1.1fr 0.9fr; /* 🔥 REDUZ LADO DIREITO */
-  gap:25px; /* 🔥 MENOS ESPAÇO */
-
-  margin-top:20px;
-
-  padding-right:10px; /* 🔥 EMPURRA PRA ESQUERDA */
-}
-
-.sobre-texto p{
-  font-size:16px;
-  color:#334155;
-  line-height:1.7;
-}
-
-.numeros{
-  display:flex;
-  gap:20px;
-  margin-top:30px;
-}
-
-.numero{
-  background:#f8fafc;
-  padding:20px;
-  border-radius:12px;
-
-  text-align:center;
-
-  flex:1;
-
-  border:1px solid #e2e8f0;
-}
-
-.numero strong{
-  display:block;
-  font-size:22px;
- color: var(--texto);
-}
-
-.numero span{
-  font-size:13px;
-  color:#64748b;
-}
-
-.sobre-cards{
-  display:grid;
-  gap:15px;
-}
-
-.card{
-  background:#ffffff;
-  padding:24px;
-  border-radius:16px;
-
-  border:1px solid #e2e8f0;
-
-  box-shadow:0 10px 30px rgba(2,6,23,0.06);
-
-  transition:0.3s;
-
-  position:relative;
-  overflow:hidden;
-}
-.card::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:5px;
-  height:100%;
-  background:linear-gradient(
-    180deg,
-    var(--azul-principal),
-    var(--azul-claro)
-  );
-}
-
-.card h3{
-  margin-bottom:8px;
-  color:#020617;
-  font-size:16px;
-  font-weight:700;
-}
-
-.card p{
-  color:#475569;
-  font-size:14.5px;
-  line-height:1.6;
-}
-.card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 20px 40px rgba(2,6,23,0.12);
-}
-
-
-.mini-cta{
-  margin-top:30px;
-
-  padding:20px;
-
-  border-radius:12px;
-
-  background:linear-gradient(90deg, #0f172a, #1e293b);
-
-  color:white;
-
-  text-align:center;
-
-  font-size:15px;
-  line-height:1.5;
-}
-  
-h1{
-  margin-bottom:10px;
-}
-/* 🔥 CAPA NÍVEL EMPRESA */
-
-.capa{
-  position:relative;
-  min-height:1000px;
-  display:flex;
-  align-items:center;
-  padding:60px;
-
-
-  
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
-
-.capa-conteudo{
-  position:relative;
-  z-index:2;
-
-  color:white;
-
-  /* 👇 ADICIONA ISSO */
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-}
-
-.capa-esquerda{
-  max-width:500px;
-  color:white;
-
-  padding:30px;
-  background:rgba(0,0,0,0.55);
-  border-radius:12px;
-
-  backdrop-filter: blur(4px);
-}
-
-.logo-capa{
-  width:120px;
-  margin-bottom:20px;
-}
-
-.capa-esquerda h1{
-  font-size:36px;
-  margin-bottom:10px;
-  letter-spacing:1px;
-}
-
-.capa-esquerda h2{
-  font-size:26px;
-  margin-bottom:5px;
-}
-
-.tipo{
-  font-size:16px;
-  opacity:0.85;
-  margin-bottom:20px;
-}
-
-.info-empresa{
-  margin-top:25px;
-  font-size:14px;
-  line-height:1.6;
-  opacity:0.9;
-}
-
-.sub{
-  font-size:16px;
-  opacity:0.85;
-}
-
-
-.capa{
-  position:relative;
-  height:1120px;
-  overflow:hidden;
-
-  display:flex;
-  align-items:flex-end;
-  justify-content:flex-start;
-
-  padding:80px 80px 120px 80px; /* 👈 CONTROLE FINO DO ESPAÇO */
-
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
-/* IMAGEM FUNDO REAL */
-.bg-capa{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  top:0;
-  left:0;
-  z-index:0;
-}
-
-.capa-pdf .overlay{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-
-  background:linear-gradient(
-    to right,
-    rgba(2,6,23,0.95) 0%,
-    rgba(2,6,23,0.85) 40%,
-    rgba(2,6,23,0.4) 70%,
-    transparent 100%
-  );
-
-  z-index:1;
-}
-
-/* CONTEÚDO */
-.capa-conteudo{
-  position:relative;
-  z-index:2;
-
-  max-width:520px;
-
-  padding:30px;
-
-  background:rgba(2,6,23,0.55); /* vidro escuro */
-  backdrop-filter: blur(6px);
-
-  border-radius:12px;
-
-  color:white;
-}
-  .capa-conteudo h1{
-  font-size:44px;
-  margin:0;
-  line-height:1.1;
-  letter-spacing:1px;
-}
-
-.capa-conteudo h2{
-  font-size:22px;
-  margin-top:15px;
-}
-
-.sub{
-  margin-top:8px;
-  opacity:0.85;
-  font-size:15px;
-}
-
-/* LOGO */
-.logo-capa{
-  width:120px;
-  margin-bottom:30px;
-}
-
-/* TÍTULOS */
-.capa-conteudo h1{
-  font-size:48px;
-  margin:0;
-  line-height:1.1;
-}
-
-.azul{
- color:var(--azul-principal);
-}
-
-.capa-conteudo h2{
-  margin-top:20px;
-  font-size:24px;
-}
-
-/* TEXTO */
-.sub{
-  margin-top:10px;
-  opacity:0.8;
-}
-
-.info{
-  margin-top:30px;
-  font-size:15px;
-  line-height:1.6;
-  opacity:0.9;
-}
-.logo-topo{
-  width:60px;
-}
-
-.conteudo-capa-pdf{
-  margin-top:80px;
-}
-
-.titulo h1{
-  font-size:48px;
-  margin:0;
-}
-
-.titulo .azul{
- color:var(--azul-principal);
-}
-
-.dados{
-  margin-top:30px;
-  font-size:16px;
-  line-height:1.6;
-}
-
-.imagem-capa img{
-  width:100%;
-  border-top-left-radius:30px;
-}
-
-@media print {
-  .fluxo{
-  break-inside: avoid;
-}
-
-.etapa{
-  break-inside: avoid;
-}
-
-  .funcionamento{
-    display:block !important;
-    overflow:visible !important;
-    page-break-inside: avoid;
-  }
-.funcionamento h2{
-  text-align:center;
-  font-size:28px;
-  margin-bottom:10px;
-}
-
-.subtitulo{
-  color:#64748b;
-  font-size:16px;
-  font-weight:500;
-
-  margin-bottom:10px;
-}
-.fluxo{
-  position:relative;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:20px;
-  margin-top:40px;
-}
-.etapa{
-  background:#ffffff;
-  padding:30px;
-  border-radius:14px;
-
- box-shadow:0 10px 30px rgba(2,6,23,0.08);
-
-  text-align:center;
-  flex:1;
-}
-.etapa p{
- color: var(--texto);
-  font-size:15.5px;
-  font-weight:500;
-}
-  .etapa h3{
-  font-size:16px;
-  font-weight:600;
-  color: var(--texto);
-  margin-bottom:8px;
-}
-.fluxo::before{
-  content:"";
-  position:absolute;
-  top:38px; /* 🔥 AJUSTE FINO */
-  left:0;
-  right:0;
-  height:3px;
-  background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
-  z-index:0;
-}
-/* 🔹 PADRÃO (página 2, números normais) */
-.numero{
-  background:#f8fafc;
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-  flex:1;
-  border:1px solid #e2e8f0;
-  position:static; /* 🔥 ESSENCIAL */
-}
-  .numero-fluxo{
-  position:absolute;
-  top:-20px;
-  left:50%;
-  transform:translateX(-50%);
-
-  background:var(--azul-principal);
-color:black;
-
-  width:38px;
-  height:38px;
-
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-weight:bold;
-
-  box-shadow:0 6px 15px rgba(37,99,235,0.4);
-
-  z-index:2; /* 🔥 IMPORTANTE */
-}
-.etapa{
-  position:relative;
-}
-
-
-.impacto{
-  margin-top:20px;
-  padding:15px;
-  background:#dcfce7;
-  color:#166534;
-  border-left:4px solid #22c55e;
-  border-radius:8px;
-  font-weight:600;
-  text-align:center;
-}
-}
-.funcionamento h2{
-  text-align:center;
-  font-size:30px;
-  margin-bottom:10px;
-  color: var(--texto);/* FORTE */
-  font-weight:700;
-}
-
-.passos{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-@media print {
-
-  .passos{
-    display:block !important;
-  }
-
-  .passo{
-    display:block;
-    margin-bottom:20px;
-  }
-
-}
-.passo{
-  background:#f1f5f9;
-  padding:20px;
-  border-radius:12px;
-}
-
-.passo h3{
-  margin-bottom:10px;
-  color: var(--texto);
-}
-
-.passo p{
-  color:#334155;
-  font-size:15px;
-  line-height:1.5;
-}
-
-.frase-impacto{
-  margin-top:30px;
-  background:#0f172a;
-  color:white;
-  padding:20px;
-  text-align:center;
-  border-radius:10px;
-  font-weight:bold;
-}
-
-/* 🔥 BENEFÍCIOS */
-
-.beneficios h2{
-  text-align:center;
-  font-size:30px;
-  margin-bottom:30px;
-
-  color:#020617; /* 🔥 MAIS FORTE */
-  font-weight:800;
-
-  letter-spacing:0.5px;
-}
-
-.grid-beneficios{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.beneficio{
-  background:#ffffff;
-  border:1px solid #e2e8f0;
-  padding:22px;
-  border-radius:16px;
-
-  box-shadow:0 8px 25px rgba(2,6,23,0.05);
-
-  transition:0.3s;
-}
-
-.beneficio h3{
-  margin-bottom:10px;
- color: var(--texto);
-}
-
-.beneficio p{
-  color:#334155;
-  font-size:15px;
-  line-height:1.5;
-}
-
-.impacto-final{
-  margin-top:30px;
-  background:#0f172a;
-  color:white;
-  padding:20px;
-  text-align:center;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:16px;
-}
-
-  .impacto-final{
-  margin-top:30px;
-  background:#0f172a;
-  color:white;
-  padding:20px;
-  text-align:center;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:16px;
-}
-
-
-/* 🔥 EQUIPAMENTOS */
-
-.equipamento{
-  background:#ffffff;
-  border:1px solid #e2e8f0;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(2,6,23,0.08);
-  margin-bottom:20px;
-}
-  
-.equipamentos h2{
-  text-align:center;
-  font-size:28px;
-  margin-bottom:30px;
-}
-
-.grid-equipamentos{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.equipamento{
-  background:#ffffff;
-  border:1px solid #cbd5e1;
-  padding:20px;
-  border-radius:12px;
- color: var(--texto);
-}
-.equipamento h3{
-  margin-bottom:10px;
-  color: var(--texto);
-}
-
-.equipamento p{
-  font-size:15px;
-  color:#334155;
-  margin-bottom:10px;
-}
-
-.equipamento ul{
-  padding-left:20px;
-  color:#475569;
-}
-
-/* 🔥 FINANCEIRO */
-
-.financeira h2{
-  text-align:center;
-  font-size:28px;
-  margin-bottom:30px;
-}
-
-.grid-financeiro{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.card-financeiro{
-  background:#ffffff;
-  border:1px solid #e2e8f0;
-  padding:25px;
-  border-radius:14px;
-  text-align:center;
-
-  box-shadow:0 10px 30px rgba(2,6,23,0.08);
-
-  transition:0.3s;
-}
-
-.card-financeiro span{
-  display:block;
-  font-size:14px;
-  color:#64748b;
-  margin-bottom:10px;
-}
-
-.card-financeiro strong{
-  font-size:26px;
-  color:#020617;
-}
-
-.card-financeiro:hover{
-  transform:translateY(-4px);
-}
-
-.card-financeiro.destaque{
-  background:#0f172a;
-  color:white;
-}
-
-.card-financeiro.destaque strong{
-  color:white;
-}
-
-/* 🔥 FECHAMENTO */
-
-.fechamento{
-  text-align:center;
-}
-
-.fechamento h2{
-  font-size:28px;
-  margin-bottom:20px;
-}
-
-.texto-fechamento{
-  font-size:16px;
-  color:#334155;
-  margin-bottom:10px;
-}
-
-.cta-box{
-  margin-top:30px;
-  background:#0f172a;
-  color:white;
-  padding:25px;
-  border-radius:12px;
-}
-
-#btnWhats{
-  display:inline-block;
-  margin-top:15px;
-  background:#22c55e;
-  color:white;
-  padding:15px 25px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-@media print {
-
-  body{
-    margin:0;
-    padding:0;
-    background:white !important;
-  }
-
-  .capa{
-    display:none !important;
-  }
-
-  /* 👇 SUA CAPA */
-  .capa-pdf{
-    display:block !important;
-    position:relative;
-    width:100%;
-    height:100vh;
-
-    background:url('https://images.unsplash.com/photo-1509391366360-2e959784a276') center/cover no-repeat;
-
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  
-    .explicacao-extra{
-  background:#f8fafc !important;
-  color:#0f172a !important;
-  border-left:6px solid var(--azul-principal) !important;
-  background-image:none !important;
-}
-
-.explicacao-extra *{
-  color:#0f172a !important;
-}
-}
-  .sobre{
-  position:relative;
-  box-shadow:none !important;
-  border-left:none !important;
-}
-.sobre::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:6px;
-  height:calc(100% - 2px);
-  background:var(--azul-principal);
-color:black;
-}
-/* 🔥 CORREÇÃO DO BUG DA LINHA VAZANDO */
-.pagina{
-  overflow:visible;
-}
-  }
-
-
-  /* 👇 COLOCA AQUI (LOGO DEPOIS) */
-  .capa-pdf::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-
-    background:rgba(0,0,0,0.65);
-
-    z-index:1;
-  }
-
-  /* 👇 TEXTO */
-  .capa-pdf .conteudo{
-    position:absolute;
-    bottom:80px;
-    left:80px;
-    color:white;
-    z-index:2;
-  }
-.capa-conteudo{
-  position:absolute !important;
-  bottom:80px;
-  left:80px;
-
-  max-width:520px;
-
-  padding:30px;
-
-  background:#020617 !important; /* 👈 FUNDO REAL (ESSENCIAL) */
-
-  color:white !important;
-
-  border-radius:12px;
-
-  z-index:999 !important;
-
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-.pagina{
-  width:100%;
-  padding:40px;
-  box-sizing:border-box;
-
-  min-height:100vh;
-  height:auto;
-
-  display:block;
-
-  /* 🔥 ESSENCIAL */
-  page-break-inside: avoid;
-  break-inside: avoid;
-}
-
-  .capa{
-    position:relative;
-    min-height:100vh !important;
-    height:auto !important;
-    padding:0 !important;
-    margin:0 !important;
-    overflow:hidden;
-  }
-
- .bg-capa{
-  position:absolute !important;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-
-  z-index:0; 
-}
-
-
-  .pagina::before,
-.pagina::after{
-  content:none !important;
-  display:none !important;
-}
-.frase-autoridade{
-  margin-top:20px;
-  margin-bottom:25px;
-
-  padding:18px;
-
-  background:#0f172a;
-  color:white;
-
-  border-radius:10px;
-
-  font-size:15px;
-  line-height:1.5;
-}
-  .prova-social{
-  margin-top:20px;
-
-  font-size:14px;
-  color:#475569;
-
-  border-left:3px solid var(--azul-principal);
-  padding-left:10px;
-}
-  .frase-autoridade{
-  margin-top:25px;
-  margin-bottom:30px;
-}
-
-.prova-social{
-  margin-top:25px;
-}
-
-  .sobre{
-  page-break-inside: avoid;
-}
-.funcionamento-header{
-  text-align:center;
-  margin-bottom:40px;
-}
-
-.funcionamento-header h2{
-  font-size:30px;
-  color: var(--texto);
-  margin-bottom:10px;
-}
-
-.funcionamento-header p{
-  color:#64748b;
-  font-size:15px;
-}
-
-.linha-processo{
-  height:4px;
-  background:linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
-  margin:30px 0 40px;
-  border-radius:10px;
-}
-
-.passos{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:25px;
-}
-
-.passo{
-  background:#ffffff;
-  border:1px solid #e2e8f0;
-  padding:25px;
-  border-radius:14px;
-  position:relative;
-}
-
-.numero-passo{
-  position:absolute;
-  top:-12px;
-  left:-12px;
-  background:var(--azul-principal);
-color:black;
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-}
-
-.passo h3{
-  margin-bottom:10px;
-  color: var(--texto);
-}
-
-.passo p{
-  font-size:14px;
-  color:#475569;
-}
-
-.frase-impacto{
-  margin-top:40px;
-  padding:22px;
-
-  background:#020617;
-
-  color:#ffffff;
-
-  text-align:center;
-
-  border-radius:12px;
-
-  font-size:16px;
-  font-weight:600;
-
-  letter-spacing:0.2px;
-}
-  .mini-cta{
-  page-break-inside: avoid;
-}
-  .explicacao-topo{
-  max-width:700px;
-  margin:0 auto 30px;
-  text-align:center;
-  color:#334155;
-  font-size:15px;
-  line-height:1.6;
-}
-  .bloco-autoridade{
-  margin-top:30px;
-  padding:18px;
-  background:#f1f5f9;
-  border-left:3px solid var(--azul-principal);
-  color: var(--texto);
-  font-size:15px;
-  line-height:1.5;
-}
-.linha-destaque{
-  width:80px;
-  height:3px;
-  background:var(--azul-principal);
-  margin:20px auto 30px;
-  border-radius:10px;
-}
-
-.grid-projeto{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-  margin-top:20px;
-}
-
-.card-projeto{
-  background:#ffffff;
-  border:1px solid #e2e8f0;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(2,6,23,0.08);
-}
-
-.card-projeto span{
-  display:block;
-  font-size:14px;
-  color:#64748b;
-}
-
-.card-projeto strong{
-  font-size:20px;
-  color:#020617;
-}
-
-.projeto h2{
-  text-align:center;
-  font-size:28px;
-  margin-bottom:10px;
-}
-
-.projeto p{
-  text-align:center;
-  color:#64748b;
-}  
-.grid-comparacao{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  margin-top:30px;
-}
-
-.box{
-  padding:25px;
-  border-radius:14px;
-  text-align:center;
-  font-size:20px;
-  font-weight:600;
-
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-.box strong{
-  display:block;
-  font-size:28px;
-  margin-top:10px;
-}
-.box.vermelho{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.box.verde{
-  background:#dcfce7;
-  color:#166534;
-}
-
-
-
-.pagina p{
-  font-size:15.5px;
-  line-height:1.7;
-  color:#334155;
-}
-
-.pagina h2,
-.pagina h3{
-  color:#020617 !important;
-  font-weight:800;
-}
-
-.subtitulo,
-.explicacao-topo{
-  color:#334155 !important;
-}
-
- #grafico{
-  height:500px !important;
-  max-height:500px !important;
-}
-  .sistema{
-  gap:20px;
-}
-
-#dados{
-  margin-bottom:10px;
-}
-/* 🔥 DEIXAR MAIS PROFISSIONAL */
-
-.pagina{
-  padding:25px 30px;
-}
-
-h2{
-  margin-top:10px;
-  margin-bottom:10px;
-}
-
-.card,
-.beneficio,
-.equipamento,
-.card-financeiro{
-  box-shadow:0 10px 30px rgba(2,6,23,0.08);
-}
-
-/* 🔥 COMPARAÇÃO MAIS FORTE */
-
-.box p{
-  margin-top:10px;
-  font-size:14px;
-}
-
-/* 🔥 IMPACTO MAIS VISUAL */
-
-.impacto{
-  font-size:16px;
-  font-weight:600;
-}
-
-/* 🔥 DADOS SISTEMA */
-
-#dados p{
-  margin:5px 0;
-  font-size:15px;
-}
-.resumo-retorno{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-top:30px;
-}
-
-.box-retorno{
-  background:#0f172a;
-  color:white;
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-}
-
-.box-retorno span{
-  display:block;
-  font-size:14px;
-  opacity:0.8;
-  margin-bottom:8px;
-}
-
-.box-retorno strong{
-  font-size:22px;
-}
-
-.selos{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:15px 0 10px;
-  flex-wrap:wrap;
-}
-
-.selos div{
-  background:#0f172a;
-  color:white;
-  padding:8px 12px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:500;
-}
-
-  .destaque-financeiro{
-  margin:15px 0 20px;
-  padding:15px;
-  background:#dcfce7;
-  color:#166534;
-  border-left:4px solid #22c55e;
-  border-radius:8px;
-  font-weight:600;
-  text-align:center;
-}
-.prova-social{
-  display:flex;
-  justify-content:space-around;
-  margin-top:20px;
-  text-align:center;
-}
-
-.prova-social div{
-  background:#f1f5f9;
-  padding:15px;
-  border-radius:10px;
-  width:30%;
-  font-size:14px;
-}
-
-.explicacao-extra{
-
-  margin-top:25px;
-  padding:28px;
-
-  background:linear-gradient(180deg, #f8fafc, #eef2ff);
-
-  border-left:6px solid var(--azul-principal);
-
-  border-radius:14px;
-
-  font-size:15.5px;
-  line-height:1.8;
-
-  color:#0f172a;
-
-  box-shadow:0 15px 35px rgba(2,6,23,0.08);
-}
-.explicacao-extra{
-  counter-reset: passo;
-}
-
-.explicacao-extra br{
-  display:block;
-  margin-bottom:8px;
-}
-
-.explicacao-extra strong{
-  display:block;
-  font-size:17px;
-  margin-bottom:12px;
-  color:var(--azul-principal);
-}
-
- .card strong{
-  color:#020617;
-  font-weight:700;
-  font-size:22px;
-}
-  .comparacao h2{
-  text-align:center;
-  font-size:30px;
-  margin-bottom:10px;
-
-  color:#020617; /* 🔥 FORTE */
-  font-weight:800;
-}
-  .comparacao{
-  border-left:3px solid var(--azul-principal);
-  padding-top:20px;
-}
-  
-  
-}
- 
-</style>
+
+    .sobre {
+      background: #ffffff;
+
+      padding: 35px;
+      border-radius: 16px;
+
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+
+      border-left: 4px solid var(--azul-principal);
+
+      padding-right: 45px;
+      /* 🔥 ESSENCIAL */
+    }
+
+    .sobre-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .sobre-header h2 {
+      font-size: 32px;
+      /* antes estava 36 */
+      color: var(--texto);
+      margin-bottom: 10px;
+      font-weight: 700;
+
+      line-height: 1.2;
+      /* 🔥 IMPORTANTE */
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .sobre-header p {
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      /* 🔥 REDUZ LADO DIREITO */
+      gap: 25px;
+      /* 🔥 MENOS ESPAÇO */
+
+      margin-top: 20px;
+
+      padding-right: 10px;
+      /* 🔥 EMPURRA PRA ESQUERDA */
+    }
+
+    .sobre-texto p {
+      font-size: 16px;
+      color: #334155;
+      line-height: 1.7;
+    }
+
+    .numeros {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .numero {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+
+      text-align: center;
+
+      flex: 1;
+
+      border: 1px solid #e2e8f0;
+    }
+
+    .numero strong {
+      display: block;
+      font-size: 22px;
+      color: var(--texto);
+    }
+
+    .numero span {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .sobre-cards {
+      display: grid;
+      gap: 15px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+
+      border: 1px solid #e2e8f0;
+
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+
+      transition: 0.3s;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(180deg,
+          var(--azul-principal),
+          var(--azul-claro));
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      color: #020617;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: #475569;
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.12);
+    }
+
+
+    .mini-cta {
+      margin-top: 30px;
+
+      padding: 20px;
+
+      border-radius: 12px;
+
+      background: linear-gradient(90deg, #0f172a, #1e293b);
+
+      color: white;
+
+      text-align: center;
+
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    /* 🔥 CAPA NÍVEL EMPRESA */
+
+
+
+
+
+
+    .capa-esquerda {
+      max-width: 500px;
+      color: white;
+
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 12px;
+
+      backdrop-filter: blur(4px);
+    }
+
+    .logo-capa {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    .capa-esquerda h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .capa-esquerda h2 {
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+
+    .tipo {
+      font-size: 16px;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .info-empresa {
+      margin-top: 25px;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .sub {
+      font-size: 16px;
+      opacity: 0.85;
+    }
+
+
+
+
+    /* IMAGEM FUNDO REAL */
+
+
+
+
+
+    .capa-conteudo h1 {
+      font-size: 60px;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .capa-conteudo h2 {
+      font-size: 22px;
+      margin-top: 15px;
+    }
+
+    .sub {
+      margin-top: 8px;
+      opacity: 0.85;
+      font-size: 15px;
+    }
+
+    /* LOGO */
+    .logo-capa {
+      width: 120px;
+      margin-bottom: 30px;
+    }
+
+
+
+    .azul {
+      color: var(--azul-principal);
+    }
+
+    .capa-conteudo h2 {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    /* TEXTO */
+    .sub {
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    .info {
+      margin-top: 30px;
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .logo-topo {
+      width: 60px;
+    }
+
+    .conteudo-capa-pdf {
+      margin-top: 80px;
+    }
+
+
+
+    .titulo .azul {
+      color: var(--azul-principal);
+    }
+
+    .bloco-titulo {
+      margin-top: 260px;
+      padding-left: 80px;
+    }
+
+    .textos-topo {
+      margin-bottom: 30px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .titulo h1 {
+      font-size: 52px;
+      margin: 0;
+    }
+
+    .titulo h2 {
+      font-size: 52px;
+      color: #3b82f6;
+      margin: 0;
+    }
+
+    .dados {
+      margin-top: 40px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .imagem-capa img {
+      width: 100%;
+      border-top-left-radius: 30px;
+    }
+
+
+    .hex {
+      width: 300px;
+      height: 346px;
+      /* PROPORÇÃO CORRETA */
+      clip-path: polygon(50% 0%,
+          100% 25%,
+          100% 75%,
+          50% 100%,
+          0% 75%,
+          0% 25%);
+      overflow: hidden;
+    }
+
+
+    .hex img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hex-principal {
+      position: absolute;
+      top: 180px;
+      left: 220px;
+    }
+
+    .hex-direita {
+      position: absolute;
+      top: 220px;
+      right: 120px;
+      opacity: 0.3;
+    }
+
+    .hex-baixo {
+      position: absolute;
+      bottom: 120px;
+      right: 140px;
+    }
+
+
+    @media print {
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: white !important;
+      }
+
+      .pagina {
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .fluxo,
+      .etapa {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+    }
+
+    .etapa {
+      break-inside: avoid;
+    }
+
+    .funcionamento {
+      display: block !important;
+      overflow: visible !important;
+      page-break-inside: avoid;
+    }
+
+    .funcionamento h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .subtitulo {
+      color: #64748b;
+      font-size: 16px;
+      font-weight: 500;
+
+      margin-bottom: 10px;
+    }
+
+    .fluxo {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .etapa {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 14px;
+
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+
+      text-align: center;
+      flex: 1;
+    }
+
+    .etapa p {
+      color: var(--texto);
+      font-size: 15.5px;
+      font-weight: 500;
+    }
+
+    .etapa h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--texto);
+      margin-bottom: 8px;
+    }
+
+    .fluxo::before {
+      content: "";
+      position: absolute;
+      top: 38px;
+      /* 🔥 AJUSTE FINO */
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
+      z-index: 0;
+    }
+
+    /* 🔹 PADRÃO (página 2, números normais) */
+    .numero {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      flex: 1;
+      border: 1px solid #e2e8f0;
+      position: static;
+      /* 🔥 ESSENCIAL */
+    }
+
+    .numero-fluxo {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      background: var(--azul-principal);
+      color: black;
+
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: bold;
+
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+
+      z-index: 2;
+      /* 🔥 IMPORTANTE */
+    }
+
+    .etapa {
+      position: relative;
+    }
+
+
+    .impacto {
+      margin-top: 20px;
+      padding: 15px;
+      background: #dcfce7;
+      color: #166534;
+      border-left: 4px solid #22c55e;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .funcionamento h2 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: var(--texto);
+      /* FORTE */
+      font-weight: 700;
+    }
+
+    .passos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media print {
+
+      .passos {
+        display: block !important;
+      }
+
+      .passo {
+        display: block;
+        margin-bottom: 20px;
+      }
+
+    }
+
+    .passo {
+      background: #f1f5f9;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .passo h3 {
+      margin-bottom: 10px;
+      color: var(--texto);
+    }
+
+    .passo p {
+      color: #334155;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .frase-impacto {
+      margin-top: 30px;
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    /* 🔥 BENEFÍCIOS */
+
+    .beneficios h2 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 30px;
+
+      color: #020617;
+      /* 🔥 MAIS FORTE */
+      font-weight: 800;
+
+      letter-spacing: 0.5px;
+    }
+
+    .grid-beneficios {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .beneficio {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 22px;
+      border-radius: 16px;
+
+      box-shadow: 0 8px 25px rgba(2, 6, 23, 0.05);
+
+      transition: 0.3s;
+    }
+
+    .beneficio h3 {
+      margin-bottom: 10px;
+      color: var(--texto);
+    }
+
+    .beneficio p {
+      color: #334155;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .impacto-final {
+      margin-top: 30px;
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+
+
+    /* 🔥 EQUIPAMENTOS */
+
+    .equipamento {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .equipamentos h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .grid-equipamentos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .equipamento {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 20px;
+      border-radius: 12px;
+      color: var(--texto);
+    }
+
+    .equipamento h3 {
+      margin-bottom: 10px;
+      color: var(--texto);
+    }
+
+    .equipamento p {
+      font-size: 15px;
+      color: #334155;
+      margin-bottom: 10px;
+    }
+
+    .equipamento ul {
+      padding-left: 20px;
+      color: #475569;
+    }
+
+    /* 🔥 FINANCEIRO */
+
+    .financeira h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .grid-financeiro {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card-financeiro {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 25px;
+      border-radius: 14px;
+      text-align: center;
+
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+
+      transition: 0.3s;
+    }
+
+    .card-financeiro span {
+      display: block;
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .card-financeiro strong {
+      font-size: 26px;
+      color: #020617;
+    }
+
+    .card-financeiro:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-financeiro.destaque {
+      background: #0f172a;
+      color: white;
+    }
+
+    .card-financeiro.destaque strong {
+      color: white;
+    }
+
+    /* 🔥 FECHAMENTO */
+
+    .fechamento {
+      text-align: center;
+    }
+
+    .fechamento h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .texto-fechamento {
+      font-size: 16px;
+      color: #334155;
+      margin-bottom: 10px;
+    }
+
+    .cta-box {
+      margin-top: 30px;
+      background: #0f172a;
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    #btnWhats {
+      display: inline-block;
+      margin-top: 15px;
+      background: #22c55e;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @media print {
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: white !important;
+      }
+
+
+      .explicacao-extra * {
+        color: #0f172a !important;
+      }
+
+    }
+
+    .sobre {
+      position: relative;
+      box-shadow: none !important;
+      border-left: none !important;
+    }
+
+    .sobre::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: calc(100% - 2px);
+      background: var(--azul-principal);
+      color: black;
+    }
+
+    /* 🔥 CORREÇÃO DO BUG DA LINHA VAZANDO */
+
+
+
+
+    /* 👇 COLOCA AQUI (LOGO DEPOIS) */
+
+
+    /* 👇 TEXTO */
+
+    .capa-conteudo {
+      position: absolute;
+      bottom: 80px;
+      left: 80px;
+
+      max-width: 520px;
+
+      padding: 30px;
+
+      background: #020617;
+      color: white;
+
+      border-radius: 12px;
+
+      z-index: 999;
+
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+
+
+
+    .pagina::before,
+    .pagina::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .frase-autoridade {
+      margin-top: 20px;
+      margin-bottom: 25px;
+
+      padding: 18px;
+
+      background: #0f172a;
+      color: white;
+
+      border-radius: 10px;
+
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .prova-social {
+      margin-top: 20px;
+
+      font-size: 14px;
+      color: #475569;
+
+      border-left: 3px solid var(--azul-principal);
+      padding-left: 10px;
+    }
+
+    .frase-autoridade {
+      margin-top: 25px;
+      margin-bottom: 30px;
+    }
+
+    .prova-social {
+      margin-top: 25px;
+    }
+
+    .sobre {
+      page-break-inside: avoid;
+    }
+
+    .funcionamento-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .funcionamento-header h2 {
+      font-size: 30px;
+      color: var(--texto);
+      margin-bottom: 10px;
+    }
+
+    .funcionamento-header p {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    .linha-processo {
+      height: 4px;
+      background: linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
+      margin: 30px 0 40px;
+      border-radius: 10px;
+    }
+
+    .passos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .passo {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 25px;
+      border-radius: 14px;
+      position: relative;
+    }
+
+    .numero-passo {
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      background: var(--azul-principal);
+      color: black;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .passo h3 {
+      margin-bottom: 10px;
+      color: var(--texto);
+    }
+
+    .passo p {
+      font-size: 14px;
+      color: #475569;
+    }
+
+    .frase-impacto {
+      margin-top: 40px;
+      padding: 22px;
+
+      background: #020617;
+
+      color: #ffffff;
+
+      text-align: center;
+
+      border-radius: 12px;
+
+      font-size: 16px;
+      font-weight: 600;
+
+      letter-spacing: 0.2px;
+    }
+
+    .mini-cta {
+      page-break-inside: avoid;
+    }
+
+    .explicacao-topo {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      text-align: center;
+      color: #334155;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .bloco-autoridade {
+      margin-top: 30px;
+      padding: 18px;
+      background: #f1f5f9;
+      border-left: 3px solid var(--azul-principal);
+      color: var(--texto);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .linha-destaque {
+      width: 80px;
+      height: 3px;
+      background: var(--azul-principal);
+      margin: 20px auto 30px;
+      border-radius: 10px;
+    }
+
+    .grid-projeto {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .card-projeto {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+    }
+
+    .card-projeto span {
+      display: block;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .card-projeto strong {
+      font-size: 20px;
+      color: #020617;
+    }
+
+    .projeto h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .projeto p {
+      text-align: center;
+      color: #64748b;
+    }
+
+    .grid-comparacao {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .box {
+      padding: 25px;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .box strong {
+      display: block;
+      font-size: 28px;
+      margin-top: 10px;
+    }
+
+    .box.vermelho {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .box.verde {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+
+
+    .pagina p {
+      font-size: 15.5px;
+      line-height: 1.7;
+      color: #334155;
+    }
+
+    .pagina h2,
+    .pagina h3 {
+      color: #020617 !important;
+      font-weight: 800;
+    }
+
+    .subtitulo,
+    .explicacao-topo {
+      color: #334155 !important;
+    }
+
+    #grafico {
+      height: 500px !important;
+      max-height: 500px !important;
+    }
+
+    .sistema {
+      gap: 20px;
+    }
+
+    #dados {
+      margin-bottom: 10px;
+    }
+
+    /* 🔥 DEIXAR MAIS PROFISSIONAL */
+
+
+    h2 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card,
+    .beneficio,
+    .equipamento,
+    .card-financeiro {
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+    }
+
+    /* 🔥 COMPARAÇÃO MAIS FORTE */
+
+    .box p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* 🔥 IMPACTO MAIS VISUAL */
+
+    .impacto {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* 🔥 DADOS SISTEMA */
+
+    #dados p {
+      margin: 5px 0;
+      font-size: 15px;
+    }
+
+    .resumo-retorno {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .box-retorno {
+      background: #0f172a;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .box-retorno span {
+      display: block;
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .box-retorno strong {
+      font-size: 22px;
+    }
+
+    .selos {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0 10px;
+      flex-wrap: wrap;
+    }
+
+    .selos div {
+      background: #0f172a;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .destaque-financeiro {
+      margin: 15px 0 20px;
+      padding: 15px;
+      background: #dcfce7;
+      color: #166534;
+      border-left: 4px solid #22c55e;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .prova-social {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .prova-social div {
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: 10px;
+      width: 30%;
+      font-size: 14px;
+    }
+
+    .explicacao-extra {
+
+      margin-top: 25px;
+      padding: 28px;
+
+      background: linear-gradient(180deg, #f8fafc, #eef2ff);
+
+      border-left: 6px solid var(--azul-principal);
+
+      border-radius: 14px;
+
+      font-size: 15.5px;
+      line-height: 1.8;
+
+      color: #0f172a;
+
+      box-shadow: 0 15px 35px rgba(2, 6, 23, 0.08);
+    }
+
+    .explicacao-extra {
+      counter-reset: passo;
+    }
+
+    .explicacao-extra br {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .explicacao-extra strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 12px;
+      color: var(--azul-principal);
+    }
+
+    .card strong {
+      color: #020617;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    .comparacao h2 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 10px;
+
+      color: #020617;
+      /* 🔥 FORTE */
+      font-weight: 800;
+    }
+
+    .comparacao {
+      border-left: 3px solid var(--azul-principal);
+      padding-top: 20px;
+    }
+
+
+
+    .container-pagina {
+      width: 100%;
+      min-height: 963px;
+
+      padding: 80px 70px;
+
+      box-sizing: border-box;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* 🔥 CENTRALIZA IGUAL AZUME */
+    }
+
+    .grid-impacto {
+      margin-top: 40px;
+    }
+
+    .destaque-impacto {
+      margin-top: 30px;
+    }
+
+    .projecao {
+      margin-top: 30px;
+    }
+
+    .impacto-financeiro {
+      background: linear-gradient(135deg, #022c22, #064e3b);
+      color: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .impacto-financeiro h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .impacto-financeiro .valor {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 10px 0;
+    }
+
+    .economia {
+      margin-top: 20px;
+      font-size: 22px;
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .retorno {
+      margin-top: 15px;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .capa-azume {
+      position: relative;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .capa-azume .bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .capa-azume .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(2, 6, 23, 0.95) 20%, rgba(2, 6, 23, 0.4));
+      z-index: 1;
+    }
+
+    .conteudo {
+      position: relative;
+      z-index: 2;
+      padding: 60px;
+      max-width: 400px;
+    }
+
+    .logo {
+      width: 90px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 36px;
+      color: #3b82f6;
+      margin: 0 0 20px 0;
+    }
+
+    .linha {
+      width: 60px;
+      height: 3px;
+      background: #3b82f6;
+      margin: 20px 0;
+    }
+
+    .sub {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .dados p {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+
+    .impacto-novo {
+      padding: 0;
+      background: none;
+    }
+
+    .grid-impacto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card-impacto {
+      padding: 25px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-impacto.vermelho {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .card-impacto.verde {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .destaque-impacto {
+      margin-top: 30px;
+      padding: 20px;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .projecao {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 16px;
+    }
+  </style>
 
 </head>
 
 <body>
 
-<div class="capa-pdf">
-
-  <!-- IMAGEM TEM QUE ESTAR AQUI DENTRO -->
-  <img class="bg-capa" src="https://images.unsplash.com/photo-1509391366360-2e959784a276">
-
-  <div class="overlay"></div>
-
-  <div class="conteudo">
-    <h1>PROPOSTA</h1>
-   <h1 style="color:var(--azul-principal);">
-
-    <h2 id="clienteNome"></h2>
-
-    <p>Sistema de Energia Solar Fotovoltaica</p>
-
-    <p><strong>Empresa:</strong> MF Soluções Elétricas</p>
-    <p><strong>CNPJ:</strong> 48.929.808/0001-84</p>
-    <p><strong>Responsável:</strong> Marcos Felipe</p>
-    <p><strong>Telefone:</strong> (21) 97238-1004</p>
-    <p><strong>Nº Proposta:</strong> <span id="numeroProposta"></span></p>
-  </div>
-
-</div>
 
 
-  <div class="capa-conteudo">
-
-    <img src="logo.png" class="logo-capa">
-
-    <h1>PROPOSTA</h1>
-    <h1 class="azul">COMERCIAL</h1>
-
-    <h2 id="clienteNome"></h2>
-
-    <p class="sub">Sistema de Energia Solar Fotovoltaica</p>
-
-    <div class="info">
-      <p><strong>Empresa:</strong> MF Soluções Elétricas</p>
-      <p><strong>CNPJ:</strong> 48.929.808/0001-84</p>
-      <p><strong>Responsável:</strong> Marcos Felipe</p>
-      <p><strong>Telefone:</strong> (21) 97238-1004</p>
-      <p><strong>Nº Proposta:</strong> <span id="numeroProposta"></span></p>
-    </div>
-
-  </div>
+  <div class="pagina">
 
 
-<div class="pagina sobre">
+    <svg width="794" height="1123" viewBox="0 0 794 1123" style="position:absolute; top:0; left:0; z-index:1;">
 
-<div class="sobre-header">
-<h2>Mais de 30 anos de experiência transformando energia em economia</h2>
-<p>Projetos elétricos e solares com foco em resultado real, segurança e retorno financeiro</p>
-</div>
+      <!-- HEX PEQUENO -->
+      <polygon points="
+  200,320
+  260,350
+  260,420
+  200,450
+  140,420
+  140,350
+" fill="#60A5FA" />
 
-<div class="sobre-grid">
+      <!-- HEX MÉDIO -->
+      <polygon points="
+  280,380
+  400,440
+  400,560
+  280,620
+  160,560
+  160,440
+" fill="#2D74C4" />
 
-  <div class="sobre-texto">
+      <!-- HEX EXTRA -->
+      <polygon points="
+  140,380
+  200,410
+  200,470
+  140,500
+  80,470
+  80,410
+" fill="#60A5FA" />
 
-    <p>
-      A <strong>MF Soluções Elétricas</strong> é uma empresa com sólida experiência na área elétrica,
-      atuando com projetos e instalações de alto padrão.
-    </p>
+      <!-- IMAGEM HEX -->
+      <defs>
 
-    <p>
-      Expandimos nossa atuação para a energia solar com o objetivo de oferecer soluções modernas,
-      eficientes e economicamente vantajosas para nossos clientes.
-    </p>
+        <clipPath id="hexImg">
+          <polygon points="
+        520,250
+        720,370
+        720,610
+        520,730
+        320,610
+        320,370
+      " />
+        </clipPath>
+      </defs>
 
-    <p>
-      Nosso compromisso é entregar sistemas seguros, com alta performance e retorno financeiro real,
-      sempre com atendimento técnico especializado.
-    </p>
-<div class="frase-autoridade">
- Você não está comprando placas solares. Está investindo em economia real com quem tem experiência comprovada em campo.
-</div>
-    <div class="prova-social">
-  <div><strong>+300</strong><br>Clientes atendidos</div>
-  <div><strong>+30 anos</strong><br>Experiência</div>
-  <div><strong>100%</strong><br>Projetos aprovados</div>
-</div>
-    <div class="numeros">
+      <image href="https://raw.githubusercontent.com/kronxz/solar-calculator/main/placas.jpg" x="320" y="250"
+        width="400" height="480" clip-path="url(#hexImg)" />
 
-      <div class="numero">
-        <strong>+30 anos</strong>
-        <span>Experiência elétrica</span>
-      </div>
+      <polygon points="
+  520,250
+  720,370
+  720,610
+  520,730
+  320,610
+  320,370
+" fill="none" stroke="#ffffff" stroke-width="8" />
 
-      <div class="numero">
-        <strong>+300</strong>
-        <span>Projetos realizados</span>
-      </div>
+      <!-- HEX DIREITA -->
+      <polygon points="
+  640,200
+  740,260
+  740,360
+  640,420
+  540,360
+  540,260
+" fill="#60A5FA" opacity="0.35" />
 
-      <div class="numero">
-        <strong>100%</strong>
-        <span>Foco em qualidade</span>
-      </div>
+      <!-- HEX GRANDE BAIXO -->
+      <polygon points="
+  650,760
+  780,830
+  780,960
+  650,1030
+  520,960
+  520,830
+" fill="#2F80ED" />
 
-    </div>
+    </svg>
 
-  </div>
-  
-  
-  <div class="sobre-cards">
-
-    <div class="card">
-     <h3>⚡ Especialistas em energia solar</h3>
-<p>Dimensionamento preciso para máxima geração e retorno financeiro</p>
-    </div>
-
-    <div class="card">
-<h3>🔧 Instalação profissional</h3>
-<p>Padrão técnico elevado, garantindo segurança e durabilidade do sistema</p>
-    </div>
-
-    <div class="card">
-     <h3>📊 Projeto personalizado</h3>
-<p>Sistema adaptado ao seu consumo para evitar desperdício e maximizar economia</p>
-    </div>
-
-    <div class="card">
-      <h3>💰 Economia real</h3>
-<p>Redução significativa na conta de energia já nos primeiros meses</p>
-    </div>
-
-    
-  </div>
-
-</div>
- <div class="mini-cta">
-  Agora que você já viu a qualidade do nosso trabalho, veja na próxima página quanto esse sistema pode economizar no seu bolso.
-</div>
-</div> 
-
-
-  
-<div class="pagina funcionamento">
-
-<h2>Como funciona a energia solar na prática</h2>
-
-<p class="subtitulo">
-  Entenda como você começa a economizar desde o primeiro mês
-</p>
-
-<div class="explicacao-topo">
-  Esse processo acontece automaticamente todos os dias no seu sistema, sem necessidade de intervenção, garantindo economia contínua e previsível na sua conta de energia.
-</div>
-  
-<div class="linha-destaque"></div>
-  
-<div class="explicacao-extra" style="
-  background:#f8fafc !important;
-  color:#0f172a !important;
-  border-left:6px solid #1d4ed8 !important;
-  border-radius:12px;
-  padding:25px;
+    <div style="
+position:absolute;
+top:10px;
+right:30px;
+display:flex;
+align-items:center;
+gap:12px;
+z-index:10;
 ">
 
-<strong>Como você economiza com energia solar:</strong><br><br>
+      <img src="logo%20mf.jpg" style="
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #1d4ed8;
+    box-shadow:0 6px 20px rgba(0,0,0,0.25);
+  ">
 
-1. Os painéis solares captam a luz do sol e geram energia elétrica gratuita<br><br>
-
-2. O inversor transforma essa energia em padrão utilizável na sua casa<br><br>
-
-3. A energia é consumida em tempo real, reduzindo sua conta imediatamente<br><br>
-
-4. O excedente vai para a rede e vira crédito na concessionária<br><br>
-
-5. O relógio bidirecional registra toda a energia injetada na rede<br><br>
-
-6. Você acompanha tudo pelo aplicativo em tempo real<br><br>
-
-7. Resultado: economia mensal, valorização do imóvel e proteção contra aumentos<br>
-
-</div>
-  
-  <div class="fluxo">
-
-    <div class="etapa">
-    <div class="numero-fluxo">1</div>
-      <h3>☀️ Geração</h3>
-      <p>Painéis captam a luz do sol e geram energia elétrica.</p>
+      <div style="color:#020617;">
+        <div style="font-weight:800;font-size:18px;">
+          MF Serviços
+        </div>
+        <div style="font-size:14px;color:#1e293b;">
+          Especializados
+        </div>
+      </div>
     </div>
 
-    
+    <div style="
+position:absolute;
+left:60px;
+bottom:120px;
+z-index:50;
+font-family:Segoe UI;
+width:420px;
+text-align:left;
+">
 
-    <div class="etapa">
-     <div class="numero-fluxo">2</div>
-      <h3>🔄 Conversão</h3>
-      <p>O inversor transforma em energia utilizável.</p>
+      <h1 style="
+font-size:52px;
+margin:0;
+font-weight:800;
+color:#020617;
+line-height:1.1;
+z-index:50;
+">
+        Proposta<br>
+        <span style="color:#1d4ed8;">Comercial</span>
+      </h1>
+
+      <p style="font-size:14px;color:#555;margin-bottom:20px;">
+        Elaborada para: <strong id="nomeCliente"></strong><br>
+        <span id="cidadeCliente"></span>
+      </p>
+
+
+
+      <div style="
+margin-top:25px;
+font-size:14px;
+color:#333;
+line-height:1.6;
+z-index:50;
+">
+
+        <div>
+          Nome do Responsável:
+          <div style="font-weight:700;color:#020617;">
+            MARCOS FELIPE MACHADO
+          </div>
+        </div>
+
+        <div>
+          Telefone:
+          <div style="font-weight:700;color:#020617;">
+            (21) 97238-1004
+          </div>
+        </div>
+
+        <div>
+          Nº da Proposta:
+          <div style="font-weight:700;color:#020617;">
+            <span id="numeroProposta"></span>
+          </div>
+        </div>
+
+
+
+      </div> <!-- fecha logo -->
+    </div> <!-- fecha bloco de dados -->
+  </div> <!-- fecha container da capa -->
+
+  <!-- 🔥 PÁGINA 2 - SOBRE A EMPRESA (AJUSTADA PROFISSIONAL) -->
+  <div class="pagina">
+
+    <!-- 🔹 TOPO ESQUERDO FIXO (PIXEL PERFEITO) -->
+    <div style="
+  position:absolute;
+  top:-5px; /* 🔥 SOBE PRA FORA DA PÁGINA */
+  left:30px;
+
+  font-size:16px;
+  font-weight:600;
+  color: var(--azul-principal);
+">
+      Energia Solar
     </div>
 
+    <!-- 🔹 CONTEÚDO CENTRAL -->
+    <div class="container-pagina">
 
+      <div style="
+      max-width:620px;
+      margin:0 auto;
+      text-align:center;
+    ">
 
-    <div class="etapa">
-    <div class="numero-fluxo">3</div>
-      <h3>⚡ Consumo</h3>
-      <p>Você usa a energia em tempo real e reduz a conta.</p>
+        <h2 style="
+  font-size:34px;
+  color: var(--azul-claro) !important; /* 🔥 AZUL CLARO DA CAPA */
+  margin-bottom:25px;
+  font-weight:800;
+">
+          Sobre a Empresa
+        </h2>
+
+        <p style="
+        font-size:16px;
+        color:#334155;
+        line-height:1.8;
+      ">
+          Somos uma empresa familiar com mais de 30 anos de experiência em elétrica e
+          centenas de projetos entregues com segurança e excelência. Expandimos nossa
+          atuação para a energia solar, fundando duas empresas especializadas para tornar a
+          energia limpa acessível, rentável e segura para todos os nossos clientes. Nosso
+          compromisso é com a economia real e o atendimento humano e técnico de alto nível.
+        </p>
+
+      </div>
+
     </div>
 
-  
-
-    <div class="etapa">
-    <div class="numero-fluxo">4</div>
-      <h3>🏦 Créditos</h3>
-      <p>O excedente vira crédito para usar à noite.</p>
-    </div>
-
-  </div>
-
-  <div class="bloco-autoridade">
-  <strong>Projeto dimensionado com precisão técnica:</strong><br><br>
-  Diferente de sistemas genéricos, este projeto foi calculado com base no seu consumo real, buscando o máximo aproveitamento da geração e o melhor retorno financeiro possível ao longo dos anos.
-</div>
- 
-  <div class="impacto">
-   Você continua conectado à rede, mas passa a gerar sua própria energia e reduzir drasticamente sua conta todos os meses.
-  </div>
-
-</div>
-
-<div class="beneficios">
-
-  <h2>Por que investir em energia solar?</h2>
-
-  <div class="grid-beneficios">
-
-    <div class="beneficio">
-      <h3>💰 Economia imediata</h3>
-      <p>Reduza em até 95% sua conta de energia desde o primeiro mês.</p>
-    </div>
-
-    <div class="beneficio">
-      <h3>📈 Valorização do imóvel</h3>
-      <p>Imóveis com energia solar podem valorizar até 10% no mercado.</p>
-    </div>
-
-    <div class="beneficio">
-      <h3>🛡 Proteção contra aumentos</h3>
-      <p>Fique protegido contra os constantes reajustes da energia elétrica.</p>
-    </div>
-
-    <div class="beneficio">
-      <h3>🌱 Energia limpa</h3>
-      <p>Reduza sua emissão de carbono e contribua com o meio ambiente.</p>
-    </div>
-    <div class="beneficio">
-
-    <h3>💳 Financiamento facilitado</h3>
-    <p>Invista em energia solar com parcelas acessíveis e pague com a própria economia gerada.</p>
-    </div>
-
-    <div class="beneficio">
-    <h3>📊 Proteção contra inflação energética</h3>
-    <p>A energia elétrica sobe todos os anos. Com energia solar, você se protege desses aumentos.</p>
-    </div>
-
-    <div class="beneficio">
-    <h3>🔒 Segurança do investimento</h3>
-    <p>Energia solar é um dos investimentos mais seguros e previsíveis do mercado atual.</p>
-    </div>
-
-    <div class="beneficio">
-    <h3>📈 Retorno garantido</h3>
-    <p>Seu sistema se paga em poucos anos e continua gerando lucro por décadas.</p>
-    </div>
-
-  </div>
-
-  <div class="impacto-final">
-
-<div class="bloco-autoridade">
-💡 Nos últimos anos, a energia elétrica tem sofrido reajustes constantes.
-Com um sistema solar, você se protege desses aumentos e transforma um custo variável em um investimento previsível.
-</div>
-    Investir em energia solar não é custo. É economia e patrimônio.
-  </div>
-<div class="impacto">
-🚀 Você transforma sua conta de luz em um investimento que retorna todos os meses.
-</div>
-</div>
-
-<div class="pagina equipamentos">
-
-  <h2>Equipamentos do Sistema</h2>
-
-<p style="text-align:center; margin-bottom:20px;">
-Equipamentos selecionados com alto padrão de qualidade, garantindo eficiência, durabilidade e máximo retorno financeiro.
-</p>
-
-<img src="https://images.unsplash.com/photo-1509391366360-2e959784a276"
-style="width:100%; border-radius:12px; margin-bottom:20px;">
-  
-<div class="grid-equipamentos">
-
-<div class="equipamento">
-
-<h3>🔲 Módulos Fotovoltaicos</h3>
-<p><strong>Marca:</strong> JA Solar / Canadian / Trina</p>
-<p><strong>Potência:</strong> 700 W</p>
-<p><strong>Quantidade:</strong> 7 unidades</p>
-<p><strong>Garantia:</strong> 25 anos</p>
-
-</div>
-
-
-<div class="equipamento">
-
-<h3>⚙️ Inversor Solar</h3>
-<p><strong>Marca:</strong> Deye / Growatt / Solis</p>
-<p><strong>Potência:</strong> 5 kW</p>
-<p><strong>Monitoramento:</strong> Wi-Fi</p>
-<p><strong>Garantia:</strong> 5 anos</p>
-
-</div>
-
-
-<div class="equipamento">
-
-<h3>🔧 Materiais Inclusos</h3>
-<p>✔ Estrutura para telhado cerâmico</p>
-<p>✔ Cabos solares (aprox. 50m)</p>
-<p>✔ Conectores MC4</p>
-<p>✔ DPS e disjuntores</p>
-<p>✔ String box completa</p>
-
-</div>
-
-
-<div class="equipamento">
-
-<h3>📡 Monitoramento</h3>
-<p>✔ Aplicativo em tempo real</p>
-<p>✔ Acompanhamento da geração</p>
-<p>✔ Relatórios de desempenho</p>
-
-</div>
-</div>
- 
-
-</div>
-
-  <div class="pagina projeto">
-
-<h2>Seu projeto de energia solar</h2>
-
-<div class="selos">
-  <div>💰 Economia imediata</div>
-  <div>⚡ Retorno garantido</div>
-  <div>📈 Valorização do imóvel</div>
-</div>    
-    
-<p>Este sistema foi dimensionado com base no seu consumo real de energia.</p>
-
-
-<div class="grid-projeto">
-
-<div class="card-projeto">
-<span>Seu consumo atual</span>
-<strong id="consumo">-</strong>
-</div>
-
-<div class="destaque-financeiro">
-💰 Você pode economizar aproximadamente R$ ${dados.economia}/mês
-</div>
-
-<div class="card-projeto">
-<span>Geração estimada mensal</span>
-<strong id="geracao">-</strong>
-</div>
-
-<div class="card-projeto">
-<span>Consumo anual</span>
-<strong id="consumoAnual">-</strong>
-</div>
-
-<div class="card-projeto">
-<span>Geração anual estimada</span>
-<strong id="geracaoAnual">-</strong>
-</div>
-
-<div class="card-projeto">
-<span>Potência do sistema</span>
-<strong>4.39 kWp</strong>
-</div>
-
-<div class="card-projeto">
-<span>Quantidade de módulos</span>
-<strong>7 unidades</strong>
-</div>
-
-<div class="card-projeto">
-<span>Vida útil do sistema</span>
-<strong>25+ anos</strong>
-</div>
-
-<div class="card-projeto">
-<span>Eficiência do sistema</span>
-<strong>Alta performance</strong>
-</div>
-
-</div>
-</div>
-
-<div class="comparacao">
-
-<h2>Comparativo de economia com energia solar</h2>
-
-<p class="explicacao-topo">
-Hoje você paga energia todos os meses. Com o sistema solar, esse custo praticamente desaparece.
-</p>
-<div class="bloco-autoridade">
-⚠️ A cada ano que passa sem energia solar, você continua pagando valores cada vez mais altos para a concessionária.
-<br><br>
-Com energia solar, você inverte esse cenário e passa a economizar todos os meses.
-</div>
-<div class="grid-comparacao">
-
-  <div class="box vermelho">
-    <span>Hoje (sem solar)</span>
-    <strong id="contaSem"></strong>
-    <p>Valor que você paga todo mês sem retorno</p>
-  </div>
-
-  <div class="box verde">
-    <span>Com energia solar</span>
-    <strong id="contaCom"></strong>
-    <p>Economia gerada todos os meses</p>
-  </div>
-
-</div>
-
-<div class="impacto">
-💰 Em poucos anos, o sistema se paga e passa a gerar lucro para você.
-</div>
-
-<div class="bloco-autoridade">
-Enquanto você continua pagando energia, esse dinheiro está indo embora.
-Com energia solar, ele volta para o seu bolso todos os meses.
-</div>
-
-<div class="impacto-final">
-🚀 Quanto antes você instalar, mais cedo começa a economizar e gerar lucro.
-</div>  
-  
-</div>
-  
-  
-<div class="pagina financeira">
-
-  <h2>Análise financeira</h2>
-
-  <div class="bloco-autoridade">
-
-💡 Comparação real de cenário:
-
-Sem energia solar, você continuará pagando valores crescentes todos os anos.
-
-Com energia solar, você reduz drasticamente esse custo e transforma sua conta em investimento.
-
-</div>
-
-<div class="destaque-financeiro">
-💰 Esse sistema se paga sozinho e depois passa a gerar lucro todos os meses.
-</div>
-  
-  <div class="grid-financeiro">
-
-    <div class="card-financeiro">
-      <span>Economia mensal</span>
-      <strong id="ecoMensal"></strong>
-    </div>
-
-    <div class="card-financeiro">
-      <span>Economia anual</span>
-      <strong id="ecoAnual"></strong>
-    </div>
-
-    <div class="card-financeiro">
-      <span>Economia em 25 anos</span>
-      <strong id="ecoTotal"></strong>
-    </div>
-
-    <div class="card-financeiro destaque">
-      <span>Lucro após payback</span>
-      <strong id="lucro"></strong>
+    <!-- 🔵 RODAPÉ -->
+    <div style="
+  position:absolute;
+  bottom:-8px;
+  left:0;
+  width:100%;
+  height:42px;
+
+  background: var(--azul-principal);
+
+  display:flex;
+  align-items:center;
+
+  padding-left:30px;
+
+  color:white;
+  font-size:13px;
+  font-weight:500;
+">
+      Energia Solar
     </div>
 
   </div>
 
-  <div class="frase-impacto">
-    Após o retorno do investimento, o sistema continua gerando economia por décadas.
+  <div class="pagina">
+
+    <!-- 🔹 TOPO -->
+    <div style="
+  position:absolute;
+  top:-5px;
+  left:30px;
+  font-size:16px;
+  font-weight:600;
+  color: var(--azul-principal);
+  ">
+      Energia Solar
+    </div>
+
+
+    <div class="container-pagina">
+
+      <!-- 🔥 TÍTULO -->
+      <h2 style="
+  font-size:34px; /* 🔥 MESMO TAMANHO */
+  color: var(--azul-claro) !important; /* 🔥 MESMA COR */
+  margin-bottom:25px;
+  font-weight:800;
+  text-align:center;
+">
+        Entenda em 4 Passos Como Você Ganha com Energia Solar
+      </h2>
+
+      <!-- 🖼️ IMAGEM GRANDE -->
+      <div style="
+  width:100%;
+  height:340px; /* 🔥 AUMENTA PRA PEGAR A IMAGEM TODA */
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:20px; /* 🔽 MENOS ESPAÇO PRO TEXTO SUBIR */
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+">
+        <img src="casa.jpg" style="
+    width:100%;
+    height:100%;
+    object-fit:contain; /* 🔥 NÃO CORTA MAIS */
+    background:#e2e8f0; /* 🔥 FUNDO LIMPO (evita borda feia) */
+  ">
+      </div>
+
+
+      <!-- 📄 TEXTO -->
+      <div style="
+      font-size:15.5px;
+      line-height:1.7;
+      color:#334155;
+    ">
+
+        <p>1. Os painéis solares captam a luz do sol e a convertem em energia elétrica 100% limpa e gratuita.</p>
+
+        <p>2. O inversor converte a energia captada para o formato utilizado em sua casa ou empresa (corrente
+          alternada).</p>
+
+        <p>3. A energia elétrica gerada alimenta diretamente o seu consumo, reduzindo a conta de luz imediatamente.</p>
+
+        <p>4. O excesso de energia é enviado para a rede da concessionária, gerando créditos para abater em sua próxima
+          fatura.</p>
+
+        <p>5. A energia injetada na rede é registrada pelo relógio bidirecional, que mede com precisão o quanto você
+          economizou e o quanto será abatido na sua próxima conta.</p>
+
+        <p>6. Você acompanha tudo em tempo real pelo aplicativo: quanto está gerando, economizando e quanto ainda tem de
+          crédito.</p>
+
+        <p>7. Ao produzir sua própria energia, você reduz gastos, valoriza seu imóvel e contribui para um futuro mais
+          sustentável.</p>
+
+      </div>
+
+    </div>
+
+
+    <!-- 🔵 RODAPÉ -->
+    <div style="
+  position:absolute;
+  bottom:-10px;
+  left:0;
+  width:100%;
+  height:42px;
+  background: var(--azul-principal);
+  display:flex;
+  align-items:center;
+  padding-left:30px;
+  color:white;
+  font-size:13px;
+  font-weight:500;
+  ">
+      Energia Solar
+    </div>
+
   </div>
-  
-<div class="bloco-autoridade">
-Enquanto você paga sua conta de energia, esse valor não retorna para você.
-Com o sistema solar, esse mesmo valor se transforma em economia e patrimônio ao longo dos anos.
-</div>
-  
-</div>
+
+  <div class="pagina">
+
+    <!-- 🔹 TOPO ESQUERDO -->
+    <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color: var(--azul-principal);
+  ">
+      Energia Solar
+    </div>
 
 
-  
-<div class="pagina sistema">
+    <div class="container-pagina">
 
- <h2>Projeção do seu retorno financeiro</h2>
+      <!-- 🔥 TÍTULO PADRÃO (IGUAL PAG 2 e 3) -->
+      <h2 style="
+  font-size:34px;
+  color: var(--azul-claro) !important; /* 🔥 FORÇA AZUL CERTO */
+  text-align:center;
+  font-weight:800;
+  margin-bottom:50px;
+">
+        Veja Por Que Investir em Energia Solar Vale a Pena
+      </h2>
 
-<p class="explicacao-topo">
-Veja como o seu investimento em energia solar se transforma em economia ao longo dos anos.
-</p>
 
-<div id="dados"></div>
+      <!-- 🔥 GRID 3x2 -->
+      <div style="
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:50px 40px;
+      text-align:center;
+      max-width:650px;
+      margin:0 auto;
+    ">
 
-<div class="bloco-autoridade">
-📈 Este gráfico representa o crescimento da sua economia ao longo do tempo.
-Após o payback, todo o valor gerado é lucro direto para você.
-</div>
+        <!-- ITEM 1 -->
+        <div>
+          <div style="font-size:32px; color:#f97316;">🧾</div>
+          <p style="font-size:13px; color:#334155; margin-top:10px;">
+            <strong>Financiamento Facilitado:</strong><br>
+            Invista em energia solar<br>
+            com parcelas acessíveis<br>
+            em até 60x.
+          </p>
+        </div>
 
-<canvas id="grafico"></canvas>
+        <!-- ITEM 2 -->
+        <div>
+          <div style="font-size:32px; color:#22c55e;">$</div>
+          <p style="font-size:13px; color:#334155; margin-top:10px;">
+            <strong>Economia Duradoura:</strong><br>
+            Após quitar seu sistema,<br>
+            gere energia gratuita por<br>
+            mais de 25 anos.
+          </p>
+        </div>
 
-  <div class="resumo-retorno">
+        <!-- ITEM 3 -->
+        <div>
+          <div style="font-size:32px; color:#06b6d4;">🏠</div>
+          <p style="font-size:13px; color:#334155; margin-top:10px;">
+            <strong>Imóvel Mais Valorizado:</strong><br>
+            Um sistema solar pode<br>
+            aumentar o valor de<br>
+            mercado da sua<br>
+            propriedade.
+          </p>
+        </div>
 
-  <div class="box-retorno">
-    <span>Tempo de retorno</span>
-    <strong id="paybackTexto"></strong>
+        <!-- ITEM 4 -->
+        <div>
+          <div style="font-size:32px; color:#a855f7;">🌎</div>
+          <p style="font-size:13px; color:#334155; margin-top:10px;">
+            Contribua para o futuro<br>
+            do planeta.
+          </p>
+        </div>
+
+        <!-- ITEM 5 -->
+        <div>
+          <div style="font-size:32px; color:#ef4444;">🛡️</div>
+          <p style="font-size:13px; color:#334155; margin-top:10px;">
+            Proteja-se contra a<br>
+            inflação de energia.
+          </p>
+        </div>
+
+        <!-- ITEM 6 -->
+        <div>
+          <div style="font-size:32px; color:#f59e0b;">💰</div>
+          <p style="font-size:13px; color:#334155; margin-top:10px;">
+            <strong>Redução de Conta:</strong><br>
+            Economize até 95% na<br>
+            sua conta de luz já nos<br>
+            primeiros meses.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 🔵 RODAPÉ -->
+    <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background: var(--azul-principal);
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+      Energia Solar
+    </div>
+
   </div>
 
-  <div class="box-retorno">
-    <span>Lucro em 25 anos</span>
-    <strong id="lucro25"></strong>
+  <div class="pagina">
+
+    <!-- 🔹 TOPO -->
+    <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color: var(--azul-principal);
+  ">
+      Energia Solar
+    </div>
+
+
+    <div class="container-pagina">
+
+      <!-- 🔥 TÍTULO -->
+      <h2 style="
+      font-size:34px;
+      color: var(--azul-claro) !important;
+      text-align:center;
+      font-weight:800;
+      margin-bottom:40px;
+    ">
+        Etapas da Instalação do Seu Sistema Solar
+      </h2>
+
+
+      <div style="
+  position:relative;
+  max-width:700px;
+  margin:0 auto;
+  padding-top:20px;
+">
+
+        <!-- 🔥 LINHA CENTRAL MAIS GROSSA -->
+        <div style="
+    position:absolute;
+    left:50%;
+    top:0;
+    transform:translateX(-50%);
+    width:20px; /* 🔥 MAIS GROSSA */
+    height:100%;
+    background:linear-gradient(
+      to bottom,
+      #0ea5e9,
+      #22c55e,
+      #facc15,
+      #fb923c,
+      #ef4444
+    );
+    border-radius:10px;
+  "></div>
+
+
+        <!-- 🔥 BLOCO PADRÃO -->
+        <div style="display:flex; flex-direction:column; gap:70px;">
+
+
+          <!-- PASSO 1 -->
+          <div style="position:relative;">
+            <div style="
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        width:65px;
+        height:65px;
+        border-radius:50%;
+        background:#0ea5e9;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-size:24px;
+        font-weight:bold;
+      ">1</div>
+
+            <div style="width:45%; margin-left:auto;">
+              <div style="color:#0ea5e9; font-weight:bold;">
+                📄 Passo 1
+              </div>
+              <p style="font-size:14px; color:#334155;">
+                Fazemos o orçamento preliminar de acordo com o seu consumo médio mensal de energia e a irradiação solar
+                local.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- PASSO 2 -->
+          <div style="position:relative;">
+            <div style="
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        width:65px;
+        height:65px;
+        border-radius:50%;
+        background:#22c55e;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-size:24px;
+        font-weight:bold;
+      ">2</div>
+
+            <div style="width:45%;">
+              <div style="color:#22c55e; font-weight:bold;">
+                👍 Passo 2
+              </div>
+              <p style="font-size:14px; color:#334155;">
+                Fechamos a proposta ideal para você.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- PASSO 3 -->
+          <div style="position:relative;">
+            <div style="
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        width:65px;
+        height:65px;
+        border-radius:50%;
+        background:#facc15;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-size:24px;
+        font-weight:bold;
+      ">3</div>
+
+            <div style="width:45%; margin-left:auto;">
+              <div style="color:#facc15; font-weight:bold;">
+                ✏️ Passo 3
+              </div>
+              <p style="font-size:14px; color:#334155;">
+                Após aprovada a proposta, conduzimos a vistoria técnica do local para coleta de requisitos técnicos do
+                sistema.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- PASSO 4 -->
+          <div style="position:relative;">
+            <div style="
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        width:65px;
+        height:65px;
+        border-radius:50%;
+        background:#fb923c;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-size:24px;
+        font-weight:bold;
+      ">4</div>
+
+            <div style="width:45%;">
+              <div style="color:#fb923c; font-weight:bold;">
+                📊 Passo 4
+              </div>
+              <p style="font-size:14px; color:#334155;">
+                Com os requisitos técnicos em mãos, elaboramos o projeto e solicitamos o acesso à rede de energia junto
+                à concessionária local.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- PASSO 5 -->
+          <div style="position:relative;">
+            <div style="
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        width:65px;
+        height:65px;
+        border-radius:50%;
+        background:#ef4444;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-size:24px;
+        font-weight:bold;
+      ">5</div>
+
+            <div style="width:45%; margin-left:auto;">
+              <div style="color:#ef4444; font-weight:bold;">
+                💡 Passo 5
+              </div>
+              <p style="font-size:14px; color:#334155;">
+                Após o projeto ser aprovado pela concessionária de energia, realizamos a instalação do sistema e
+                solicitamos a troca do relógio para o modelo bidirecional.
+              </p>
+            </div>
+          </div>
+
+        </div>
+        <!-- 🔵 RODAPÉ -->
+        <div style="
+position:absolute;
+bottom:-10px;
+left:-30px;
+width:calc(100% + 60px);
+height:42px;
+background: var(--azul-principal);
+display:flex;
+align-items:center;
+padding-left:30px;
+color:white;
+font-size:13px;
+font-weight:500;
+">
+          Energia Solar
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+
+
+
+    <div class="pagina projeto" style="
+position:relative;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding-top:120px;
+box-sizing:border-box;
+">
+
+      <!-- TOPO -->
+      <div style="
+position:absolute;
+top:-5px;
+left:30px;
+font-size:16px;
+font-weight:600;
+color:#1d4ed8;
+">
+        Energia Solar
+      </div>
+
+
+      <h2 style="
+font-size:34px;
+color:#60a5fa !important;
+text-align:center;
+font-weight:800;
+margin-bottom:25px;
+">
+        Projeto e Instalação
+      </h2>
+
+
+
+      <p style="
+max-width:620px;
+margin:0 auto 40px;
+text-align:center;
+font-size:15px;
+line-height:1.8;
+color:#334155;
+">
+        Antes de instalar seu sistema solar, realizamos um estudo completo do local para garantir o máximo de geração de
+        energia. Analisamos fatores como sombreamento, orientação do telhado e espaço disponível — tudo para que seu
+        sistema funcione com o melhor desempenho possível. Cada detalhe importa, e é por isso que o projeto é
+        personalizado para a sua realidade, com segurança, eficiência e economia garantidas.
+      </p>
+
+
+
+      <!-- BLOCO PROJETO -->
+      <div style="
+display:flex;
+align-items:center;
+justify-content:center;
+gap:35px;
+
+max-width:620px;
+
+margin:0 auto;
+
+margin-top:-20px;
+
+position:relative;
+z-index:5;
+">
+
+        <!-- VELOCÍMETRO -->
+        <div>
+
+          <svg width="180" height="180" viewBox="0 0 100 100">
+
+            <path d="M20 70 A30 30 0 0 1 80 70" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" />
+
+            <line x1="50" y1="70" x2="68" y2="50" stroke="#2563eb" stroke-width="6" stroke-linecap="round" />
+
+            <circle cx="50" cy="70" r="6" fill="#2563eb" />
+
+          </svg>
+
+        </div>
+
+
+
+        <!-- DADOS -->
+        <div style="
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+
+  font-size:15px;
+  color:#334155;
+
+  line-height:1.6;
+  ">
+
+          <div>
+            <strong style="color:#020617;">
+              Consumo médio mensal de energia:
+            </strong>
+            <span id="consumoMensal">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#020617;">
+              Consumo médio anual de energia:
+            </strong>
+            <span id="consumoAnual">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#020617;">
+              Geração média mensal estimada:
+            </strong>
+            <span id="geracaoMensal">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#020617;">
+              Geração média anual estimada:
+            </strong>
+            <span id="geracaoAnual">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#020617;">
+              Potência do sistema:
+            </strong>
+            <span id="kwp">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#020617;">
+              Quantidade de módulos:
+            </strong>
+            <span id="placas">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong style="color:#020617;">
+              Economia mensal estimada:
+            </strong>
+            <span id="ecoTexto">
+              -
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+position:absolute;
+bottom:-10px;
+left:0;
+width:100%;
+height:42px;
+background:#1d4ed8;
+display:flex;
+align-items:center;
+padding-left:30px;
+color:white;
+font-size:13px;
+font-weight:500;
+z-index:20;
+">
+        Energia Solar
+      </div>
+
+    </div> <!-- 🔥 FECHA A PÁGINA PROJETO -->
+
+    <!-- 🔥 PÁGINA - LISTA DE EQUIPAMENTOS -->
+    <div class="pagina">
+
+      <!-- TOPO -->
+      <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color: var(--azul-principal);
+  ">
+        Energia Solar
+      </div>
+
+      <div class="container-pagina">
+
+        <!-- TÍTULO -->
+        <h2 style="
+      font-size:34px;
+      color: var(--azul-claro) !important;
+      text-align:center;
+      font-weight:800;
+      margin-bottom:35px;
+    ">
+          Lista de Equipamentos
+        </h2>
+
+        <!-- IMAGEM -->
+        <div style="
+      width:100%;
+      max-width:520px;
+      height:260px;
+      margin:0 auto 30px auto;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    ">
+
+          <img src="lista%20de%20equipamentos.jpg" style="
+        width:100%;
+        height:100%;
+        object-fit:cover;
+      ">
+
+        </div>
+
+        <!-- GRID -->
+        <div style="
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      max-width:620px;
+      margin:0 auto;
+      color:#334155;
+      font-size:14px;
+      line-height:1.7;
+    ">
+
+          <!-- MÓDULO -->
+          <div>
+
+            <div style="
+          color:var(--azul-principal);
+          font-weight:700;
+          margin-bottom:10px;
+          font-size:16px;
+        ">
+              🔷 Módulo Fotovoltaico
+            </div>
+
+            <strong>Fabricante:</strong> TOPCON N-TYPE<br>
+
+            <strong>Potência:</strong>
+            <span id="equip-potencia-placa"></span> Wp<br>
+
+            <strong>Garantia (defeitos):</strong> 10 Anos<br>
+
+            <strong>Garantia (eficiência):</strong> 25 Anos<br>
+
+            <strong>Quantidade:</strong>
+            <span id="equip-quantidade-placas"></span>
+
+          </div>
+
+          <!-- INVERSOR -->
+          <div>
+
+            <div style="
+          color:var(--azul-principal);
+          font-weight:700;
+          margin-bottom:10px;
+          font-size:16px;
+        ">
+              ⚡ Inversor
+            </div>
+
+            <strong>Fabricante:</strong> DEYE<br>
+
+            <strong>Potência:</strong>
+            <span id="equip-inversor"></span><br>
+
+            <strong>Garantia:</strong> 5 Anos<br>
+
+            <strong>Monitoramento:</strong> Wi-Fi<br>
+
+            <strong>Quantidade:</strong> 1
+
+          </div>
+
+        </div>
+
+        <!-- EQUIPAMENTO EXTRA -->
+        <div style="
+      max-width:620px;
+      margin:35px auto 0 auto;
+      color:#334155;
+      font-size:14px;
+      line-height:1.7;
+    ">
+
+          <div style="
+        color:var(--azul-principal);
+        font-weight:700;
+        margin-bottom:10px;
+        font-size:16px;
+      ">
+            🛠 Equipamento Adicional
+          </div>
+
+          ESTRUTURA DE FIXAÇÃO CERÂMICA<br>
+
+          <strong>Quantidade:</strong> 1
+
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background: var(--azul-principal);
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+    <!-- 🔥 PÁGINA - INFORMAÇÕES DO SISTEMA -->
+    <div class="pagina">
+
+      <!-- TOPO -->
+      <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color:#1d4ed8;
+  ">
+        Energia Solar
+      </div>
+
+      <div class="container-pagina" style="
+justify-content:flex-start;
+padding-top:120px;
+">
+
+        <!-- TÍTULO -->
+        <h2 style="
+      font-size:34px;
+      color:#60a5fa !important;
+      text-align:center;
+      font-weight:800;
+      margin-bottom:30px;
+    ">
+          Informações do Sistema
+        </h2>
+
+        <!-- TEXTO -->
+        <p style="
+      text-align:center;
+      color:#64748b;
+      font-size:15px;
+      margin-bottom:30px;
+    ">
+          As principais informações do sistema proposto estão indicadas nesta seção.
+        </p>
+
+        <!-- DADOS -->
+        <div style="
+      text-align:center;
+      margin-bottom:30px;
+      color:#334155;
+      font-size:15px;
+      line-height:1.8;
+    ">
+
+          <div>
+            <strong>Potência do sistema:</strong>
+            <span id="infoPotencia" style="color:#2563eb;font-weight:700;">
+              -
+            </span>
+          </div>
+
+          <div>
+            <strong>Vida útil do sistema:</strong>
+            25 a 35 Anos
+          </div>
+
+        </div>
+
+        <!-- GRÁFICO -->
+        <div style="
+  width:100%;
+  max-width:650px;
+  height:320px;
+  margin:0 auto 40px auto;
+">
+          <canvas id="graficoSistema"></canvas>
+        </div>
+
+        <!-- EXPLICAÇÕES -->
+        <div style="
+      max-width:650px;
+      margin:0 auto;
+      color:#334155;
+      font-size:14px;
+      line-height:1.8;
+    ">
+
+          <p>
+            <strong>kWp:</strong>
+            Simplificadamente, é a máxima potência que o sistema poderia alcançar na ausência de perdas.
+            Tecnicamente, corresponde à máxima potência instantânea que o conjunto de módulos fotovoltaicos pode
+            fornecer dentro dos padrões Standard Test Conditions (STC): Irradiação solar de 1000 W/m²; Temperatura da
+            célula fotovoltaica a 25°C e Massa de ar atmosférica de 1,5.
+          </p>
+
+          <br>
+
+          <p>
+            <strong>kWh:</strong>
+            Unidade de medida padrão de energia elétrica consumida ou gerada em um determinado período
+            (convencionalmente, período de um mês).
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background:#1d4ed8;
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+    <!-- 🔥 PÁGINA - SERVIÇOS INCLUSOS -->
+    <div class="pagina">
+
+      <!-- 🔹 TOPO -->
+      <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color: var(--azul-principal);
+  ">
+        Energia Solar
+      </div>
+
+      <!-- 🔥 CONTEÚDO CENTRAL -->
+      <div class="container-pagina" style="
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  ">
+
+        <!-- TÍTULO -->
+        <h2 style="
+      font-size:34px;
+      color: var(--azul-claro) !important;
+      font-weight:800;
+      margin-bottom:45px;
+    ">
+          Serviços Inclusos
+        </h2>
+
+        <!-- TEXTO -->
+        <div style="
+      max-width:620px;
+      color:#334155;
+      font-size:15px;
+      line-height:2;
+      text-align:left;
+    ">
+
+          <p>
+            1. Vistoria técnica no local + elaboração do projeto elétrico personalizado.
+          </p>
+
+          <p>
+            2. Responsabilidade técnica (ART) registrada no CREA — garantindo segurança e legalidade.
+          </p>
+
+          <p>
+            3. Tratamos de toda a burocracia com a concessionária de energia — do início ao fim.
+          </p>
+
+          <p>
+            4. Montagem especializada dos painéis com estruturas sob medida para o seu telhado ou solo.
+          </p>
+
+          <p>
+            5. Instalação elétrica profissional com materiais de alta qualidade e normas atualizadas.
+          </p>
+
+          <p>
+            6. Acompanhamento técnico completo: do projeto à obra final, com supervisão profissional.
+          </p>
+
+          <p>
+            7. Frete incluso de todos equipamentos referentes ao sistema.
+          </p>
+
+          <p>
+            8. Documentação personalizada do projeto fotovoltaico.
+          </p>
+
+          <br>
+
+          <p style="
+        text-align:center;
+        font-size:13px;
+        color:#64748b;
+        line-height:1.8;
+      ">
+            OBS: Não estão inclusos eventuais serviços de alvenaria, reforço estrutural
+            e/ou alterações na rede de distribuição as quais eventualmente podem ser
+            solicitadas pela concessionária.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- 🔵 RODAPÉ -->
+      <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background: var(--azul-principal);
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+    <!-- 🔥 PÁGINA - ANÁLISE FINANCEIRA -->
+    <div class="pagina">
+
+      <!-- TOPO -->
+      <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color:#1d4ed8;
+  ">
+        Energia Solar
+      </div>
+
+      <div class="container-pagina" style="
+    justify-content:flex-start;
+    padding-top:110px;
+  ">
+
+        <!-- TÍTULO -->
+        <h2 style="
+      font-size:34px;
+      color:#60a5fa !important;
+      text-align:center;
+      font-weight:800;
+      margin-bottom:25px;
+    ">
+          Análise Financeira
+        </h2>
+
+        <!-- TEXTO -->
+        <p style="
+      text-align:center;
+      color:#64748b;
+      font-size:15px;
+      max-width:620px;
+      margin:0 auto 35px auto;
+      line-height:1.7;
+    ">
+          Nesta seção estão apresentados os principais dados financeiros do
+          sistema proposto, incluindo economia estimada, projeção futura
+          da conta de energia e retorno financeiro do investimento.
+        </p>
+
+        <!-- DADOS -->
+        <div style="
+      max-width:620px;
+      margin:0 auto 35px auto;
+      font-size:15px;
+      color:#334155;
+      line-height:2;
+    ">
+
+          <div style="display:flex;justify-content:space-between;">
+            <strong>Custo atual da conta SEM sistema:</strong>
+            <span id="semSistema">-</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;">
+            <strong>Custo da conta COM sistema:</strong>
+            <span id="comSistema">-</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;">
+            <strong>Custo anual SEM sistema:</strong>
+            <span id="anoSemSistema">-</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;">
+            <strong>Custo anual COM sistema:</strong>
+            <span id="anoComSistema">-</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;">
+            <strong>Economia mensal estimada:</strong>
+            <span id="economiaMensalTexto" style="
+          color:#16a34a;
+          font-weight:700;
+        ">-</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;">
+            <strong>Economia anual estimada:</strong>
+            <span id="economiaAnualTexto" style="
+          color:#16a34a;
+          font-weight:700;
+        ">-</span>
+          </div>
+
+        </div>
+
+        <!-- GRÁFICO -->
+        <div style="
+      width:100%;
+      max-width:650px;
+      height:300px;
+      margin:0 auto 40px auto;
+    ">
+          <canvas id="graficoFinanceiro"></canvas>
+        </div>
+
+        <!-- PROJEÇÃO -->
+        <div style="
+      text-align:center;
+      margin-top:10px;
+    ">
+
+          <h3 style="
+        color:#2563eb !important;
+        font-size:22px;
+        margin-bottom:25px;
+      ">
+            Projeção da Conta de Energia Após a Instalação
+          </h3>
+
+          <div id="projecaoFinanceira" style="
+        color:#334155;
+        font-size:15px;
+        line-height:2;
+      ">
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background:#1d4ed8;
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+    <!-- 🔥 PÁGINA - INDICADORES DE VIABILIDADE -->
+    <div class="pagina">
+
+      <!-- TOPO -->
+      <div style="
+  position:absolute;
+  top:-5px;
+  left:30px;
+  font-size:16px;
+  font-weight:600;
+  color:#1d4ed8;
+  ">
+        Energia Solar
+      </div>
+
+      <div class="container-pagina" style="
+  justify-content:flex-start;
+  padding-top:120px;
+  ">
+
+        <h2 style="
+    font-size:34px;
+    color:#60a5fa !important;
+    text-align:center;
+    font-weight:800;
+    margin-bottom:40px;
+    ">
+          Indicadores de Viabilidade
+        </h2>
+
+        <div style="
+    max-width:620px;
+    margin:0 auto;
+    font-size:15px;
+    line-height:2;
+    color:#334155;
+    ">
+
+          <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+            <strong>Valor do sistema:</strong>
+            <span id="valorSistemaTexto">-</span>
+          </div>
+
+          <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+            <strong>Payback:</strong>
+            <span id="paybackTexto">-</span>
+          </div>
+
+          <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+            <strong>ROI:</strong>
+            <span id="roiTexto">-</span>
+          </div>
+
+          <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+            <strong>TIR:</strong>
+            <span id="tirTexto">-</span>
+          </div>
+
+          <div style="
+      display:flex;
+      justify-content:space-between;
+      ">
+            <strong>Economia em 25 anos:</strong>
+            <span id="economia25anosTexto">-</span>
+          </div>
+
+        </div>
+
+        <div style="
+    width:100%;
+    max-width:650px;
+    height:320px;
+    margin:40px auto 0 auto;
+    ">
+          <canvas id="graficoFluxoCaixa"></canvas>
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+  position:absolute;
+  bottom:-10px;
+  left:0;
+  width:100%;
+  height:42px;
+  background:#1d4ed8;
+  display:flex;
+  align-items:center;
+  padding-left:30px;
+  color:white;
+  font-size:13px;
+  font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+
+    <!-- 🔥 PÁGINA FINAL -->
+    <div class="pagina">
+
+      <!-- TOPO -->
+      <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color:#1d4ed8;
+  ">
+        Energia Solar
+      </div>
+
+      <div class="container-pagina" style="
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  ">
+
+        <!-- TÍTULO -->
+        <h2 style="
+      font-size:34px;
+      color:#60a5fa !important;
+      font-weight:800;
+      margin-bottom:40px;
+    ">
+          Considerações Finais e Validade
+        </h2>
+
+        <!-- TEXTO -->
+        <div style="
+      max-width:620px;
+      text-align:left;
+      color:#334155;
+      font-size:15px;
+      line-height:1.9;
+    ">
+
+          <p>
+            1. Os valores apresentados de geração de energia são estimativas
+            baseadas em informações consultadas no banco de dados do CRESESB,
+            e representam médias mensais e anuais.
+          </p>
+
+          <p>
+            2. A estimativa de geração, custos e economia foram baseadas
+            no perfil de consumo apresentado pelo cliente e podem sofrer
+            pequenas variações conforme sazonalidade climática.
+          </p>
+
+          <p>
+            3. O sistema proposto foi projetado considerando o atual perfil
+            de consumo da unidade consumidora apresentada.
+          </p>
+
+          <p>
+            4. O sistema fotovoltaico possui vida útil superior a 25 anos,
+            necessitando apenas de manutenções preventivas periódicas.
+          </p>
+
+          <p>
+            5. Esta proposta possui validade de 7 dias corridos,
+            considerando oscilações de mercado e disponibilidade
+            de equipamentos.
+          </p>
+
+        </div>
+
+        <!-- DATAS -->
+        <div style="
+      margin-top:45px;
+      font-size:16px;
+      color:#0f172a;
+      line-height:2;
+    ">
+
+          <div>
+            Esta proposta foi gerada em:
+            <strong id="dataGeracao" style="color:#2563eb;">
+              --
+            </strong>
+          </div>
+
+          <div>
+            Válida até:
+            <strong id="dataValidade" style="color:#2563eb;">
+              --
+            </strong>
+          </div>
+
+        </div>
+
+        <!-- ASSINATURAS -->
+        <div style="
+      margin-top:90px;
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      gap:40px;
+    ">
+
+
+
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background:#1d4ed8;
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+    <!-- 🔥 ÚLTIMA PÁGINA -->
+    <div class="pagina">
+
+      <!-- TOPO -->
+      <div style="
+    position:absolute;
+    top:-5px;
+    left:30px;
+    font-size:16px;
+    font-weight:600;
+    color:#1d4ed8;
+  ">
+        Energia Solar
+      </div>
+
+      <!-- CONTEÚDO -->
+      <div class="container-pagina" style="
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  ">
+
+        <!-- TÍTULO -->
+        <h2 style="
+      font-size:34px;
+      color:#60a5fa !important;
+      font-weight:800;
+      margin-bottom:40px;
+    ">
+          Informações da Empresa e Contato
+        </h2>
+
+        <!-- EMPRESA -->
+        <div style="
+      color:#334155;
+      line-height:2;
+      font-size:15px;
+      margin-bottom:60px;
+    ">
+
+          <div style="
+        font-weight:700;
+        color:#020617;
+        font-size:18px;
+      ">
+            MF Serviços Especializados
+          </div>
+
+          <div>
+            📞 (21) 97238-1004
+          </div>
+
+          <div style="
+        color:#2563eb;
+        font-weight:600;
+      ">
+            @mf.eletricidade
+          </div>
+
+          <div>
+            Avenida Park Way
+          </div>
+
+          <div>
+            48.929.804/0001-84
+          </div>
+
+        </div>
+
+        <!-- ASSINATURAS -->
+        <div style="
+      width:100%;
+      max-width:650px;
+      display:flex;
+      justify-content:space-between;
+      margin-top:60px;
+      gap:40px;
+    ">
+
+          <!-- EMPRESA -->
+          <div style="
+        flex:1;
+        text-align:center;
+      ">
+
+            <div style="
+          color:#2563eb;
+          font-weight:700;
+          margin-bottom:70px;
+          font-size:18px;
+        ">
+              Assinatura da Empresa
+            </div>
+
+            <div style="
+          border-top:2px solid #cbd5e1;
+          padding-top:12px;
+          color:#334155;
+          font-size:14px;
+          line-height:1.8;
+        ">
+              MF Serviços Especializados<br>
+              48.929.804/0001-84
+            </div>
+
+          </div>
+
+          <!-- CLIENTE -->
+          <div style="
+        flex:1;
+        text-align:center;
+      ">
+
+            <div style="
+          color:#2563eb;
+          font-weight:700;
+          margin-bottom:70px;
+          font-size:18px;
+        ">
+              Assinatura do Cliente
+            </div>
+
+            <div style="
+          border-top:2px solid #cbd5e1;
+          padding-top:12px;
+          color:#334155;
+          font-size:14px;
+          line-height:1.8;
+        ">
+              <span id="assinaturaCliente">
+                Cliente
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ -->
+      <div style="
+    position:absolute;
+    bottom:-10px;
+    left:0;
+    width:100%;
+    height:42px;
+    background:#1d4ed8;
+    display:flex;
+    align-items:center;
+    padding-left:30px;
+    color:white;
+    font-size:13px;
+    font-weight:500;
+  ">
+        Energia Solar
+      </div>
+
+    </div>
+
+
+  </div>
   </div>
 
-    
-</div>
-  <div class="impacto">
-📊 Após o payback, o sistema passa a gerar lucro líquido todos os meses para você.
-</div>
-<div class="impacto">
-🚀 Quanto antes você instalar, mais cedo começa a lucrar.
-</div>
+
+
+
 
 <script>
 
-let dados = JSON.parse(localStorage.getItem("propostaAtual") || "{}")
+const lead = JSON.parse(localStorage.getItem("leadSelecionado"))
 
-let consumoEl = document.getElementById("consumo")
-if(consumoEl){
-  consumoEl.innerText = dados.consumo || "-"
-}
-let consumoAnualEl = document.getElementById("consumoAnual")
-if(consumoAnualEl){
-  consumoAnualEl.innerText = dados.consumoAnual || "-"
-}
+console.log("LEAD:", lead)
 
-let geracaoAnualEl = document.getElementById("geracaoAnual")
-if(geracaoAnualEl){
-  geracaoAnualEl.innerText = dados.geracaoAnual || "-"
-}
+if(lead){
 
-let geracaoEl = document.getElementById("geracao")
-if(geracaoEl){
-  geracaoEl.innerText = dados.geracao || "-"
-}
-let kwpEl = document.getElementById("kwp")
-if(kwpEl){
-  kwpEl.innerText = dados.kwp ? dados.kwp + " kWp" : "-"
-}
-let placasEl = document.getElementById("placas")
-if(placasEl){
-  placasEl.innerText = dados.placas || "-"
-}
-document.getElementById("contaSem").innerText = "R$ " + (dados.conta || dados.economia || "-")
-let contaBase = dados.conta || dados.economia || 0
+  // =========================
+  // DADOS BASE
+  // =========================
 
-document.getElementById("contaCom").innerText =
-contaBase ? "R$ " + (contaBase * 0.1).toFixed(0) : "-"
+  const consumo = Number(lead.consumo || lead.consumoMensal || 500)
 
-// 🔥 MÓDULOS
-let mod = document.getElementById("potenciaModulo")
-if(mod){
-  mod.innerText = dados.potenciaPlaca || "-"
-}
+  const tarifa = 1.35
 
-let qtd = document.getElementById("quantidadeModulos")
-if(qtd){
-  qtd.innerText = dados.placas || "-"
-}
+  const fatorPerda = 0.80
 
-// 🔥 INVERSOR
-let inv = document.getElementById("potenciaInversor")
-if(inv){
-  inv.innerText = sugerirInversor(dados.kwp)
-}
+  const irradiacao = 5.2
 
-// 🔥 INVERSOR AUTOMÁTICO (mesma lógica do simulador)
-function sugerirInversor(kwp){
-  if(kwp<=3) return "3 kW"
-  if(kwp<=5) return "5 kW"
-  if(kwp<=8) return "8 kW"
-  if(kwp<=10) return "10 kW"
-  return "15 kW"
-}
+  // =========================
+  // CÁLCULO SISTEMA
+  // =========================
 
-  
-if(!dados || !dados.kwp){
-  console.log("Sem dados da proposta")
-}
+  const geracaoMensal =
+    consumo * 1.2
 
-let telefone = dados.telefone || ""
+  const geracaoAnual =
+    geracaoMensal * 12
 
-if(telefone){
-  let msg = "Olá, vi minha proposta de energia solar e gostaria de avançar."
-  let link = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(msg)
+  const kwp =
+    geracaoMensal / (irradiacao * 30 * fatorPerda)
 
-  let btn = document.getElementById("btnWhats")
+  const potenciaPlaca = 550
 
-if(btn){
-  btn.href = link
-}
-  
-let clienteEl = document.getElementById("clienteNome")
-if(clienteEl){
-  clienteEl.innerText = dados.nome || "Cliente"
-}
+  const placas =
+    Math.ceil((kwp * 1000) / potenciaPlaca)
 
-let cidadeEl = document.getElementById("cidade")
-if(cidadeEl){
-  cidadeEl.innerText = dados.cidade || ""
-}
+  const economiaMensal =
+    consumo * tarifa
 
-let economia = dados.economia || 0
-let investimento = (dados.kwp || 0) * 3500
+  const economiaAnual =
+    economiaMensal * 12
 
-let payback = economia > 0 ? investimento / (economia * 12) : 0
+  // =========================
+  // PREENCHER HTML
+  // =========================
 
-let economiaAnual = economia * 12
-let economiaTotal = economiaAnual * 25
-let lucro = economiaTotal - investimento
-  document.getElementById("paybackTexto").innerText = payback.toFixed(1) + " anos"
-document.getElementById("lucro25").innerText = "R$ " + lucro.toFixed(0)
+  document.getElementById("consumoMensal").innerText =
+    consumo.toFixed(0) + " kWh"
 
-let ecoMensalEl = document.getElementById("ecoMensal")
-if(ecoMensalEl){
-  ecoMensalEl.innerText = "R$ " + economia
-}
+  document.getElementById("consumoAnual").innerText =
+    geracaoAnual.toFixed(0) + " kWh"
 
-let ecoAnualEl = document.getElementById("ecoAnual")
-if(ecoAnualEl){
-  ecoAnualEl.innerText = "R$ " + economiaAnual.toFixed(0)
-}
+  document.getElementById("geracaoMensal").innerText =
+    geracaoMensal.toFixed(0) + " kWh"
 
-let ecoTotalEl = document.getElementById("ecoTotal")
-if(ecoTotalEl){
-  ecoTotalEl.innerText = "R$ " + economiaTotal.toFixed(0)
-}
+  document.getElementById("geracaoAnual").innerText =
+    geracaoAnual.toFixed(0) + " kWh"
 
-let lucroEl = document.getElementById("lucro")
-if(lucroEl){
-  lucroEl.innerText = "R$ " + lucro.toFixed(0)
-}
-  
-let dadosEl = document.getElementById("dados")
+  document.getElementById("kwp").innerText =
+    kwp.toFixed(2) + " kWp"
 
-if(dadosEl){
-  dadosEl.innerHTML = `
-<p><strong>Cliente:</strong> ${dados.nome || "-"}</p>
-<p><strong>Sistema:</strong> ${dados.sistema || "-"}</p>
-<p><strong>Potência:</strong> ${dados.kwp || "-"} kWp</p>
-<p><strong>Módulos:</strong> ${dados.placas || "-"}</p>
-<p><strong>Economia mensal:</strong> R$ ${economia}</p>
-<p><strong>Investimento:</strong> R$ ${investimento.toFixed(0)}</p>
-<p><strong>Payback:</strong> ${payback.toFixed(1)} anos</p>
-`
-}
+  document.getElementById("placas").innerText =
+    placas
 
+  document.getElementById("ecoTexto").innerText =
+    "R$ " + economiaMensal.toFixed(2)
 
-  let canvas = document.getElementById("grafico")
+  // =========================
+  // EQUIPAMENTOS
+  // =========================
 
-if(canvas){
+  const inversor =
+    kwp <= 3 ? "3kW" :
+    kwp <= 5 ? "5kW" :
+    kwp <= 8 ? "8kW" :
+    kwp <= 10 ? "10kW" :
+    "30kW"
 
- let anos = Array.from({length:25}, (_, i) => i + 1)
+  document.getElementById("equip-potencia-placa").innerText =
+    potenciaPlaca
 
- let fluxo = anos.map(ano => {
-  let crescimento = 1.05 ** ano
-  return (economia * 12 * crescimento * ano) - investimento
-})
+  document.getElementById("equip-quantidade-placas").innerText =
+    placas
 
-  let paybackAno = payback > 0 ? Math.ceil(payback) : null
- let linhaPayback = paybackAno ? anos.map(a => a === paybackAno ? fluxo[a-1] : null) : []
-  new Chart(canvas, {
-    type: 'line',
-    data: {
-      labels: anos,
-    datasets: [
-  {
-    label: 'Retorno acumulado (R$)',
-    data: fluxo,
-    tension: 0.4,
-    fill: true,
-    borderWidth: 3,
-    pointRadius: 0,
-    borderColor: '#22c55e',
-    backgroundColor: (ctx) => {
-      const chart = ctx.chart;
-      const {ctx: c, chartArea} = chart;
+  document.getElementById("equip-inversor").innerText =
+    inversor
 
-      if (!chartArea) return null;
-
-      const gradient = c.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-
-      gradient.addColorStop(0, 'rgba(34,197,94,0.4)');
-      gradient.addColorStop(0.5, 'rgba(34,197,94,0.2)');
-      gradient.addColorStop(1, 'rgba(239,68,68,0.2)');
-
-      return gradient;
-    }
-  },
-  {
-    label: 'Payback',
-    data: anos.map(a => a === paybackAno ? fluxo[a-1] : null),
-    pointRadius: 6,
-    pointBackgroundColor: '#ef4444',
-    showLine: false
-  }
-  ,
-      {
-  label: 'Ponto de retorno',
-  data: linhaPayback,
-  borderColor: '#ef4444',
-  borderWidth: 2,
-  pointRadius: 6,
-  pointBackgroundColor: '#ef4444',
-  showLine: false
-}
-]
-    },
-    options: {
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          callbacks: {
-            label: ctx => "R$ " + ctx.raw.toLocaleString()
-          }
-        }
-      },
- scales: {
-  x: {
-    min: 1,
-    max: 25,
-    ticks: {
-      stepSize: 1,
-    }
-  },
-  y: {
-    ticks: {
-      callback: value => "R$ " + value.toLocaleString()
-    }
-  }
-}
-    }
-  })
+  document.getElementById("infoPotencia").innerText =
+    kwp.toFixed(2) + " kWp"
 
 }
-let numero = localStorage.getItem("numeroProposta") || 1
 
-document.getElementById("numeroProposta").innerText =
-"#" + String(numero).padStart(4, '0')
-
-localStorage.setItem("numeroProposta", Number(numero) + 1)
-}
-window.onload = () => {
-  try{
-    setTimeout(() => {
-      document.body.style.display = "block";
-      window.focus();
-      window.print();
-    }, 2000);
-  }catch(e){
-    console.log("Erro ao gerar PDF", e)
-  }
-}
-  
 </script>
 
-<script>
 
-let dados = JSON.parse(localStorage.getItem("propostaAtual"))
 
-if(dados){
+<script type="module" src="./js/app.js"></script>
 
-let consumo = (dados.valor / dados.tarifa).toFixed(0)
-let geracao = (dados.kwp * dados.hsp * 30).toFixed(0)
 
-// anual
-let consumoAnual = (consumo * 12).toFixed(0)
-let geracaoAnual = (geracao * 12).toFixed(0)
 
-// jogar na tela
-document.getElementById("consumo").innerText = consumo + " kWh"
-document.getElementById("geracao").innerText = geracao + " kWh"
-document.getElementById("consumoAnual").innerText = consumoAnual + " kWh"
-document.getElementById("geracaoAnual").innerText = geracaoAnual + " kWh"
-
-}
-</script>
 
 </body>
-</html>
+
+</html>>

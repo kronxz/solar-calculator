@@ -1,243 +1,768 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>CRM - MF Soluções</title>
+  <title>CRM - MF Soluções</title>
 
-<style>
-
-body{
-font-family: Arial;
-background:#0f172a;
-color:white;
-margin:0;
-padding:10px;
-}
-
-h1{
-text-align:center;
-margin-bottom:10px;
-}
-
-.add{
-background:var(--azul-principal);
-color:black;
-margin-bottom:10px;
-}
-
-.detalhes{
-  background:#0ea5e9;
-  color:white;
-}
+  <style>
+    body {
 
 
 
-.proposta:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(37,99,235,0.4);
-}
-
-button{
-width:100%;
-padding:10px;
-margin-top:5px;
-border:none;
-border-radius:8px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.board{
-display:flex;
-gap:12px;
-overflow-x:auto;
-padding-bottom:10px;
-}
 
 
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 10px;
+    }
 
-.column{
-min-width:260px;
-background:#1f2937;
-padding:10px;
-border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,0.3);
-}
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 220px;
+      height: 100vh;
+      background: #111827;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 999;
+    }
 
-.column h2{
-text-align:center;
-font-size:15px;
-margin-bottom:10px;
-}
+    #sidebar button {
+      width: 100%;
+      background: #1f2937;
+      color: white;
+      border: none;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+      text-align: left;
+    }
 
-.card{
-background:#111827;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.5);
-animation:fadeIn 0.3s ease;
-}
+    #sidebar button:hover {
+      background: #2563eb;
+      transform: translateX(4px);
+    }
 
-.card b{
-font-size:16px;
-}
+    .menu-logo {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #22c55e;
+    }
 
-.card small{
-color:#9ca3af;
-}
+    .main-content {
+      margin-left: 240px;
+      padding: 10px;
+    }
 
-.whatsapp{
-background:#22c55e;
-}
+    .page {
+      display: none;
+    }
 
-.avancar{
-background:#f59e0b;
-}
+    .page.active {
+      display: block;
+    }
 
-.excluir{
-  background:#ef4444;
-  color:white;
-}
 
-button.proposta{
-  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-  color: white !important;
-  font-weight: 600;
-}
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(10px);}
-to{opacity:1; transform:translateY(0);}
-}
+    .add {
+      background: var(--azul-principal);
+      color: black;
+      margin-bottom: 10px;
+    }
 
-</style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    .detalhes {
+      background: #0ea5e9;
+      color: white;
+    }
+
+
+
+    .proposta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 6px 10px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .board {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+
+
+    .column {
+      width: 300px;
+      min-width: 300px;
+      max-width: 300px;
+    }
+
+
+    .column h2 {
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      animation: fadeIn 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .card b {
+      font-size: 16px;
+    }
+
+    .card small {
+      color: #9ca3af;
+    }
+
+    .whatsapp {
+      background: #22c55e;
+    }
+
+    .avancar {
+      background: #f59e0b;
+    }
+
+    .excluir {
+      background: #ef4444;
+      color: white;
+    }
+
+    button.proposta {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+      color: white !important;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 🔥 DASHBOARD COMPACTO */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(80px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* 🔥 CARDS MENORES */
+    .dashboard .card {
+      padding: 8px;
+      border-radius: 10px;
+      background: #111827;
+      text-align: center;
+    }
+
+    /* 🔥 NÚMEROS GRANDES */
+    .dashboard h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    /* 🔥 TEXTO PEQUENO */
+    .dashboard p {
+      font-size: 11px;
+      margin: 2px 0 0;
+      color: #9ca3af;
+    }
+
+    .dashboard-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .linha {
+      display: grid;
+      grid-template-columns: 120px repeat(4, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .titulo {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .mini-card {
+      background: linear-gradient(135deg, #111827, #1f2937);
+      padding: 8px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .mini-card h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    #userBar {
+      position: fixed;
+      top: 10px;
+      right: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+      z-index: 999;
+    }
+
+    #userBar button {
+      background: transparent;
+      border: 1px solid #374151;
+      color: #9ca3af;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    #userBar button:hover {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
+  <div id="sidebar">
 
+    <div class="menu-logo">
+      ⚡ MF CRM
+    </div>
 
-<h1>⚡ MF Soluções - CRM</h1>
+    <button onclick="mostrarPagina('dashboardPage')">
+      📊 Dashboard
+    </button>
 
-  
+    <button onclick="mostrarPagina('visitasPage')">
+      👁️ Visitas
+    </button>
 
-<!-- 🔥 DASHBOARD -->
-<div id="dashboard" style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+    <button onclick="mostrarPagina('leadsPage')">
+      📋 Leads
+    </button>
 
-  
-  <div class="card">
-    <b>💰 Em negociação</b><br>
-    <span id="negociacao">R$ 0</span>
+    <button onclick="mostrarPagina('statsPage')">
+      🏆 Estatísticas
+    </button>
+
   </div>
 
-  <div class="card">
-    <b>🏆 Fechado</b><br>
-    <span id="fechadoTotal">R$ 0</span>
+  <div id="pdf" style="display:none; padding:40px; font-family:Arial;">
+    <h1>Proposta Solar</h1>
+
+    <p><strong>Cliente:</strong> <span id="pdf-nome"></span></p>
+    <p><strong>Telefone:</strong> <span id="pdf-telefone"></span></p>
+    <p><strong>Endereço:</strong> <span id="pdf-endereco"></span></p>
+
+    <hr>
+
+    <p><strong>Potência:</strong> <span id="pdf-kwp"></span> kWp</p>
+    <p><strong>Economia:</strong> R$ <span id="pdf-economia"></span></p>
+    <p><strong>Investimento:</strong> R$ <span id="pdf-investimento"></span></p>
   </div>
 
-  <div class="card">
-    <b>📊 Leads</b><br>
-    <span id="totalLeads">0</span>
+  <div class="main-content">
+
+
+
+    <div id="userBar">
+      👤 <span id="userEmail"></span>
+      <button onclick="logout()">Sair</button>
+
+    </div>
+
+    <div id="dashboardPage" class="page active">
+
+      <div class="dashboard-grid">
+
+        <div id="dashboard" style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+
+
+          <div class="card">
+            <b>💰 Em negociação</b><br>
+            <span id="negociacao">R$ 0</span>
+          </div>
+
+          <div class="card">
+            <b>🏆 Fechado</b><br>
+            <span id="fechadoTotal">R$ 0</span>
+          </div>
+
+          <div class="card">
+            <b>📊 Leads</b><br>
+            <span id="totalLeads">0</span>
+          </div>
+
+          <div class="card">
+            <b>📈 Conversão</b><br>
+            <span id="conversao">0%</span>
+          </div>
+
+        </div>
+
+        <!-- VISITAS -->
+        <div class="linha">
+          <span class="titulo">👁️ Visitas</span>
+
+          <div class="mini-card">
+            <h3 id="visitasHoje">0</h3>
+            <p>Hoje</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="visitasSemana">0</h3>
+            <p>Semana</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="visitasMes">0</h3>
+            <p>Mês</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="visitasAno">0</h3>
+            <p>Ano</p>
+          </div>
+        </div>
+
+        <!-- LEADS -->
+        <div class="linha">
+          <span class="titulo">📊 Leads</span>
+
+          <div class="mini-card">
+            <h3 id="leadsHoje">0</h3>
+            <p>Hoje</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="leadsSemana">0</h3>
+            <p>Semana</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="leadsMes">0</h3>
+            <p>Mês</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="leadsAno">0</h3>
+            <p>Ano</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="visitasPage" class="page">
+
+      <!-- 🔥 DASHBOARD -->
+
+    </div>
+
+    <div id="statsPage" class="page">
+
+      <div class="card" style="margin-bottom:20px">
+
+        <h2>📊 Performance dos Kits</h2>
+
+        <div id="statsKits"></div>
+
+      </div>
+
+
+      <canvas id="graficoLeads" height="120" style="
+margin-top:20px;
+background:#111827;
+padding:20px;
+border-radius:16px;
+">
+      </canvas>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+  </div>
   </div>
 
-  <div class="card">
-    <b>📈 Conversão</b><br>
-    <span id="conversao">0%</span>
+  <div style=" display:flex; justify-content:center; gap:12px; margin:20px 0; flex-wrap:wrap; "></div>
+
+  <div id="leadsPage" class="page">
+
+    <div style="
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:20px 0;
+  flex-wrap:wrap;
+  ">
+
+      <button onclick="novoLead()" style="
+background:#22c55e;
+color:white;
+font-size:13px;
+padding:8px 14px;
+width:auto;
+border-radius:10px;
+font-weight:600;
+box-shadow:0 4px 12px rgba(34,197,94,0.25);
+">
+        ➕ Novo Lead
+      </button>
+
+      <button onclick="abrirLixeira()" style="
+background:#374151;
+color:white;
+font-size:13px;
+padding:8px 14px;
+width:auto;
+border-radius:10px;
+font-weight:600;
+box-shadow:0 4px 12px rgba(0,0,0,0.25);
+">
+        🗑️ Lixeira
+      </button>
+
+    </div>
+
+
+
+    <div id="modalLixeira" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+z-index:9999;
+justify-content:center;
+align-items:center;
+">
+
+      <div style="
+background:#111827;
+width:90%;
+max-width:700px;
+max-height:80vh;
+overflow:auto;
+padding:20px;
+border-radius:16px;
+box-shadow:0 0 30px rgba(0,0,0,0.5);
+">
+
+        <div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+">
+
+          <h2>🗑️ Lixeira</h2>
+
+          <button onclick="fecharLixeira()" style="
+background:#ef4444;
+color:white;
+width:auto;
+padding:8px 14px;
+">
+            Fechar
+          </button>
+
+        </div>
+
+        <input id="pesquisaLixeira" placeholder="Pesquisar lead..." style="
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin-bottom:20px;
+background:#1f2937;
+color:white;
+" />
+
+        <div id="listaLixeira"></div>
+
+      </div>
+    </div>
+
+
+
+    <div class="board">
+      <div class="column" id="novo" ondragover="allowDrop(event)" ondrop="drop(event, 'novo')">
+        <h2>🟡 Novos</h2>
+      </div>
+
+      <div class="column" id="contato" ondragover="allowDrop(event)" ondrop="drop(event, 'contato')">
+        <h2>🔵 Contato</h2>
+      </div>
+
+      <div class="column" id="proposta" ondragover="allowDrop(event)" ondrop="drop(event, 'proposta')">
+        <h2>🟠 Proposta</h2>
+      </div>
+
+      <div class="column" id="fechado" ondragover="allowDrop(event)" ondrop="drop(event, 'fechado')">
+        <h2>🟢 Fechado</h2>
+      </div>
+    </div>
   </div>
 
-</div>
 
-  <canvas id="graficoLeads" style="margin-top:20px;"></canvas>
+  <script>
 
-  
-<button class="add" onclick="novoLead()">+ Novo Lead</button>
+    function mostrarPagina(id) {
 
-<div class="board">
+      document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"))
 
-<div class="column" id="novo" ondragover="allowDrop(event)" ondrop="drop(event, 'novo')">
-<h2>🟡 Novos</h2>
-</div>
+      document.getElementById(id)
+        .classList.add("active")
 
-<div class="column" id="contato" ondragover="allowDrop(event)" ondrop="drop(event, 'contato')">
-<h2>🔵 Contato</h2>
-</div>
+    }
 
-<div class="column" id="proposta" ondragover="allowDrop(event)" ondrop="drop(event, 'proposta')">
-<h2>🟠 Proposta</h2>
-</div>
+  </script>
 
-<div class="column" id="fechado" ondragover="allowDrop(event)" ondrop="drop(event, 'fechado')">
-<h2>🟢 Fechado</h2>
-</div>
+  <script>
 
-</div>
+    function formatarData(dataISO) {
+      let data = new Date(dataISO)
 
-<script>
+      let dia = data.getDate().toString().padStart(2, '0')
+      let mes = (data.getMonth() + 1).toString().padStart(2, '0')
+      let ano = data.getFullYear()
 
+      let hora = data.getHours().toString().padStart(2, '0')
+      let minuto = data.getMinutes().toString().padStart(2, '0')
 
+      return `${dia}/${mes}/${ano} - ${hora}:${minuto}`
+    }
 
-</script>
+  </script>
 
-<script type="module">
+  <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
-  authDomain: "mf-solucoes-crm.firebaseapp.com",
-  projectId: "mf-solucoes-crm",
-  storageBucket: "mf-solucoes-crm.firebasestorage.app",
-  messagingSenderId: "492242482187",
-  appId: "1:492242482187:web:c5d808bf46d199bc60030e"
-};
+    import {
+      getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc, getDocs, query, where
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let leads = []
-
-function drag(ev, id){
-  ev.dataTransfer.setData("id", id)
-}
-
-function allowDrop(ev){
-  ev.preventDefault()
-}
+    import {
+      getAuth, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";;
 
 
-window.drop = async function(ev, novoStatus){
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
+      authDomain: "mf-solucoes-crm.firebaseapp.com",
+      projectId: "mf-solucoes-crm",
+      storageBucket: "mf-solucoes-crm.firebasestorage.app",
+      messagingSenderId: "492242482187",
+      appId: "1:492242482187:web:c5d808bf46d199bc60030e"
+    };
 
-  ev.preventDefault()
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  let id = ev.dataTransfer.getData("id")
 
-  const ref = doc(db, "leads", id)
+    const auth = getAuth(app);
 
-  await updateDoc(ref, {
-    status: novoStatus
-  })
+    onAuthStateChanged(auth, (user) => {
 
-}
+      if (!user) {
+        alert("Você precisa estar logado")
+        window.location.href = "/solar-calculator/login.html"
+        return
+      }
 
-window.whatsapp = function(telefone,nome){
+      // 🔥 MOSTRA USUÁRIO
+      let email = user.email
+      let nomeCurto = email.split("@")[0]
 
-  let numero = telefone.replace(/\D/g,'')
+      document.getElementById("userEmail").innerText = nomeCurto
 
-  let msg = "Olá "+nome+"! Vi sua simulação solar."
+      console.log("✅ Usuário logado:", user.uid)
 
-  window.open("https://wa.me/55"+numero+"?text="+encodeURIComponent(msg))
+      // 🔥 BUSCA APENAS LEADS DO USUÁRIO
+      const q = query(
+        collection(db, "leads"),
+        where("userId", "==", user.uid)
+      )
 
-}
-window.verDetalhes = function(lead){
+      onSnapshot(q, (snapshot) => {
 
-  alert(`
+        leads = []
+
+        snapshot.forEach(doc => {
+          leads.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+
+        localStorage.setItem("backup_leads", JSON.stringify(leads))
+
+        render()
+        atualizarDashboard()
+      })
+
+    })
+
+
+
+    let leads = []
+    window.leads = leads
+    let backup = localStorage.getItem("backup_leads")
+
+    if (backup) {
+      leads = JSON.parse(backup)
+      render()
+    }
+    function drag(ev, id) {
+      ev.dataTransfer.setData("id", id)
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault()
+    }
+
+
+    window.drop = async function (ev, novoStatus) {
+
+      ev.preventDefault()
+
+      let id = ev.dataTransfer.getData("id")
+
+      if (!id) return
+
+      const ref = doc(db, "leads", id)
+
+      await updateDoc(ref, {
+        status: novoStatus
+      })
+    }
+
+    window.whatsapp = function (telefone, nome) {
+
+      try {
+        if (typeof fbq !== "undefined") {
+          fbq('track', 'Contact')
+        }
+      } catch (e) { }
+
+      try {
+        if (typeof gtag !== "undefined") {
+          gtag('event', 'clique_whatsapp', {
+            event_category: 'contato',
+            event_label: 'botao_whatsapp'
+          })
+        }
+      } catch (e) { }
+
+      let numero = (telefone || "").replace(/\D/g, '')
+
+      let msg = `Olá ${nome}, preparei sua proposta de energia solar.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Hoje ainda consigo manter as condições especiais.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Posso te explicar em 2 minutos?`
+
+      window.open("https://wa.me/55" + numero + "?text=" + encodeURIComponent(msg))
+    }
+
+
+
+    window.verDetalhes = function (id) {
+
+      let lead = leads.find(l => l.id == id)
+
+      if (!lead) {
+        alert("Lead não encontrado")
+        return
+      }
+
+      let historicoTexto = ""
+
+      if (lead.historico) {
+        lead.historico.forEach(h => {
+          historicoTexto += `\n- ${h.acao} (${new Date(h.data).toLocaleString()})`
+        })
+      }
+
+
+      alert(`
 👤 Cliente: ${lead.nome}
+📅 ${lead.data ? formatarData(lead.data) : ""}
 
 📞 Telefone: ${lead.telefone || "Não informado"}
 📍 Endereço: ${lead.endereco || "Não informado"}
@@ -248,153 +773,597 @@ window.verDetalhes = function(lead){
 
 💰 Economia: R$ ${lead.economia || "-"}
 💵 Investimento: R$ ${lead.investimento || "-"}
-  `)
 
-}
-window.mover = async function(id){
+📜 Histórico:
+${historicoTexto || "Sem histórico"}
+`)
+    }
 
-  let lead = leads.find(l => l.id == id)
 
-  let ordem = ["novo","contato","proposta","fechado"]
-  let i = ordem.indexOf(lead.status)
 
-  if(i < ordem.length -1){
+    window.mover = async function (id) {
 
-    let novoStatus = ordem[i+1]
+      let lead = leads.find(l => l.id == id)
 
-    const ref = doc(db, "leads", id)
+      let ordem = ["novo", "contato", "proposta", "fechado"]
+      let i = ordem.indexOf(lead.status)
 
-    await updateDoc(ref, {
-      status: novoStatus
-    })
-  }
-}
+      if (i < ordem.length - 1) {
 
-window.excluir = async function(id){
+        let novoStatus = ordem[i + 1]
 
-  if(!confirm("Excluir lead?")) return
+        const ref = doc(db, "leads", id)
 
-  const ref = doc(db, "leads", id)
+        let novoHistorico = lead.historico || []
 
-  await deleteDoc(ref)
-}
+        novoHistorico.push({
+          acao: "Movido para " + novoStatus,
+          data: new Date().toISOString()
+        })
 
-window.abrirProposta = function(id){
+        await updateDoc(ref, {
+          status: novoStatus,
+          historico: novoHistorico
+        })
+      }
+    }
 
-  let lead = leads.find(l => l.id == id)
+    window.voltar = async function (id) {
 
-  localStorage.setItem("propostaAtual", JSON.stringify(lead))
+      let lead = leads.find(l => l.id == id)
 
-  window.open("../proposta.html", "_blank")
+      let ordem = ["novo", "contato", "proposta", "fechado"]
+      let i = ordem.indexOf(lead.status)
 
-}
-  
-function render(){
+      if (i > 0) {
 
-  document.getElementById("novo").innerHTML="<h2>🟡 Novos</h2>"
-  document.getElementById("contato").innerHTML="<h2>🔵 Contato</h2>"
-  document.getElementById("proposta").innerHTML="<h2>🟠 Proposta</h2>"
-  document.getElementById("fechado").innerHTML="<h2>🟢 Fechado</h2>"
+        let novoStatus = ordem[i - 1]
 
-  leads.forEach(l => {
+        const ref = doc(db, "leads", id)
 
-  let card = `
-<div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
+        let novoHistorico = lead.historico || []
 
-<b>${l.nome}</b><br>
-<small>📞 ${l.telefone}</small><br>
-<small>💡 Conta: R$ ${l.valor}</small>
+        novoHistorico.push({
+          acao: "Voltou para " + novoStatus,
+          data: new Date().toISOString()
+        })
 
-<button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
-💬 WhatsApp
-</button>
+        await updateDoc(ref, {
+          status: novoStatus,
+          historico: novoHistorico
+        })
+      }
+    }
 
-<button onclick="mover('${l.id}')">
-➡️ Avançar
-</button>
+    window.excluir = async function (id) {
 
-<button class="excluir" onclick="excluir('${l.id}')">
-🗑 Excluir
-</button>
+      if (!confirm("Excluir lead?")) return
 
-<button class="detalhes" onclick="verDetalhes(${JSON.stringify(l).replace(/"/g, '&quot;')})">
-📊 Detalhes
-</button>
+      const ref = doc(db, "leads", id)
 
-<button class="proposta" onclick="abrirProposta('${l.id}')">
-📄 Proposta
-</button>
+      await updateDoc(ref, {
+        deletado: true,
+        deletadoEm: new Date().toISOString()
+      })
+
+    }
+
+    window.abrirProposta = function (id) {
+
+      if (!id) return alert("ID inválido")
+
+      let lead = leads.find(l => l.id == id)
+
+
+      if (!lead) {
+        alert("Lead não encontrado")
+        return
+      }
+
+      // 🔥 SALVA O LEAD COMPLETO
+      localStorage.setItem("leadSelecionado", JSON.stringify(lead))
+
+      localStorage.setItem(
+"geracaoMensal",
+lead.geracaoMensal || 1200
+);
+      // 🔥 ABRE A PROPOSTA
+      window.open("../proposta.html", "_blank")
+    }
+
+
+
+
+
+
+
+    function render() {
+
+      document.getElementById("novo").innerHTML = "<h2>🟡 Novos</h2>"
+      document.getElementById("contato").innerHTML = "<h2>🔵 Contato</h2>"
+      document.getElementById("numeroProposta").innerHTML = "<h2>🟠 Proposta</h2>"
+      document.getElementById("fechado").innerHTML = "<h2>🟢 Fechado</h2>"
+
+      let ativos = leads.filter(l => !l.deletado)
+
+      let total = ativos.length
+
+      let negociacao = ativos.filter(l =>
+        l.status === "contato" || l.status === "proposta"
+      )
+
+      let fechado = ativos.filter(l => l.status === "fechado")
+
+      let valorNegociacao = negociacao.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
+
+      let valorFechado = fechado.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
+
+      let conversao = total > 0 ? ((fechado.length / total) * 100).toFixed(0) : 0
+
+      document.getElementById("totalLeads").innerText = total
+      document.getElementById("negociacao").innerText = "R$ " + valorNegociacao
+      document.getElementById("fechadoTotal").innerText = "R$ " + valorFechado
+      document.getElementById("conversao").innerText = conversao + "%"
+
+      leads.forEach(l => {
+
+        if (l.deletado) return
+        let dias = Math.floor((Date.now() - new Date(l.data)) / (1000 * 60 * 60 * 24))
+
+        let alerta = ""
+        let cor = ""
+
+        if (l.status === "proposta" && dias >= 1) {
+          alerta = "🔥 FECHAR HOJE"
+          cor = "#ef4444"
+        }
+        else if (dias >= 3) {
+          alerta = "⚠️ PARADO"
+          cor = "#f59e0b"
+        }
+        else {
+          alerta = "🟢 ANDAMENTO"
+          cor = "#22c55e"
+        }
+        let card = `
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <b>${l.nome}</b><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small style="color:#22c55e; font-weight:bold">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          🔥 ${l.utm_source || "direto"}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </small><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small style="color:#9ca3af">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Campanha: ${l.utm_campaign || "-"}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </small><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div style="color:${cor}; font-weight:bold">${alerta}</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small>📞 ${l.telefone}</small><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small>💡 Conta: R$ ${l.valor}</small>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          💬 WhatsApp
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button onclick="mover('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ➡️ Avançar
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button style="background:#6b7280" onclick="voltar('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ⬅️ Voltar
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="excluir" onclick="excluir('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          🗑 Excluir
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="detalhes" onclick="verDetalhes('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          📊 Detalhes
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="proposta" onclick="abrirProposta('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          📄 Proposta
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button style="background:#22c55e" onclick="fechar('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          💰 Fechar Venda
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          `
+
+        document.getElementById(l.status).innerHTML += card
+      })
+    }
+
+    window.novoLead = async function () {
+
+      let utm = JSON.parse(localStorage.getItem("utm")) || {}
+
+      let nome = prompt("Nome do cliente:")
+      if (!nome) return
+
+      let telefone = prompt("Telefone:")
+      let valor = prompt("Conta de luz:")
+      let investimento = prompt("Valor do sistema (R$):")
+      let kwp = prompt("Potência do sistema (kWp):")
+
+      await addDoc(collection(db, "leads"), {
+
+        nome,
+        telefone,
+        valor,
+        investimento,
+        kwp,
+
+        geracao: sistemaSelecionado?.geracao || 0,
+
+        status: "novo",
+
+        data: new Date().toISOString(),
+
+        userId: auth.currentUser.uid,
+
+        // 🔥 UTM
+        utm_source: utm.source,
+        utm_campaign: utm.campaign,
+        utm_medium: utm.medium
+
+      })
+
+      // 🔥 CONTADORES PERMANENTES
+      let stats = JSON.parse(localStorage.getItem("stats")) || {
+
+        leadsHoje: 0,
+        leadsSemana: 0,
+        leadsMes: 0,
+        leadsAno: 0
+
+      }
+
+      stats.leadsHoje++
+      stats.leadsSemana++
+      stats.leadsMes++
+      stats.leadsAno++
+
+      localStorage.setItem("stats", JSON.stringify(stats))
+
+      // 🔥 PIXEL
+      try {
+        fbq('track', 'Lead')
+      } catch (e) { }
+
+      try {
+        gtag('event', 'lead_gerado')
+      } catch (e) { }
+
+    }
+
+
+
+    window.migrarLeadsAntigos = async function () {
+
+      const snapshot = await getDocs(collection(db, "leads"))
+
+      snapshot.forEach(async (docSnap) => {
+
+        const data = docSnap.data()
+
+        // se não tiver userId
+        if (!data.userId) {
+
+          await updateDoc(doc(db, "leads", docSnap.id), {
+            userId: auth.currentUser.uid
+          })
+
+          console.log("Corrigido:", docSnap.id)
+        }
+
+      })
+
+      alert("Migração concluída!")
+    }
+    window.fechar = async function (id) {
+
+      const ref = doc(db, "leads", id)
+      let lead = leads.find(l => l.id == id)
+
+      let estatisticas = JSON.parse(localStorage.getItem("estatisticas")) || {}
+
+      if (lead.sistema?.includes("Essencial")) {
+        estatisticas.essencialFechados =
+          (estatisticas.essencialFechados || 0) + 1
+      }
+
+      if (lead.sistema?.includes("Recomendado")) {
+        estatisticas.recomendadoFechados =
+          (estatisticas.recomendadoFechados || 0) + 1
+      }
+
+      if (lead.sistema?.includes("Premium")) {
+        estatisticas.premiumFechados =
+          (estatisticas.premiumFechados || 0) + 1
+      }
+
+      localStorage.setItem(
+        "estatisticas",
+        JSON.stringify(estatisticas)
+      )
+      await updateDoc(ref, {
+        status: "fechado"
+      })
+
+      alert("Venda fechada 🚀")
+    }
+
+    window.db = db
+    window.doc = doc
+    window.updateDoc = updateDoc
+    window.deleteDoc = deleteDoc
+
+    function atualizarDashboard() {
+      let hoje = new Date()
+
+      let inicioSemana = new Date()
+      inicioSemana.setDate(hoje.getDate() - hoje.getDay())
+
+      let inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1)
+      let inicioAno = new Date(hoje.getFullYear(), 0, 1)
+
+      // 🔥 VISITAS
+      let visitas = JSON.parse(localStorage.getItem("visitas")) || []
+
+      let visitasHoje = 0
+      let visitasSemana = 0
+      let visitasMes = 0
+      let visitasAno = 0
+
+      visitas.forEach(v => {
+        let data = new Date(v.data)
+
+
+        if (data.toDateString() === hoje.toDateString()) visitasHoje++
+        if (data >= inicioSemana) visitasSemana++
+        if (data >= inicioMes) visitasMes++
+        if (data >= inicioAno) visitasAno++
+      })
+      let e = JSON.parse(localStorage.getItem("estatisticas")) || {}
+
+      document.getElementById("statsKits").innerHTML = `
+
+<div style="margin-top:10px">
+
+<b>🥉 Essencial</b><br>
+Cliques: ${e.essencialCliques || 0}<br>
+Propostas: ${e.essencialPropostas || 0}<br>
+Fechados: ${e.essencialFechados || 0}
+
+<hr>
+
+<b>🥈 Recomendado</b><br>
+Cliques: ${e.recomendadoCliques || 0}<br>
+Propostas: ${e.recomendadoPropostas || 0}<br>
+Fechados: ${e.recomendadoFechados || 0}
+
+<hr>
+
+<b>🥇 Premium</b><br>
+Cliques: ${e.premiumCliques || 0}<br>
+Propostas: ${e.premiumPropostas || 0}<br>
+Fechados: ${e.premiumFechados || 0}
 
 </div>
 `
+      // 🔥 LEADS PERMANENTES
 
-    document.getElementById(l.status).innerHTML += card
-  })
-}
+      let stats = JSON.parse(localStorage.getItem("stats")) || {
 
-window.novoLead = async function(){
+        leadsHoje: 0,
+        leadsSemana: 0,
+        leadsMes: 0,
+        leadsAno: 0
 
-  let nome = prompt("Nome do cliente:")
-  if(!nome) return
+      }
 
-  let telefone = prompt("Telefone:")
-  let valor = prompt("Conta de luz:")
+      let leadsHoje = stats.leadsHoje || 0
+      let leadsSemana = stats.leadsSemana || 0
+      let leadsMes = stats.leadsMes || 0
+      let leadsAno = stats.leadsAno || 0
 
-  await addDoc(collection(db, "leads"), {
-    nome,
-    telefone,
-    valor,
-    status: "novo",
-    data: new Date().toLocaleString()
-  })
+      // 🔥 JOGA NA TELA
 
-}
+      document.getElementById("visitasHoje").innerText = visitasHoje
+      document.getElementById("visitasSemana").innerText = visitasSemana
+      document.getElementById("visitasMes").innerText = visitasMes
+      document.getElementById("visitasAno").innerText = visitasAno
 
-onSnapshot(collection(db, "leads"), (snapshot) => {
+      document.getElementById("leadsHoje").innerText = leadsHoje
+      document.getElementById("leadsSemana").innerText = leadsSemana
+      document.getElementById("leadsMes").innerText = leadsMes
+      document.getElementById("leadsAno").innerText = leadsAno
 
-  leads = []
 
-  snapshot.forEach(doc => {
-    leads.push({
-      id: doc.id,
-      ...doc.data()
+
+      // 🔥 LEAD QUENTE (melhorado)
+      let leadQuente = leads.slice(-1)[0]
+
+      // 🔥 TELA
+      document.getElementById("visitasHoje").innerText = visitasHoje
+      document.getElementById("leadsHoje").innerText = leadsHoje
+
+    }
+
+    window.abrirLixeira = function () {
+
+      document.getElementById("modalLixeira").style.display = "flex"
+
+      renderLixeira()
+
+    }
+
+    window.fecharLixeira = function () {
+
+      document.getElementById("modalLixeira").style.display = "none"
+
+    }
+
+    window.renderLixeira = function () {
+
+      let lista = document.getElementById("listaLixeira")
+
+      let busca = (
+        document.getElementById("pesquisaLixeira").value || ""
+      ).toLowerCase()
+
+      let excluidos = leads.filter(l =>
+        l.deletado &&
+        (
+          l.nome?.toLowerCase().includes(busca) ||
+          l.telefone?.includes(busca)
+        )
+      )
+
+      if (excluidos.length === 0) {
+
+        lista.innerHTML = `
+      <div style="
+      padding:20px;
+      text-align:center;
+      color:#9ca3af;
+      ">
+      Nenhum lead encontrado
+      </div>
+    `
+
+        return
+      }
+
+      lista.innerHTML = ""
+
+      excluidos.forEach(l => {
+
+        lista.innerHTML += `
+
+    <div style="
+    background:#1f2937;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:10px;
+    ">
+
+      <b>${l.nome}</b><br>
+
+      <small>📞 ${l.telefone || "-"}</small><br>
+      <small>💰 R$ ${l.valor || "-"}</small><br>
+
+      <small style="color:#9ca3af">
+      Excluído em:
+      ${formatarData(l.deletadoEm)}
+      </small>
+
+      <div style="
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+      ">
+
+        <button
+        onclick="restaurarLead('${l.id}')"
+        style="
+        background:#22c55e;
+        color:white;
+        ">
+        ♻️ Restaurar
+        </button>
+
+        <button
+        onclick="excluirPermanentemente('${l.id}')"
+        style="
+        background:#ef4444;
+        color:white;
+        ">
+        ❌ Excluir Permanente
+        </button>
+
+      </div>
+
+    </div>
+
+    `
+      })
+
+    }
+
+
+    document.addEventListener("input", (e) => {
+
+      if (e.target.id === "pesquisaLixeira") {
+
+        renderLixeira()
+
+      }
+
     })
-  })
-// 🔥 CALCULAR MÉTRICAS CORRETAMENTE
 
-let total = leads.length
+    window.restaurarLead = async function (id) {
 
-let negociacao = leads.filter(l => 
-  l.status === "contato" || l.status === "proposta"
-)
-let fechado = leads.filter(l => l.status === "fechado")
+      const ref = doc(db, "leads", id)
 
-let valorNegociacao = negociacao.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
-let valorFechado = fechado.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
+      await updateDoc(ref, {
 
-let conversao = total > 0 ? ((fechado.length / total) * 100).toFixed(0) : 0
+        deletado: false,
 
-// 🔥 ATUALIZA UI COM SEGURANÇA
-const elNeg = document.getElementById("negociacao")
-const elFech = document.getElementById("fechadoTotal")
-const elLeads = document.getElementById("totalLeads")
-const elConv = document.getElementById("conversao")
+        restauradoEm: new Date().toISOString()
 
-if(elNeg) elNeg.innerText = "R$ " + valorNegociacao
-if(elFech) elFech.innerText = "R$ " + valorFechado
-if(elLeads) elLeads.innerText = total
-if(elConv) elConv.innerText = conversao + "%"
-  render()
-})
-  
-window.db = db
-window.doc = doc
-window.updateDoc = updateDoc
-window.deleteDoc = deleteDoc
+      })
+
+      alert("✅ Lead restaurado")
+
+      renderLixeira()
+
+    }
+
+    window.excluirPermanentemente = async function (id) {
+
+      let confirmar = confirm(
+        "Excluir permanentemente?"
+      )
+
+      if (!confirmar) return
+
+      await deleteDoc(doc(db, "leads", id))
+
+      alert("🗑️ Lead removido permanentemente")
+
+      renderLixeira()
+
+    }
 
 
 
-</script>
+
+
+
+    // 🔥 roda ao abrir
+
+
+    window.logout = function () {
+      signOut(auth)
+      alert("Você saiu da conta")
+      window.location.reload()
+    }
+
+
+  </script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+  <script type="module"></script>
+
+  </div>
 
 </body>
-</html>
+
+</html>>
