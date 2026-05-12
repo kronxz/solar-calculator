@@ -2208,7 +2208,7 @@ font-weight:500;
 
     </div>
 
-
+   </div>
 
     <div class="pagina projeto" style="
 position:relative;
@@ -3740,29 +3740,7 @@ if(ctxFinanceiro){
 }
 
 
-// ========================================
-// DATAS DA PROPOSTA
-// ========================================
 
-const hoje = new Date()
-
-const dataGeracao =
-  hoje.toLocaleDateString("pt-BR")
-
-document.getElementById("dataGeracao").innerText =
-  dataGeracao
-
-const validade = new Date()
-
-validade.setDate(
-  validade.getDate() + 7
-)
-
-const dataValidade =
-  validade.toLocaleDateString("pt-BR")
-
-document.getElementById("dataValidade").innerText =
-  dataValidade
 
 
 
@@ -3831,6 +3809,22 @@ criarGraficoViabilidade({
 })
 
 }
+
+const hoje = new Date()
+
+const validade = new Date()
+validade.setDate(hoje.getDate() + 7)
+
+function formatarData(data){
+  return data.toLocaleDateString('pt-BR')
+}
+
+document.getElementById("dataGeracao").innerText =
+formatarData(hoje)
+
+document.getElementById("dataValidade").innerText =
+formatarData(validade)
+
 </script>
 
 
