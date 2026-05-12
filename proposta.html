@@ -1146,6 +1146,11 @@
   height:320px !important;
 }
 
+#graficoViabilidade{
+  width:100% !important;
+  height:320px !important;
+}
+
     .sistema {
       gap: 20px;
     }
@@ -2181,7 +2186,7 @@ z-index:50;
         <!-- 🔵 RODAPÉ -->
         <div style="
 position:absolute;
-bottom:-10px;
+bottom:-35px;
 left:-30px;
 width:calc(100% + 60px);
 height:42px;
@@ -2781,6 +2786,167 @@ padding-top:120px;
 
     </div>
 
+
+  <!-- 🔥 PÁGINA - INDICADORES DE VIABILIDADE -->
+<div class="pagina">
+
+  <!-- TOPO -->
+  <div style="
+    position:absolute;
+    top:58px;
+    left:58px;
+    font-size:11px;
+    font-weight:600;
+    color:#2b6cb0;
+    letter-spacing:0.2px;
+  ">
+    Energia Solar
+  </div>
+
+  <div class="container-pagina"
+  style="
+    justify-content:flex-start;
+    padding-top:170px;
+  ">
+
+    <!-- TÍTULO -->
+    <h2 style="
+      font-size:18px;
+      color:#2b6cb0 !important;
+      text-align:center;
+      font-weight:700;
+      margin-bottom:35px;
+      letter-spacing:-0.2px;
+    ">
+      Indicadores de Viabilidade
+    </h2>
+
+    <!-- BLOCO CENTRAL -->
+    <div style="
+      width:100%;
+      max-width:470px;
+      margin:0 auto;
+    ">
+
+      <!-- LINHA VALOR -->
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-end;
+        margin-bottom:14px;
+      ">
+
+        <div style="
+          font-size:15px;
+          font-weight:700;
+          color:#111827;
+        ">
+          Valor do sistema:
+        </div>
+
+        <div id="valorSistemaTexto"
+        style="
+          font-size:20px;
+          font-weight:700;
+          color:#2b6cb0;
+        ">
+          -
+        </div>
+
+      </div>
+
+      <!-- LISTA -->
+      <div style="
+        display:flex;
+        flex-direction:column;
+        gap:7px;
+        font-size:13px;
+        color:#374151;
+      ">
+
+        <div style="display:flex;justify-content:space-between;">
+          <strong style="font-weight:700;">Reajuste anual de energia:</strong>
+          <span>10%</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;">
+          <strong style="font-weight:700;">Payback (tempo de retorno):</strong>
+          <span id="paybackTexto">-</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;">
+          <strong style="font-weight:700;">ROI (retorno sobre investimento):</strong>
+          <span id="roiTexto">-</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;">
+          <strong style="font-weight:700;">TIR (taxa interna de retorno):</strong>
+          <span id="tirTexto">-</span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;">
+          <strong style="font-weight:700;">Valor kWh Sistema FV:</strong>
+          <span id="valorKwhTexto">-</span>
+        </div>
+
+      </div>
+
+      <!-- ECONOMIA -->
+      <div style="
+        margin-top:18px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
+
+        <div style="
+          font-size:14px;
+          font-weight:700;
+          color:#111827;
+        ">
+          Economia total em 25 anos:
+        </div>
+
+        <div id="economia25Texto"
+        style="
+          font-size:18px;
+          font-weight:700;
+          color:#2b6cb0;
+        ">
+          -
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- GRÁFICO -->
+    <div style="
+      width:100%;
+      max-width:520px;
+      height:230px;
+      margin:38px auto 0 auto;
+    ">
+      <canvas id="graficoViabilidade"></canvas>
+    </div>
+
+  </div>
+
+  <!-- RODAPÉ -->
+  <div style="
+    position:absolute;
+    bottom:58px;
+    left:58px;
+    font-size:11px;
+    font-weight:600;
+    color:#2b6cb0;
+  ">
+    Energia Solar
+  </div>
+
+</div>
+
+
     <!-- 🔥 PÁGINA - ANÁLISE FINANCEIRA -->
     <div class="pagina">
 
@@ -2928,143 +3094,10 @@ padding-top:120px;
 
     </div>
 
-    <!-- 🔥 PÁGINA - INDICADORES DE VIABILIDADE -->
-    <div class="pagina">
-
-      <!-- TOPO -->
-      <div style="
-  position:absolute;
-  top:-5px;
-  left:30px;
-  font-size:16px;
-  font-weight:600;
-  color:#1d4ed8;
-  ">
-        Energia Solar
-      </div>
-
-      <div class="container-pagina" style="
-  justify-content:flex-start;
-  padding-top:120px;
-  ">
-
-        <h2 style="
-    font-size:34px;
-    color:#60a5fa !important;
-    text-align:center;
-    font-weight:800;
-    margin-bottom:40px;
-    ">
-          Indicadores de Viabilidade
-        </h2>
-
-        <div style="
-    max-width:620px;
-    margin:0 auto;
-    font-size:15px;
-    line-height:2;
-    color:#334155;
-    ">
-
-          <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-            <strong>Valor do sistema:</strong>
-
-<span id="valorSistema">-</span>
-
-          </div>
-          
-           <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-          <strong>Reajuste anual de energia:</strong>
-<span id="reajusteEnergia">-</span>
-
-          </div>
-
-          <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-            <strong>Payback:</strong>
-            <span id="paybackTexto">-</span>
-
-          </div>
-
-          <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-            <strong>ROI:</strong>
-            <span id="roiTexto">-</span>
-
-          </div>
-
-          <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-            <strong>TIR:</strong>
-            <span id="tirTexto">-</span>
-
-          </div>
-
-           <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-      <strong>Valor kWh Sistema FV:</strong>
-<span id="valorKwhSistema">-</span>
-
-</div>
+    
 
 
-          <div style="
-      display:flex;
-      justify-content:space-between;
-      ">
-            <strong>Economia em 25 anos:</strong>
-            <span id="economia25anosTexto">-</span>
-          </div>
-
-        </div>
-
-        <div style="
-    width:100%;
-    max-width:650px;
-    height:320px;
-    margin:40px auto 0 auto;
-    ">
-          <canvas id="graficoFluxoCaixa"></canvas>
-        </div>
-
-      </div>
-
-      <!-- RODAPÉ -->
-      <div style="
-  position:absolute;
-  bottom:-10px;
-  left:0;
-  width:100%;
-  height:42px;
-  background:#1d4ed8;
-  display:flex;
-  align-items:center;
-  padding-left:30px;
-  color:white;
-  font-size:13px;
-  font-weight:500;
-  ">
-        Energia Solar
-      </div>
-
-    </div>
-
-
-    <!-- 🔥 PÁGINA FINAL -->
+    <!-- 🔥 pagina consideraçoes finais -->
     <div class="pagina">
 
       <!-- TOPO -->
@@ -3517,6 +3550,9 @@ document.getElementById("nomeCliente").innerText =
 document.getElementById("cidadeCliente").innerText =
   lead.endereco || ""
 
+document.getElementById("numeroProposta").innerText =
+  lead.numeroProposta || "PRO-0001"
+
   const dados =
     calcularSistema(lead)
 
@@ -3688,13 +3724,20 @@ if(ctxFinanceiro){
 
 <script type="module">
 
-import { criarGraficoSistema }
-from './js/graficos.js'
+import {
+  criarGraficoSistema
+} from "./js/graficos.js"
+
+import {
+  criarGraficoFinanceiro,
+  preencherProjecaoFinanceira,
+  preencherAnaliseFinanceira
+}
+from "./js/financeiro.js"
 
 
 
 import {
-  preencherIndicadoresViabilidade,
   criarGraficoViabilidade
 } from "./js/viabilidade.js"
 
@@ -3711,13 +3754,34 @@ preencherEquipamentos(dados)
 
 criarGraficoFinanceiro(dados)
 
+criarGraficoSistema(dados)
+
 preencherProjecaoFinanceira(dados)
 
 preencherAnaliseFinanceira(dados)
 
-preencherIndicadoresViabilidade(dados)
+//preencherIndicadoresViabilidade(dados)
 
-criarGraficoViabilidade(dados)
+criarGraficoViabilidade({
+
+  investimento:
+  Number(lead.investimento || 0),
+
+  economia:
+  Number(
+    lead.economia ||
+    lead.economiaMensal ||
+    0
+  ),
+
+  consumoMensal:
+  Number(
+    lead.consumoMensal ||
+    lead.consumo ||
+    0
+  )
+
+})
 
 }
 </script>

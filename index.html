@@ -1337,6 +1337,30 @@ let overload =
 
 function gerarProposta(nomeSistema, kwp, placas, economia) {
 
+// 🔥 GERAR NÚMERO PROGRESSIVO DA PROPOSTA
+
+let ultimoNumero =
+localStorage.getItem("numeroProposta")
+
+// se não existir começa no 1
+ultimoNumero = ultimoNumero
+? parseInt(ultimoNumero)
+: 0
+
+// soma 1
+let novoNumero = ultimoNumero + 1
+
+// salva imediatamente
+localStorage.setItem(
+  "numeroProposta",
+  novoNumero
+)
+
+// gera código
+let codigoProposta =
+"PRO-" +
+String(novoNumero).padStart(4, "0")
+
         let estatisticas = JSON.parse(localStorage.getItem("estatisticas")) || {
 
           essencialCliques: 0,
@@ -1420,6 +1444,8 @@ calculateInvestment(parseFloat(kwpReal)).toFixed(0),
         let geracaoAnual = (geracao * 12).toFixed(0)
 
         localStorage.setItem("propostaAtual", JSON.stringify({
+
+          numeroProposta: codigoProposta,
 
           nome,
           telefone,
