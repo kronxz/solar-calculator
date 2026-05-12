@@ -3181,19 +3181,36 @@ font-weight:500;
       line-height:2;
     ">
 
-          <div>
-            Esta proposta foi gerada em:
-            <strong id="dataGeracao" style="color:#2563eb;">
-              --
-            </strong>
-          </div>
 
-          <div>
-            Válida até:
-            <strong id="dataValidade" style="color:#2563eb;">
-              --
-            </strong>
-          </div>
+
+          <div style="
+font-size:18px;
+color:#334155;
+font-weight:500;
+line-height:1.8;
+">
+
+  Esta proposta foi gerada em
+
+  <strong id="dataGeracao"
+  style="
+    color:#020617;
+    font-weight:800;
+  ">
+    --
+  </strong>
+
+  e é válida até
+
+  <strong id="dataValidade"
+  style="
+    color:#2563eb;
+    font-weight:800;
+  ">
+    --
+  </strong>
+
+</div>
 
         </div>
 
@@ -3721,7 +3738,29 @@ if(ctxFinanceiro){
 }
 
 
+// ========================================
+// DATAS DA PROPOSTA
+// ========================================
 
+const hoje = new Date()
+
+const dataGeracao =
+  hoje.toLocaleDateString("pt-BR")
+
+document.getElementById("dataGeracao").innerText =
+  dataGeracao
+
+const validade = new Date()
+
+validade.setDate(
+  validade.getDate() + 7
+)
+
+const dataValidade =
+  validade.toLocaleDateString("pt-BR")
+
+document.getElementById("dataValidade").innerText =
+  dataValidade
 
 
 
