@@ -1,0 +1,3118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CRM - MF Soluções</title>
+
+  <style>
+    body {
+
+
+
+
+
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 10px;
+    }
+
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 220px;
+      height: 100vh;
+      background: #111827;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 999;
+    }
+
+    #sidebar button {
+      width: 100%;
+      background: #1f2937;
+      color: white;
+      border: none;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+      text-align: left;
+    }
+
+    #sidebar button:hover {
+      background: #2563eb;
+      transform: translateX(4px);
+    }
+
+    .menu-logo {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #22c55e;
+    }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 10px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .add {
+      background: var(--azul-principal);
+      color: black;
+      margin-bottom: 10px;
+    }
+
+    .detalhes {
+      background: #0ea5e9;
+      color: white;
+    }
+
+
+
+    .proposta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 6px 10px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .board {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+
+
+    .column {
+      width: 300px;
+      min-width: 300px;
+      max-width: 300px;
+    }
+
+
+    .column h2 {
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      animation: fadeIn 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .card b {
+      font-size: 16px;
+    }
+
+    .card small {
+      color: #9ca3af;
+    }
+
+    .whatsapp {
+      background: #22c55e;
+    }
+
+    .avancar {
+      background: #f59e0b;
+    }
+
+    .excluir {
+      background: #ef4444;
+      color: white;
+    }
+
+    button.proposta {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+      color: white !important;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 🔥 DASHBOARD COMPACTO */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(80px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* 🔥 CARDS MENORES */
+    .dashboard .card {
+      padding: 8px;
+      border-radius: 10px;
+      background: #111827;
+      text-align: center;
+    }
+
+    /* 🔥 NÚMEROS GRANDES */
+    .dashboard h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    /* 🔥 TEXTO PEQUENO */
+    .dashboard p {
+      font-size: 11px;
+      margin: 2px 0 0;
+      color: #9ca3af;
+    }
+
+    .dashboard-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .linha {
+      display: grid;
+      grid-template-columns: 120px repeat(4, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .titulo {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .mini-card {
+      background: linear-gradient(135deg, #111827, #1f2937);
+      padding: 8px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .mini-card h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    #userBar {
+      position: fixed;
+      top: 10px;
+      right: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+      z-index: 999;
+    }
+
+    #userBar button {
+      background: transparent;
+      border: 1px solid #374151;
+      color: #9ca3af;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    #userBar button:hover {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    /* =========================================
+   MOBILE RESPONSIVO CRM + CALCULADORA
+========================================= */
+
+    .mobile-kanban-tabs {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+
+      .mobile-kanban-tabs {
+        display: grid;
+      }
+
+      body {
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      /* SIDEBAR MOBILE */
+
+      #sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 12px;
+        border-right: none;
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #sidebar button {
+        width: auto;
+        min-width: 140px;
+        margin-top: 0;
+        font-size: 13px;
+        padding: 12px 14px;
+      }
+
+      .menu-logo {
+        width: 100%;
+        margin-bottom: 5px;
+        font-size: 26px;
+      }
+
+      /* CONTEÚDO PRINCIPAL */
+
+      .main-content {
+        margin-left: 0;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* USER BAR */
+
+      #userBar {
+        position: relative;
+        top: auto;
+        right: auto;
+
+        justify-content: center;
+
+        margin: 10px 0 20px 0;
+      }
+
+      /* DASHBOARD */
+
+      .dashboard {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .linha {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* BOARD DOS LEADS */
+
+      .board {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .column {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      /* CARDS */
+
+      .card {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* BOTÕES */
+
+      button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      /* MODAL DETALHES */
+
+      .modal-detalhes-mobile {
+        width: 95vw !important;
+        height: 90vh !important;
+        padding: 15px !important;
+        border-radius: 16px !important;
+      }
+
+      /* CANVAS GRÁFICO */
+
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
+
+
+      /* =========================================
+   KANBAN MOBILE
+========================================= */
+
+      .mobile-kanban-tabs {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+
+        margin: 15px 0;
+
+      }
+
+      .kanban-btn {
+
+        background: rgba(17, 24, 39, 0.9);
+
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        color: white;
+
+        border-radius: 12px;
+
+        padding: 12px;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        backdrop-filter: blur(10px);
+
+      }
+
+      .kanban-btn.active-tab {
+
+        background: #2563eb;
+
+        color: white;
+
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.35);
+
+      }
+
+      /* ESCONDE TODAS */
+
+      .column {
+
+        display: none;
+
+      }
+
+      /* MOSTRA APENAS A ATIVA */
+
+      .column.active-mobile {
+
+        display: block !important;
+
+        width: 100%;
+
+      }
+
+      /* MOSTRA TODAS */
+
+      .column.show-all {
+
+        display: block !important;
+
+        width: 100%;
+
+      }
+
+      .todos-btn {
+
+        grid-column: span 2;
+
+      }
+
+
+    }
+
+    .painelRapido {
+      background: #081225;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .painelRapido h3 {
+      color: #22c55e;
+      margin-bottom: 15px;
+    }
+
+    .acoesRapidas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .acoesRapidas a {
+      background: #0f172a;
+      padding: 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: 0.3s;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .acoesRapidas a:hover {
+      transform: translateY(-2px);
+      border-color: #22c55e;
+    }
+
+    .dadosEmpresa {
+      margin-bottom: 15px;
+      color: #cbd5e1;
+    }
+
+    #notasInternas {
+      width: 100%;
+      min-height: 120px;
+      background: #020617;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      resize: vertical;
+    }
+
+    .linkPainel {
+
+      background: #0f172a;
+
+      border: 1px solid rgba(255, 255, 255, 0.05);
+
+      padding: 16px;
+
+      border-radius: 14px;
+
+      text-decoration: none;
+
+      color: white;
+
+      font-weight: 700;
+
+      transition: 0.3s;
+
+      text-align: center;
+
+    }
+
+    .linkPainel:hover {
+
+      transform: translateY(-4px);
+
+      border-color: #22c55e;
+
+      box-shadow:
+        0 0 20px rgba(34, 197, 94, 0.2);
+
+    }
+  </style>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <div id="sidebar">
+
+    <div class="menu-logo">
+      ⚡ MF CRM
+    </div>
+
+    <button onclick="mostrarPagina('dashboardPage')">
+      📊 Dashboard
+    </button>
+
+    <button onclick="mostrarPagina('visitasPage')">
+      👁️ Visitas
+    </button>
+
+    <button onclick="mostrarPagina('leadsPage')">
+      📋 Leads
+    </button>
+
+    <button onclick="mostrarPagina('statsPage')">
+      🏆 Estatísticas
+    </button>
+
+    <button onclick="mostrarPagina('analyticsPage')">
+      📈 Analytics
+    </button>
+
+    <button onclick="exportarBackup()">
+      ⬇ Backup
+    </button>
+
+
+  </div>
+
+  <div id="pdf" style="display:none; padding:40px; font-family:Arial;">
+    <h1>Proposta Solar</h1>
+
+    <p><strong>Cliente:</strong> <span id="pdf-nome"></span></p>
+    <p><strong>Telefone:</strong> <span id="pdf-telefone"></span></p>
+    <p><strong>Endereço:</strong> <span id="pdf-endereco"></span></p>
+
+    <hr>
+
+    <p><strong>Potência:</strong> <span id="pdf-kwp"></span> kWp</p>
+    <p><strong>Economia:</strong> R$ <span id="pdf-economia"></span></p>
+    <p><strong>Investimento:</strong> R$ <span id="pdf-investimento"></span></p>
+  </div>
+
+  <div class="main-content">
+
+
+
+    <div id="userBar">
+      👤 <span id="userEmail"></span>
+      <button onclick="logout()">Sair</button>
+
+    </div>
+
+    <div id="dashboardPage" class="page active">
+
+      <div class="painelRapido">
+
+        <h3>⚡ Central Rápida</h3>
+
+        <div class="acoesRapidas">
+
+          <a href="https://kronxz.github.io/mf-solucoes-eletricas/#inicio" target="_blank">
+            🌐 Abrir Site
+          </a>
+
+          <a href="../index.html#simulador" target="_blank">
+            ☀️ Calculadora
+          </a>
+
+          <a href="https://www.instagram.com/mf.eletricidade/?hl=pt-br" target="_blank">
+            📸 Instagram
+          </a>
+
+          <a href="https://www.nfse.gov.br/EmissorNacional/Dashboard" target="_blank">
+            📄 NFS-e
+          </a>
+
+          <a href="https://wa.me/5521972381004" target="_blank">
+            💬 WhatsApp
+          </a>
+
+        </div>
+
+        <div class="dadosEmpresa">
+
+          <div style="
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:20px;
+  ">
+
+            <div class="card">
+
+              <b>🏢 Empresa</b><br><br>
+
+              MF Soluções Elétricas<br>
+
+              CNPJ:
+              48.929.808/0001-84<br>
+
+              MEI Ativo
+
+            </div>
+
+            <div class="card">
+
+              <b>📍 Endereço</b><br><br>
+
+              Park Way 451<br>
+
+              Quadra 173 Lote 9<br>
+
+              Bambuí — Maricá/RJ
+
+            </div>
+
+            <div class="card">
+
+              <b>💳 Financeiro</b><br><br>
+
+              PIX:<br>
+
+              21972381004
+
+            </div>
+
+            <div class="card">
+
+              <b>📞 Contato</b><br><br>
+
+              WhatsApp:<br>
+
+              (21) 97238-1004
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <textarea id="notasInternas" placeholder="Anotações internas..."></textarea>
+
+      </div>
+
+
+
+      <div class="dashboard-grid">
+
+        <div id="dashboard" style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+
+
+          <div class="card">
+            <b>💰 Em negociação</b><br>
+            <span id="negociacao">R$ 0</span>
+          </div>
+
+          <div class="card">
+            <b>🏆 Fechado</b><br>
+            <span id="fechadoTotal">R$ 0</span>
+          </div>
+
+          <div class="card">
+            <b>📊 Leads</b><br>
+            <span id="totalLeads">0</span>
+          </div>
+
+          <div class="card">
+            <b>📈 Conversão</b><br>
+            <span id="conversao">0%</span>
+          </div>
+
+        </div>
+
+
+        <div id="analytics" style="
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:20px;
+">
+        </div>
+
+
+        <!-- VISITAS -->
+        <div class="linha">
+          <span class="titulo">👁️ Visitas</span>
+
+          <div class="mini-card">
+            <h3 id="visitasHoje">0</h3>
+            <p>Hoje</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="visitasSemana">0</h3>
+            <p>Semana</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="visitasMes">0</h3>
+            <p>Mês</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="visitasAno">0</h3>
+            <p>Ano</p>
+          </div>
+        </div>
+
+        <!-- LEADS -->
+        <div class="linha">
+          <span class="titulo">📊 Leads</span>
+
+          <div class="mini-card">
+            <h3 id="leadsHoje">0</h3>
+            <p>Hoje</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="leadsSemana">0</h3>
+            <p>Semana</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="leadsMes">0</h3>
+            <p>Mês</p>
+          </div>
+
+          <div class="mini-card">
+            <h3 id="leadsAno">0</h3>
+            <p>Ano</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="visitasPage" class="page">
+
+      <!-- 🔥 DASHBOARD -->
+
+    </div>
+
+    <div id="statsPage" class="page">
+
+      <div class="card" style="margin-bottom:20px">
+
+        <h2>📊 Performance dos Kits</h2>
+
+        <div id="statsKits"></div>
+
+      </div>
+
+
+
+
+
+      <canvas id="graficoLeads" height="120" style="
+margin-top:20px;
+background:#111827;
+padding:20px;
+border-radius:16px;
+">
+      </canvas>
+    </div>
+    <div id="analyticsPage" class="page">
+
+      <h1>📈 Analytics</h1>
+
+      <div id="analyticsResumo"></div>
+
+      <button id="toggleEventos" style="
+background:#2563eb;
+color:white;
+padding:14px;
+border-radius:12px;
+margin-top:20px;
+font-weight:600;
+">
+        🧠 Ver eventos completos IA
+      </button>
+
+      <div id="eventosBrutos" style="
+display:none;
+margin-top:20px;
+">
+
+        <textarea id="textoEventos" style="
+width:100%;
+height:400px;
+background:#020617;
+color:#22c55e;
+padding:20px;
+border-radius:12px;
+border:none;
+font-size:12px;
+font-family:monospace;
+">
+</textarea>
+
+        <button onclick="copiarEventos()" style="
+margin-top:10px;
+background:#22c55e;
+color:black;
+font-weight:700;
+">
+          📋 Copiar para IA
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+  </div>
+  </div>
+
+  <div style=" display:flex; justify-content:center; gap:12px; margin:20px 0; flex-wrap:wrap; "></div>
+
+  <div id="leadsPage" class="page">
+
+    <div style="
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:20px 0;
+  flex-wrap:wrap;
+  ">
+
+      <button onclick="novoLead()" style="
+background:#22c55e;
+color:white;
+font-size:13px;
+padding:8px 14px;
+width:auto;
+border-radius:10px;
+font-weight:600;
+box-shadow:0 4px 12px rgba(34,197,94,0.25);
+">
+        ➕ Novo Lead
+      </button>
+
+      <button onclick="abrirLixeira()" style="
+background:#374151;
+color:white;
+font-size:13px;
+padding:8px 14px;
+width:auto;
+border-radius:10px;
+font-weight:600;
+box-shadow:0 4px 12px rgba(0,0,0,0.25);
+">
+        🗑️ Lixeira
+      </button>
+
+    </div>
+
+
+
+    <div id="modalLixeira" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+z-index:9999;
+justify-content:center;
+align-items:center;
+">
+
+      <div style="
+background:#111827;
+width:90%;
+max-width:700px;
+max-height:80vh;
+overflow:auto;
+padding:20px;
+border-radius:16px;
+box-shadow:0 0 30px rgba(0,0,0,0.5);
+">
+
+        <div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+">
+
+          <h2>🗑️ Lixeira</h2>
+
+          <button onclick="fecharLixeira()" style="
+background:#ef4444;
+color:white;
+width:auto;
+padding:8px 14px;
+">
+            Fechar
+          </button>
+
+        </div>
+
+        <input id="pesquisaLixeira" placeholder="Pesquisar lead..." style="
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin-bottom:20px;
+background:#1f2937;
+color:white;
+" />
+
+        <div id="listaLixeira"></div>
+
+      </div>
+    </div>
+
+
+    <div class="mobile-kanban-tabs">
+
+      <button class="kanban-btn active-tab" onclick="mostrarColunaMobile('novo', this)">
+        🟡 Novos
+      </button>
+
+      <button class="kanban-btn" onclick="mostrarColunaMobile('contato', this)">
+        🔵 Contato
+      </button>
+
+      <button class="kanban-btn" onclick="mostrarColunaMobile('proposta', this)">
+        🟠 Proposta
+      </button>
+
+      <button class="kanban-btn" onclick="mostrarColunaMobile('fechado', this)">
+        🟢 Fechado
+      </button>
+
+      <button class="kanban-btn todos-btn" onclick="mostrarTodasColunas(this)">
+        📋 Todos
+      </button>
+
+    </div>
+
+
+    <div class="board">
+      <div class="column" id="novo" ondragover="allowDrop(event)" ondrop="drop(event, 'novo')">
+        <h2>🟡 Novos</h2>
+      </div>
+
+      <div class="column" id="contato" ondragover="allowDrop(event)" ondrop="drop(event, 'contato')">
+        <h2>🔵 Contato</h2>
+      </div>
+
+      <div class="column" id="proposta" ondragover="allowDrop(event)" ondrop="drop(event, 'proposta')">
+        <h2>🟠 Proposta</h2>
+      </div>
+
+      <div class="column" id="fechado" ondragover="allowDrop(event)" ondrop="drop(event, 'fechado')">
+        <h2>🟢 Fechado</h2>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+    function mostrarPagina(id) {
+
+      document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"))
+
+      document.getElementById(id)
+        .classList.add("active")
+
+    }
+
+    window.mostrarColunaMobile = function (status, botao) {
+
+      // remove visual dos botões
+      document.querySelectorAll(".kanban-btn")
+        .forEach(btn => {
+
+          btn.classList.remove("active-tab")
+
+        })
+
+      // ativa botão clicado
+      if (botao) {
+
+        botao.classList.add("active-tab")
+
+      }
+
+      // esconde todas
+      document.querySelectorAll(".column")
+        .forEach(col => {
+
+          col.classList.remove(
+            "active-mobile",
+            "show-all"
+          )
+
+        })
+
+      // mostra só uma
+      const coluna =
+        document.getElementById(status)
+
+      if (coluna) {
+
+        coluna.classList.add("active-mobile")
+
+      }
+
+    }
+
+
+
+    window.mostrarTodasColunas = function (botao) {
+
+      // remove active
+      document.querySelectorAll(".kanban-btn")
+        .forEach(btn => {
+
+          btn.classList.remove("active-tab")
+
+        })
+
+      // ativa botão
+      if (botao) {
+
+        botao.classList.add("active-tab")
+
+      }
+
+      // mostra todas
+      document.querySelectorAll(".column")
+        .forEach(col => {
+
+          col.classList.remove("active-mobile")
+
+          col.classList.add("show-all")
+
+        })
+
+    }
+
+  </script>
+
+  <script>
+
+    function formatarData(dataISO) {
+      let data = new Date(dataISO)
+
+      let dia = data.getDate().toString().padStart(2, '0')
+      let mes = (data.getMonth() + 1).toString().padStart(2, '0')
+      let ano = data.getFullYear()
+
+      let hora = data.getHours().toString().padStart(2, '0')
+      let minuto = data.getMinutes().toString().padStart(2, '0')
+
+      return `${dia}/${mes}/${ano} - ${hora}:${minuto}`
+    }
+
+  </script>
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+    import {
+      getFirestore,
+      collection,
+      onSnapshot,
+      doc,
+      updateDoc,
+      deleteDoc,
+      addDoc,
+      getDocs,
+      query,
+      where,
+      setDoc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    
+   
+    
+
+    import {
+      getAuth, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";;
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
+      authDomain: "mf-solucoes-crm.firebaseapp.com",
+      projectId: "mf-solucoes-crm",
+      storageBucket: "mf-solucoes-crm.firebasestorage.app",
+      messagingSenderId: "492242482187",
+      appId: "1:492242482187:web:c5d808bf46d199bc60030e"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+        alert("Você precisa estar logado")
+        window.location.href = "/solar-calculator/login.html"
+        return
+      }
+
+      // 🔥 MOSTRA USUÁRIO
+      let email = user.email
+      let nomeCurto = email.split("@")[0]
+
+      document.getElementById("userEmail").innerText = nomeCurto
+
+      const notasRef = doc(
+        db,
+        "crm_config",
+        user.uid
+      )
+
+      const notasBox =
+        document.getElementById(
+          "notasInternas"
+        )
+
+      // CARREGA
+      const notasSnap =
+        await getDoc(notasRef)
+
+      if (notasSnap.exists()) {
+
+        notasBox.value =
+          notasSnap.data().texto || ""
+
+      }
+
+      // SALVA AUTOMÁTICO
+      notasBox.addEventListener(
+        "input",
+        async () => {
+
+          await setDoc(
+            notasRef,
+            {
+              texto: notasBox.value,
+              atualizadoEm:
+                new Date().toISOString()
+            }
+          )
+
+        }
+      )
+
+      console.log("✅ Usuário logado:", user.uid)
+
+      // 🔥 BUSCA APENAS LEADS DO USUÁRIO
+      const q = query(
+        collection(db, "leads"),
+        where("userId", "==", user.uid)
+      )
+
+      onSnapshot(q, (snapshot) => {
+
+        leads = []
+
+        window.leads = leads
+
+        snapshot.forEach(doc => {
+          leads.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+
+        window.leads = leads
+
+        localStorage.setItem("backup_leads", JSON.stringify(leads))
+
+        render()
+        renderEventos()
+        renderAnalytics()
+        atualizarDashboard()
+      })
+
+      const eventosRef =
+        collection(db, "eventos")
+
+      onSnapshot(eventosRef, (snapshot) => {
+
+        window.eventos = []
+
+        snapshot.forEach(doc => {
+
+          window.eventos.push({
+            id: doc.id,
+            ...doc.data()
+          })
+
+        })
+
+        renderEventos()
+
+      })
+
+    })
+
+
+
+    let leads = []
+    window.leads = leads
+    let backup = localStorage.getItem("backup_leads")
+    window.eventos = []
+
+    if (backup) {
+      leads = JSON.parse(backup)
+      render()
+    }
+    function drag(ev, id) {
+      ev.dataTransfer.setData("id", id)
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault()
+    }
+
+
+    window.drop = async function (ev, novoStatus) {
+
+      ev.preventDefault()
+
+      let id = ev.dataTransfer.getData("id")
+
+      if (!id) return
+
+      const ref = doc(db, "leads", id)
+
+      await updateDoc(ref, {
+        status: novoStatus
+      })
+    }
+
+    window.whatsapp = function (telefone, nome) {
+
+      try {
+        if (typeof fbq !== "undefined") {
+          fbq('track', 'Contact')
+        }
+      } catch (e) { }
+
+      try {
+        if (typeof gtag !== "undefined") {
+          gtag('event', 'clique_whatsapp', {
+            event_category: 'contato',
+            event_label: 'botao_whatsapp'
+          })
+        }
+      } catch (e) { }
+
+      let numero = (telefone || "").replace(/\D/g, '')
+
+      let msg = `Olá ${nome}, preparei sua proposta de energia solar.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Hoje ainda consigo manter as condições especiais.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Posso te explicar em 2 minutos?`
+
+      window.open("https://wa.me/55" + numero + "?text=" + encodeURIComponent(msg))
+    }
+
+
+
+    window.verDetalhes = async function (id) {
+
+      let lead = leads.find(l => l.id == id)
+
+      console.log("LEAD DETALHES:", lead)
+      console.log("SISTEMA:", lead?.sistema)
+      console.log("INVESTIMENTO:", lead?.investimento)
+      console.log("GERACAO:", lead?.geracao)
+
+      if (!lead) {
+
+        alert("Lead não encontrado")
+        return
+      }
+
+
+      lead.financiamentos =
+        gerarFinanciamentos(lead)
+
+
+      let historicoTexto = ""
+
+      if (lead.historico) {
+        lead.historico.forEach(h => {
+          historicoTexto += `\n- ${h.acao} (${new Date(h.data).toLocaleString()})`
+        })
+      }
+
+
+      const modal = document.createElement("div")
+
+      modal.style.position = "fixed"
+      modal.style.top = "50%"
+      modal.style.left = "50%"
+      modal.style.transform = "translate(-50%, -50%)"
+
+      if (window.innerWidth < 768) {
+
+        modal.classList.add("modal-detalhes-mobile")
+
+      } else {
+
+        modal.style.width = "900px"
+        modal.style.maxWidth = "95vw"
+
+      }
+
+      modal.style.height = "90vh"
+
+      modal.style.background = "#111827"
+      modal.style.color = "white"
+
+      modal.style.padding = "30px"
+
+      modal.style.borderRadius = "20px"
+
+      modal.style.zIndex = "999999"
+
+      modal.style.boxShadow = "0 0 40px rgba(0,0,0,0.7)"
+
+      modal.style.fontFamily = "Arial"
+
+      modal.style.lineHeight = "1.8"
+
+      modal.style.overflow = "hidden"
+
+      modal.style.pointerEvents = "auto"
+
+      modal.innerHTML = `
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+">
+
+<h2 style="margin:0">
+📊 Detalhes do Lead
+</h2>
+
+<button id="fecharModalDetalhes" style="
+background:#ef4444;
+border:none;
+color:white;
+padding:10px 16px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+width:auto;
+">
+Fechar
+</button>
+
+</div>
+
+<!-- ABAS -->
+
+<div id="abasLead" style="
+display:flex;
+gap:10px;
+margin-bottom:20px;
+flex-wrap:wrap;
+">
+
+<button onclick="trocarAbaLead('abaLead')">
+📋 Lead
+</button>
+
+<button onclick="trocarAbaLead('abaInteligencia')">
+🧠 Inteligência
+</button>
+
+<button onclick="trocarAbaLead('abaFinanciamento')">
+💳 Financiamento
+</button>
+
+
+
+</div>
+
+<!-- CONTEÚDO DAS ABAS -->
+
+<div id="abaLead" class="abaLead">
+
+<div style="
+background:#0f172a;
+padding:20px;
+border-radius:16px;
+overflow:auto;
+height:60vh;
+">
+
+<h2>📋 Informações do Lead</h2>
+
+👤 Cliente: ${lead.nome}<br><br>
+
+📞 Telefone: ${lead.telefone || "-"}<br><br>
+
+📍 Endereço: ${lead.endereco || "-"}<br><br>
+
+🗓 Cadastro:
+${formatarData(lead.data)}<br><br>
+
+<p>
+📍 Origem:
+<span id="leadOrigem"></span>
+</p>
+
+<p>
+📢 Campanha:
+<span id="leadCampanha"></span>
+</p>
+
+⚡ Sistema:
+${lead.sistema || "-"}<br><br>
+
+💰 Investimento:
+R$ ${Number(lead.investimento || 0).toFixed(0)}
+
+💡 Conta:
+R$ ${lead.valor || "-"}<br><br>
+
+<hr style="
+margin:25px 0;
+border-color:rgba(255,255,255,0.08);
+">
+
+⚡ Consumo:
+${lead.consumo || "-"} kWh
+
+<br><br>
+
+📈 Geração:
+${Number(lead.geracao || 0).toFixed(0)} kWh/mês
+
+<br><br>
+
+🧩 Quantidade de placas:
+${lead.placas || "-"}
+
+<br><br>
+
+🔌 Potência da placa:
+${lead.potenciaPlaca || "-"} W
+
+
+<br><br>
+
+⚡ Potência do sistema:
+${lead.kwp || "-"} kWp
+
+<br><br>
+
+⚙️ Inversor:
+${lead.inversor || "-"}
+
+<br><br>
+
+📊 Overload:
+${Number(lead.overload || 0).toFixed(0)}%
+
+<br><br>
+
+⏳ Payback:
+${Number(lead.payback || 0).toFixed(1)} anos
+
+<br><br>
+
+🌞 HSP:
+${lead.hsp || "-"}
+
+<br><br>
+
+💸 Tarifa:
+R$ ${lead.tarifa || "-"}
+
+</div>
+
+</div>
+
+<!-- INTELIGÊNCIA -->
+
+<div id="abaInteligencia"
+class="abaLead"
+style="display:none;">
+
+<div style="
+background:#0f172a;
+padding:20px;
+border-radius:16px;
+height:60vh;
+overflow:auto;
+">
+
+<h2>🧠 Inteligência do Lead</h2>
+
+<div id="analyticsLead">
+
+Carregando analytics...
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FINANCIAMENTO -->
+
+<div id="abaFinanciamento"
+class="abaLead"
+style="display:none;">
+
+<div style="
+background:#0f172a;
+padding:20px;
+border-radius:16px;
+height:60vh;
+overflow:auto;
+">
+
+<h2>💳 Financiamentos</h2>
+
+${lead.kitsDisponiveis ? `
+
+<div style="
+display:grid;
+gap:14px;
+margin-top:20px;
+">
+
+${Object.entries(lead.kitsDisponiveis)
+            .map(([tipo, kit]) => `
+
+<div style="
+background:#111827;
+padding:16px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.05);
+">
+
+<div style="
+font-size:18px;
+font-weight:700;
+margin-bottom:12px;
+color:#22c55e;
+">
+⚡ ${kit.nome}
+</div>
+
+📦 Potência:
+<b>${kit.kwp} kWp</b>
+
+<br><br>
+
+💰 Investimento:
+<b>R$ ${kit.investimento}</b>
+
+<br><br>
+
+💸 Economia:
+<b>R$ ${kit.economia}/mês</b>
+
+</div>
+
+`).join("")}
+
+</div>
+
+<hr style="
+margin:25px 0;
+border-color:rgba(255,255,255,0.08);
+">
+
+` : ""}
+
+${lead.financiamentos ? `
+
+<div style="
+display:grid;
+gap:14px;
+margin-top:20px;
+">
+
+${Object.entries(lead.financiamentos)
+            .map(([kit, bancos]) => `
+
+<div style="
+background:#111827;
+padding:16px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.05);
+">
+
+<div style="
+font-size:18px;
+font-weight:700;
+margin-bottom:12px;
+color:#22c55e;
+">
+⚡ ${kit.toUpperCase()}
+</div>
+
+<div style="
+display:grid;
+gap:10px;
+margin-top:15px;
+">
+
+<div style="
+background:#0f172a;
+padding:12px;
+border-radius:12px;
+">
+
+🏦 Santander
+
+<br><br>
+
+24x:
+<b>
+R$ ${bancos.santander24}
+</b>
+
+<br>
+
+36x:
+<b>
+R$ ${bancos.santander36}
+</b>
+
+<br>
+
+48x:
+<b style="
+color:
+${Number(bancos.santander48) <= Number(lead.valor)
+                ? '#22c55e'
+                : '#f59e0b'}
+">
+R$ ${bancos.santander48}
+</b>
+
+</div>
+
+<div style="
+background:#0f172a;
+padding:12px;
+border-radius:12px;
+">
+
+🏦 BV Financeira
+
+<br><br>
+
+48x:
+<b>
+R$ ${bancos.bv48}
+</b>
+
+</div>
+
+<div style="
+background:#0f172a;
+padding:12px;
+border-radius:12px;
+">
+
+🏦 Sicoob
+
+<br><br>
+
+60x:
+<b style="
+color:
+${Number(bancos.sicoob60) <= Number(lead.valor)
+                ? '#22c55e'
+                : '#f59e0b'}
+">
+R$ ${bancos.sicoob60}
+</b>
+
+</div>
+
+<div style="
+background:#0f172a;
+padding:12px;
+border-radius:12px;
+">
+
+🏦 Bradesco
+
+<br><br>
+
+72x:
+<b>
+R$ ${bancos.bradesco72}
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+` : "Nenhuma simulação encontrada."}
+
+</div>
+
+</div>
+
+
+
+<!-- COLUNA DIREITA -->
+
+<div style="
+background:#0f172a;
+border-radius:16px;
+padding:20px;
+overflow:auto;
+border:1px solid rgba(255,255,255,0.05);
+">
+
+<h2 style="
+margin-top:0;
+color:#22c55e;
+">
+
+
+
+</div>
+
+</div>
+
+`
+
+      document.body.appendChild(modal)
+
+      document.getElementById("leadOrigem").innerText =
+lead.utm_source || "Direto"
+
+document.getElementById("leadCampanha").innerText =
+lead.utm_campaign || "-"
+
+      const analyticsDiv =
+        document.getElementById(
+          "analyticsLead"
+        )
+
+      if (
+        lead.sessionId
+      ) {
+
+        const q = query(
+
+          collection(
+            db,
+            "eventos"
+          ),
+
+          where(
+            "sessionId",
+            "==",
+            lead.sessionId
+          )
+
+        )
+
+        const snapshot =
+          await getDocs(q)
+
+        let eventosLead = []
+
+        snapshot.forEach(doc => {
+
+          eventosLead.push(
+            doc.data()
+          )
+
+        })
+
+        analyticsDiv.innerHTML = `
+
+<div style="
+display:flex;
+flex-direction:column;
+gap:12px;
+">
+
+<div style="
+background:#111827;
+padding:14px;
+border-radius:12px;
+border-left:4px solid #22c55e;
+">
+
+🔥 Eventos encontrados:
+<b>
+${eventosLead.length}
+</b>
+
+</div>
+
+${(() => {
+
+            const simulacoes = new Set(
+
+              eventos
+                .filter(e =>
+                  e.evento === "clicou_simular"
+                )
+                .map(e => e.sessionId)
+
+            ).size
+
+            const whatsapp =
+              eventosLead.filter(e =>
+                e.evento === "clicou_whatsapp"
+              ).length
+
+            const scroll =
+              eventosLead.filter(e =>
+                e.evento === "scroll_profundo"
+              ).length
+
+            const telefone =
+              eventosLead.some(e =>
+                e.evento === "telefone_digitado"
+              )
+
+            const tempo =
+              eventosLead.some(e =>
+                e.evento === "ficou_40_segundos"
+              )
+
+            let score = 0
+
+            score += simulacoes * 5
+            score += whatsapp * 20
+            score += scroll * 10
+
+            if (telefone) score += 15
+            if (tempo) score += 15
+
+            if (score > 100) {
+              score = 100
+            }
+
+            let nivel = "🟢 Frio"
+
+            if (score >= 40) {
+              nivel = "🟡 Morno"
+            }
+
+            if (score >= 70) {
+              nivel = "🔥 Quente"
+            }
+
+            return `
+
+<div style="
+background:#111827;
+padding:18px;
+border-radius:16px;
+line-height:1.9;
+">
+
+<div style="
+font-size:22px;
+font-weight:bold;
+margin-bottom:15px;
+color:#22c55e;
+">
+
+${nivel}
+
+</div>
+
+<div style="
+font-size:18px;
+margin-bottom:20px;
+">
+
+🎯 Score:
+<b>${score}/100</b>
+
+</div>
+
+━━━━━━━━━━━━━━<br><br>
+
+📈 Simulações:
+<b>${simulacoes}</b><br>
+
+📜 Scroll profundo:
+<b>${scroll}</b><br>
+
+💬 Cliques WhatsApp:
+<b>${whatsapp}</b><br>
+
+📞 Digitou telefone:
+<b>${telefone ? "Sim" : "Não"}</b><br>
+
+⏱ Ficou +40 segundos:
+<b>${tempo ? "Sim" : "Não"}</b><br>
+
+<br>
+
+━━━━━━━━━━━━━━<br><br>
+
+💡 Sugestão:
+
+${score >= 70
+                ? "Lead pronto para abordagem imediata no WhatsApp."
+                : score >= 40
+                  ? "Lead demonstrou interesse moderado."
+                  : "Lead ainda frio."
+              }
+
+</div>
+
+`
+
+          })()}
+
+</div>
+
+`
+
+      }
+
+      setTimeout(() => {
+
+        const botaoFechar =
+          document.getElementById("fecharModalDetalhes")
+
+        if (botaoFechar) {
+
+          botaoFechar.addEventListener("click", () => {
+            modal.remove()
+          })
+
+        }
+
+      }, 100)
+
+
+    }
+
+
+
+    window.mover = async function (id) {
+
+      let lead = leads.find(l => l.id == id)
+
+      let ordem = ["novo", "contato", "proposta", "fechado"]
+      let i = ordem.indexOf(lead.status)
+
+      if (i < ordem.length - 1) {
+
+        let novoStatus = ordem[i + 1]
+
+        const ref = doc(db, "leads", id)
+
+        let novoHistorico = lead.historico || []
+
+        novoHistorico.push({
+          acao: "Movido para " + novoStatus,
+          data: new Date().toISOString()
+        })
+
+        await updateDoc(ref, {
+          status: novoStatus,
+          historico: novoHistorico
+        })
+      }
+    }
+
+    window.voltar = async function (id) {
+
+      let lead = leads.find(l => l.id == id)
+
+      let ordem = ["novo", "contato", "proposta", "fechado"]
+      let i = ordem.indexOf(lead.status)
+
+      if (i > 0) {
+
+        let novoStatus = ordem[i - 1]
+
+        const ref = doc(db, "leads", id)
+
+        let novoHistorico = lead.historico || []
+
+        novoHistorico.push({
+          acao: "Voltou para " + novoStatus,
+          data: new Date().toISOString()
+        })
+
+        await updateDoc(ref, {
+          status: novoStatus,
+          historico: novoHistorico
+        })
+      }
+    }
+
+    window.excluir = async function (id) {
+
+      if (!confirm("Excluir lead?")) return
+
+      const ref = doc(db, "leads", id)
+
+      await updateDoc(ref, {
+        deletado: true,
+        deletadoEm: new Date().toISOString()
+      })
+
+    }
+
+    window.abrirProposta = function (id) {
+
+      if (!id) return alert("ID inválido")
+
+      let lead = leads.find(l => l.id == id)
+
+
+      if (!lead) {
+        alert("Lead não encontrado")
+        return
+      }
+
+      // 🔥 SALVA O LEAD COMPLETO
+
+
+
+      localStorage.setItem("leadSelecionado", JSON.stringify(lead))
+
+      localStorage.setItem(
+        "geracaoMensal",
+        lead.geracaoMensal || 1200
+      );
+      // 🔥 ABRE A PROPOSTA
+
+      localStorage.setItem(
+        "nomePdf",
+        `PROPOSTA SOLAR - ${lead.nome.toUpperCase()}`
+      )
+
+      window.open("../proposta.html", "_blank")
+    }
+
+    function calcularParcela(valor, taxa, meses) {
+
+      const i = taxa
+
+      const parcela =
+        (valor * i) /
+        (1 - Math.pow(1 + i, -meses))
+
+      return parcela.toFixed(0)
+
+    }
+
+    function gerarFinanciamentos(lead) {
+
+      if (!lead.kitsDisponiveis) return {}
+
+      const bancos = {
+
+        santander: 0.0199,
+        bv: 0.0215,
+        sicoob: 0.0185,
+        bradesco: 0.0220
+
+      }
+
+      const financiamentos = {}
+
+      Object.entries(
+        lead.kitsDisponiveis
+      ).forEach(([tipo, kit]) => {
+
+        const valor =
+          Number(
+            String(kit.investimento)
+              .replace(/\D/g, "")
+          )
+
+        financiamentos[tipo] = {
+
+          santander24:
+            calcularParcela(
+              valor,
+              bancos.santander,
+              24
+            ),
+
+          santander36:
+            calcularParcela(
+              valor,
+              bancos.santander,
+              36
+            ),
+
+          santander48:
+            calcularParcela(
+              valor,
+              bancos.santander,
+              48
+            ),
+
+          bv48:
+            calcularParcela(
+              valor,
+              bancos.bv,
+              48
+            ),
+
+          sicoob60:
+            calcularParcela(
+              valor,
+              bancos.sicoob,
+              60
+            ),
+
+          bradesco72:
+            calcularParcela(
+              valor,
+              bancos.bradesco,
+              72
+            )
+
+        }
+
+      })
+
+      return financiamentos
+
+    }
+
+
+
+    function render() {
+
+      document.getElementById("novo").innerHTML = "<h2>🟡 Novos</h2>"
+      document.getElementById("contato").innerHTML = "<h2>🔵 Contato</h2>"
+      document.getElementById("proposta").innerHTML = "<h2>🟠 Proposta</h2>"
+      document.getElementById("fechado").innerHTML = "<h2>🟢 Fechado</h2>"
+
+      let ativos = leads.filter(l => !l.deletado)
+
+      let total = ativos.length
+
+      let negociacao = ativos.filter(l =>
+        l.status === "contato" || l.status === "proposta"
+      )
+
+      let fechado = ativos.filter(l => l.status === "fechado")
+
+      let valorNegociacao = negociacao.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
+
+      let valorFechado = fechado.reduce((acc, l) => acc + (parseFloat(l.valor) || 0), 0)
+
+      let conversao = total > 0 ? ((fechado.length / total) * 100).toFixed(0) : 0
+
+      document.getElementById("totalLeads").innerText = total
+      document.getElementById("negociacao").innerText = "R$ " + valorNegociacao
+      document.getElementById("fechadoTotal").innerText = "R$ " + valorFechado
+      document.getElementById("conversao").innerText = conversao + "%"
+
+      leads.forEach(l => {
+
+        if (l.deletado) return
+        let dias = Math.floor((Date.now() - new Date(l.data)) / (1000 * 60 * 60 * 24))
+
+        let alerta = ""
+        let cor = ""
+
+        if (l.status === "proposta" && dias >= 1) {
+          alerta = "🔥 FECHAR HOJE"
+          cor = "#ef4444"
+        }
+        else if (dias >= 3) {
+          alerta = "⚠️ PARADO"
+          cor = "#f59e0b"
+        }
+        else {
+          alerta = "🟢 ANDAMENTO"
+          cor = "#22c55e"
+        }
+        let card = `
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div class="card" draggable="true" ondragstart="drag(event, '${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <b>${l.nome}</b><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small style="color:#22c55e; font-weight:bold">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          🔥 ${l.utm_source || "direto"}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </small><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small style="color:#9ca3af">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Campanha: ${l.utm_campaign || "-"}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </small><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div style="color:${cor}; font-weight:bold">${alerta}</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small>📞 ${l.telefone}</small><br>
+
+<div style="
+margin-top:8px;
+padding:8px;
+background:#0f172a;
+border-radius:10px;
+font-size:11px;
+line-height:1.7;
+border:1px solid rgba(255,255,255,0.05);
+">
+
+📍 Origem:
+<b style="color:#22c55e">
+${l.utm_source || "direto"}
+</b>
+
+<br>
+
+📢 Campanha:
+<b style="color:#38bdf8">
+${l.utm_campaign || "-"}
+</b>
+
+<br>
+
+🛰 Meio:
+<b style="color:#f59e0b">
+${l.utm_medium || "-"}
+</b>
+
+<br>
+
+🏷 Kit:
+<b style="color:#e879f9">
+${l.kitEscolhido || "-"}
+</b>
+
+</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <small>💡 Conta: R$ ${l.valor}</small>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="whatsapp" onclick="whatsapp('${l.telefone}','${l.nome}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          💬 WhatsApp
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button onclick="mover('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ➡️ Avançar
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button style="background:#6b7280" onclick="voltar('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ⬅️ Voltar
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="excluir" onclick="excluir('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          🗑 Excluir
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="detalhes" onclick="verDetalhes('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          📊 Detalhes
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button class="proposta" onclick="abrirProposta('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          📄 Proposta
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <button style="background:#22c55e" onclick="fechar('${l.id}')">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          💰 Fechar Venda
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          `
+
+        document.getElementById(l.status).innerHTML += card
+
+
+        // MOBILE -> abre coluna inicial
+
+
+
+
+      })
+
+      if (window.innerWidth < 768) {
+
+        mostrarColunaMobile("novo")
+
+      }
+    }
+
+
+
+    function renderAnalytics() {
+
+      const visitas = new Set(
+
+        eventos
+          .filter(e =>
+            e.evento === "pagina_abriu"
+          )
+          .map(e => e.sessionId)
+
+      ).size
+
+      const scrolls =
+        eventos.filter(e =>
+          e.evento === "scroll_profundo"
+        ).length
+
+      const simulacoes =
+        eventos.filter(e =>
+          e.evento === "clicou_simular"
+        ).length
+
+      const telefones =
+        eventos.filter(e =>
+          e.evento === "telefone_digitado"
+        ).length
+
+      const propostas =
+        eventos.filter(e =>
+          e.evento === "gerou_proposta"
+        ).length
+
+      const whatsapp =
+        eventos.filter(e =>
+          e.evento === "clicou_whatsapp"
+        ).length
+
+      const leadsQuentes =
+        eventos.filter(e =>
+          (e.score || 0) >= 70
+        ).length
+
+      document.getElementById(
+        "analytics"
+      ).innerHTML = `
+
+    <div class="card">
+      👁️ Visitas
+      <h2>${visitas}</h2>
+    </div>
+
+    <div class="card">
+      📜 Scroll profundo
+      <h2>${scrolls}</h2>
+    </div>
+
+    <div class="card">
+      ⚡ Simulações
+      <h2>${simulacoes}</h2>
+    </div>
+
+    <div class="card">
+      📞 Telefones
+      <h2>${telefones}</h2>
+    </div>
+
+    <div class="card">
+      📄 Propostas
+      <h2>${propostas}</h2>
+    </div>
+
+    <div class="card">
+      💬 WhatsApp
+      <h2>${whatsapp}</h2>
+    </div>
+
+    <div class="card">
+      🔥 Leads quentes
+      <h2>${leadsQuentes}</h2>
+    </div>
+
+  `
+
+    }
+
+
+
+    window.novoLead = async function () {
+
+      let utm = JSON.parse(localStorage.getItem("utm")) || {}
+
+      let nome = prompt("Nome do cliente:")
+      if (!nome) return
+
+      const kit =
+        JSON.parse(
+          localStorage.getItem("kitSelecionado")
+        ) || {}
+
+      let telefone = prompt("Telefone:")
+      let valor = prompt("Conta de luz:")
+
+      const valorConta =
+Number(valor || 0)
+
+      let investimento = prompt("Valor do sistema (R$):")
+      let kwp = prompt("Potência do sistema (kWp):")
+
+
+      const leadRef =
+        await addDoc(collection(db, "leads"), {
+
+          nome,
+          telefone,
+          valor,
+
+          sistema: kit?.sistema || "-",
+          investimento: kit?.investimento || investimento || 0,
+          geracao: kit?.geracao || 0,
+          kwp: kit?.kwp || kwp || 0,
+          payback: kit?.payback || "-",
+          inversor: kit?.inversor || "-",
+          overload: kit?.overload || "-",
+          potenciaPlaca: kit?.potenciaPlaca || "-",
+          placas: kit?.placas || 0,
+
+          status: "novo",
+
+          data: new Date().toISOString(),
+
+          userId: auth.currentUser.uid,
+
+          utm_source: utm.source,
+          utm_campaign: utm.campaign,
+          utm_medium: utm.medium
+
+        })
+
+      localStorage.setItem(
+        "leadId",
+        leadRef.id
+      )
+
+      // 🔥 CONTADORES PERMANENTES
+      let stats = JSON.parse(localStorage.getItem("stats")) || {
+
+        leadsHoje: 0,
+        leadsSemana: 0,
+        leadsMes: 0,
+        leadsAno: 0
+
+      }
+
+      stats.leadsHoje++
+      stats.leadsSemana++
+      stats.leadsMes++
+      stats.leadsAno++
+
+      localStorage.setItem("stats", JSON.stringify(stats))
+
+      // 🔥 PIXEL
+      try {
+        fbq('track', 'Lead')
+      } catch (e) { }
+
+      try {
+        gtag('event', 'lead_gerado')
+      } catch (e) { }
+
+    }
+
+
+
+    window.migrarLeadsAntigos = async function () {
+
+      const snapshot = await getDocs(collection(db, "leads"))
+
+      snapshot.forEach(async (docSnap) => {
+
+        const data = docSnap.data()
+
+        // se não tiver userId
+        if (!data.userId) {
+
+          await updateDoc(doc(db, "leads", docSnap.id), {
+            userId: auth.currentUser.uid
+          })
+
+          console.log("Corrigido:", docSnap.id)
+        }
+
+      })
+
+      alert("Migração concluída!")
+    }
+    window.fechar = async function (id) {
+
+      const ref = doc(db, "leads", id)
+      let lead = leads.find(l => l.id == id)
+
+      let estatisticas = JSON.parse(localStorage.getItem("estatisticas")) || {}
+
+      if (lead.sistema?.includes("Essencial")) {
+        estatisticas.essencialFechados =
+          (estatisticas.essencialFechados || 0) + 1
+      }
+
+      if (lead.sistema?.includes("Recomendado")) {
+        estatisticas.recomendadoFechados =
+          (estatisticas.recomendadoFechados || 0) + 1
+      }
+
+      if (lead.sistema?.includes("Premium")) {
+        estatisticas.premiumFechados =
+          (estatisticas.premiumFechados || 0) + 1
+      }
+
+      localStorage.setItem(
+        "estatisticas",
+        JSON.stringify(estatisticas)
+      )
+      await updateDoc(ref, {
+        status: "fechado"
+      })
+
+      alert("Venda fechada 🚀")
+    }
+
+   
+   
+    
+    window.deleteDoc = deleteDoc
+
+    function atualizarDashboard() {
+      let hoje = new Date()
+
+      let inicioSemana = new Date()
+      inicioSemana.setDate(hoje.getDate() - hoje.getDay())
+
+      let inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1)
+      let inicioAno = new Date(hoje.getFullYear(), 0, 1)
+
+      // 🔥 VISITAS
+      let visitas = JSON.parse(localStorage.getItem("visitas")) || []
+
+      let visitasHoje = 0
+      let visitasSemana = 0
+      let visitasMes = 0
+      let visitasAno = 0
+
+      visitas.forEach(v => {
+        let data = new Date(v.data)
+
+
+        if (data.toDateString() === hoje.toDateString()) visitasHoje++
+        if (data >= inicioSemana) visitasSemana++
+        if (data >= inicioMes) visitasMes++
+        if (data >= inicioAno) visitasAno++
+      })
+      let e = JSON.parse(localStorage.getItem("estatisticas")) || {}
+
+      document.getElementById("statsKits").innerHTML = `
+
+<div style="margin-top:10px">
+
+<b>🥉 Essencial</b><br>
+Cliques: ${e.essencialCliques || 0}<br>
+Propostas: ${e.essencialPropostas || 0}<br>
+Fechados: ${e.essencialFechados || 0}
+
+<hr>
+
+<b>🥈 Recomendado</b><br>
+Cliques: ${e.recomendadoCliques || 0}<br>
+Propostas: ${e.recomendadoPropostas || 0}<br>
+Fechados: ${e.recomendadoFechados || 0}
+
+<hr>
+
+<b>🥇 Premium</b><br>
+Cliques: ${e.premiumCliques || 0}<br>
+Propostas: ${e.premiumPropostas || 0}<br>
+Fechados: ${e.premiumFechados || 0}
+
+</div>
+`
+      // 🔥 LEADS PERMANENTES
+
+      let stats = JSON.parse(localStorage.getItem("stats")) || {
+
+        leadsHoje: 0,
+        leadsSemana: 0,
+        leadsMes: 0,
+        leadsAno: 0
+
+      }
+
+      let leadsHoje = stats.leadsHoje || 0
+      let leadsSemana = stats.leadsSemana || 0
+      let leadsMes = stats.leadsMes || 0
+      let leadsAno = stats.leadsAno || 0
+
+      // 🔥 JOGA NA TELA
+
+      document.getElementById("visitasHoje").innerText = visitasHoje
+      document.getElementById("visitasSemana").innerText = visitasSemana
+      document.getElementById("visitasMes").innerText = visitasMes
+      document.getElementById("visitasAno").innerText = visitasAno
+
+      document.getElementById("leadsHoje").innerText = leadsHoje
+      document.getElementById("leadsSemana").innerText = leadsSemana
+      document.getElementById("leadsMes").innerText = leadsMes
+      document.getElementById("leadsAno").innerText = leadsAno
+
+
+
+      // 🔥 LEAD QUENTE (melhorado)
+      let leadQuente = leads.slice(-1)[0]
+
+      // 🔥 TELA
+      document.getElementById("visitasHoje").innerText = visitasHoje
+      document.getElementById("leadsHoje").innerText = leadsHoje
+
+    }
+
+    window.abrirLixeira = function () {
+
+      document.getElementById("modalLixeira").style.display = "flex"
+
+      renderLixeira()
+
+    }
+
+    window.fecharLixeira = function () {
+
+      document.getElementById("modalLixeira").style.display = "none"
+
+    }
+
+    window.renderLixeira = function () {
+
+      let lista = document.getElementById("listaLixeira")
+
+      let busca = (
+        document.getElementById("pesquisaLixeira").value || ""
+      ).toLowerCase()
+
+      let excluidos = leads.filter(l =>
+        l.deletado &&
+        (
+          l.nome?.toLowerCase().includes(busca) ||
+          l.telefone?.includes(busca)
+        )
+      )
+
+      if (excluidos.length === 0) {
+
+        lista.innerHTML = `
+      <div style="
+      padding:20px;
+      text-align:center;
+      color:#9ca3af;
+      ">
+      Nenhum lead encontrado
+      </div>
+    `
+
+        return
+      }
+
+      lista.innerHTML = ""
+
+      excluidos.forEach(l => {
+
+        lista.innerHTML += `
+
+    <div style="
+    background:#1f2937;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:10px;
+    ">
+
+      <b>${l.nome}</b><br>
+
+      <small>📞 ${l.telefone || "-"}</small><br>
+      <small>💰 R$ ${l.valor || "-"}</small><br>
+
+      <small style="color:#9ca3af">
+      Excluído em:
+      ${formatarData(l.deletadoEm)}
+      </small>
+
+      <div style="
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+      ">
+
+        <button
+        onclick="restaurarLead('${l.id}')"
+        style="
+        background:#22c55e;
+        color:white;
+        ">
+        ♻️ Restaurar
+        </button>
+
+        <button
+        onclick="excluirPermanentemente('${l.id}')"
+        style="
+        background:#ef4444;
+        color:white;
+        ">
+        ❌ Excluir Permanente
+        </button>
+
+      </div>
+
+    </div>
+
+    `
+      })
+
+    }
+
+
+    document.addEventListener("input", (e) => {
+
+      if (e.target.id === "pesquisaLixeira") {
+
+        renderLixeira()
+
+      }
+
+    })
+
+    window.restaurarLead = async function (id) {
+
+      const ref = doc(db, "leads", id)
+
+      await updateDoc(ref, {
+
+        deletado: false,
+
+        restauradoEm: new Date().toISOString()
+
+      })
+
+      alert("✅ Lead restaurado")
+
+      renderLixeira()
+
+    }
+
+    window.excluirPermanentemente = async function (id) {
+
+      let confirmar = confirm(
+        "Excluir permanentemente?"
+      )
+
+      if (!confirmar) return
+
+      await deleteDoc(doc(db, "leads", id))
+
+      alert("🗑️ Lead removido permanentemente")
+
+      renderLixeira()
+
+    }
+
+
+
+    window.exportarBackup = function () {
+
+      const confirmar = confirm(
+        "⚠️ Tem certeza que deseja baixar o backup do CRM?"
+      )
+
+      if (!confirmar) return
+
+      const backup = {
+
+        leads,
+
+        eventos,
+
+        exportadoEm:
+          new Date().toISOString()
+
+      }
+
+      const blob = new Blob(
+
+        [
+          JSON.stringify(
+            backup,
+            null,
+            2
+          )
+        ],
+
+        {
+          type: "application/json"
+        }
+
+      )
+
+      const url =
+        URL.createObjectURL(blob)
+
+      const a =
+        document.createElement("a")
+
+      a.href = url
+
+      a.download =
+        `backup-crm-${new Date().toISOString()
+        }.json`
+
+      a.click()
+
+      URL.revokeObjectURL(url)
+
+    }
+
+
+    // 🔥 roda ao abrir
+
+
+    window.logout = function () {
+      signOut(auth)
+      alert("Você saiu da conta")
+      window.location.reload()
+    }
+
+    window.trocarAbaLead = function (id) {
+
+      document
+        .querySelectorAll(".abaLead")
+        .forEach(div => {
+
+          div.style.display = "none"
+
+        })
+
+      document.getElementById(id)
+        .style.display = "block"
+
+    }
+
+  </script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+  <script>
+
+    function renderEventos() {
+
+
+
+      const totalVisitas = new Set(
+
+        eventos
+          .filter(e =>
+            e.evento === "pagina_abriu"
+          )
+          .map(e => e.sessionId)
+
+      ).size
+
+      const totalSimulacoes =
+        eventos.filter(e =>
+          e.evento === "clicou_simular"
+        ).length
+
+      const totalWhatsapp =
+        eventos.filter(e =>
+          e.evento === "clicou_whatsapp"
+        ).length
+
+      const totalPropostas =
+        eventos.filter(e =>
+          e.evento === "gerou_proposta"
+        ).length
+
+      document.getElementById(
+        "analyticsResumo"
+      ).innerHTML = `
+
+<div class="card"
+style="
+margin-bottom:20px;
+padding:20px;
+">
+
+<h2>
+📈 Resumo Executivo
+</h2>
+
+<div style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:12px;
+margin-top:20px;
+">
+
+<div class="mini-card">
+<h3>${totalVisitas}</h3>
+<p>Visitas</p>
+</div>
+
+<div class="mini-card">
+<h3>${totalSimulacoes}</h3>
+<p>Simulações</p>
+</div>
+
+<div class="mini-card">
+<h3>${totalWhatsapp}</h3>
+<p>WhatsApp</p>
+</div>
+
+<div class="mini-card">
+<h3>${totalPropostas}</h3>
+<p>Propostas</p>
+</div>
+
+</div>
+
+</div>
+`
+
+
+
+      document.getElementById(
+        "toggleEventos"
+      ).onclick = () => {
+
+        const box =
+          document.getElementById(
+            "eventosBrutos"
+          )
+
+        box.style.display =
+          box.style.display === "none"
+            ? "block"
+            : "none"
+
+      }
+
+      let textoBruto = ""
+
+      eventos
+        .slice()
+        .reverse()
+        .forEach(ev => {
+
+          textoBruto += `
+
+🔥 ${ev.evento}
+
+Score: ${ev.score || 0}
+
+Origem:
+${ev.utm_source || "direto"}
+
+Campanha:
+${ev.utm_campaign || "-"}
+
+Sessão:
+${ev.sessionId || "-"}
+
+━━━━━━━━━━━━━━
+
+`
+
+        })
+
+      document.getElementById(
+        "textoEventos"
+      ).value = textoBruto
+
+    }
+
+
+
+  </script>
+
+  </div>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Proposta Solar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  background:#dcdcdc;
+  font-family:'Montserrat', sans-serif;
+}
+
+/* A4 proporcional */
+.page{
+  width:794px;   /* equivalente A4 */
+  height:1123px;
+  margin:auto;
+  background:#f2f2f2;
+  position:relative;
+  overflow:hidden;
+}
+
+/* TEXTO */
+.title{
+  position:absolute;
+  left:90px;
+  bottom:260px;
+}
+
+.title h1{
+  margin:0;
+  font-size:34px;
+  font-weight:700;
+  color:#333;
+}
+
+.title h2{
+  margin-top:5px;
+  font-size:42px;
+  color:#2F80ED;
+  font-weight:700;
+}
+
+.info{
+  position:absolute;
+  left:90px;
+  bottom:120px;
+  font-size:14px;
+  color:#333;
+  line-height:1.8;
+}
+/* LOGO */
+.logo{
+  position:absolute;
+  top:60px;
+  right:140px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+}
+
+.logo span{
+  font-weight:600;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- SVG MASTER -->
+<div class="page">
+
+<svg width="794" height="1123" viewBox="0 0 794 1123">
+
+  <!-- BORDA -->
+  <polygon points="120,60 680,60 740,200 740,940 680,1060 120,1060 60,940 60,200"
+           fill="none" stroke="#2F80ED" stroke-width="2" opacity="0.5"/>
+
+  <!-- HEX ESQUERDA (ALINHADOS EM DIAGONAL) -->
+  <polygon points="240,320 310,360 310,440 240,480 170,440 170,360"
+           fill="#2F80ED"/>
+
+  <polygon points="310,420 400,480 400,600 310,660 220,600 220,480"
+           fill="#2D74C4"/>
+
+  <polygon points="170,380 210,410 210,460 170,490 130,460 130,410"
+           fill="#2F80ED"/>
+
+  <!-- HEX CENTRAL (IMAGEM) -->
+  <defs>
+    <clipPath id="hexImg">
+      <polygon points="540,420 650,480 650,600 540,660 430,600 430,480"/>
+    </clipPath>
+  </defs>
+
+  <image href="https://images.unsplash.com/photo-1509395176047-4a66953fd231"
+         x="410" y="420" width="280" height="280"
+         clip-path="url(#hexImg)"
+         style="filter: grayscale(100%)"/>
+
+  <!-- BORDA BRANCA -->
+  <polygon points="540,420 650,480 650,600 540,660 430,600 430,480"
+           fill="none" stroke="#ffffff" stroke-width="8"/>
+
+  <!-- HEX SOBREPOSTO TRANSPARENTE -->
+  <polygon points="630,420 720,470 720,590 630,640 540,590 540,470"
+           fill="#56CCF2" opacity="0.65"/>
+
+  <!-- HEX INFERIOR GRANDE -->
+  <polygon points="640,760 780,840 780,1000 640,1080 500,1000 500,840"
+           fill="#2F80ED"/>
+
+</svg>
+
+<!-- LOGO -->
+<div class="logo">
+  <img src="https://cdn-icons-png.flaticon.com/512/3103/3103446.png">
+  <span>MF Serviços<br>Especializados</span>
+</div>
+
+<!-- TEXTO AJUSTADO (SEM SOBREPOSIÇÃO) -->
+<div class="title">
+  <h1>Proposta</h1>
+  <h2>Comercial</h2>
+</div>
+
+<div class="info">
+  Elaborada para Luiz Pinho<br>
+  MARICÁ - RJ<br><br>
+  Nome do Responsável: <strong>MARCOS FELIPE MACHADO</strong><br>
+  Telefone do Responsável: <strong>(21) 97238-1004</strong><br>
+  Nº da Proposta: <strong>#00055</strong>
+</div>
+
+</div>
+
+</body>
+</html>
