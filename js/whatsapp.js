@@ -1,22 +1,39 @@
-import { atualizarLeadWhatsApp } from './lead.js';
+import { atualizarLeadWhatsApp, criarLeadBase } from '../services/leadService.js';
+import { salvarEvento, adicionarScore } from './analytics.js';
+import { Storage } from './storage.js';
 
-const NUMERO_WHATSAPP = "5521972821094"; // Exemplo (Substituir pelo da MF Soluções)
+const NUMERO_WHATSAPP = "5521972381004"; // Telefone Oficial da MF Soluções
 
 export async function abrirWhatsApp(kit, sistema) {
     try {
-        // 1. Atualiza no Firebase primeiro (REGRA CRÍTICA)
-        await atualizarLeadWhatsApp(kit.kit, sistema);
+        // Registra evento de clique no WhatsApp e adiciona score
+        salvarEvento('clicou_whatsapp');
+        adicionarScore(25);
+
+        const nome = document.getElementById('clienteNome')?.value || document.getElementById('nome')?.value || 'Não informado';
+        const telefone = document.getElementById('clienteTelefone')?.value || document.getElementById('telefone')?.value || '';
+
+        if (!Storage.getLeadId()) {
+            if (telefone.replace(/\D/g, '').length >= 10) {
+                await criarLeadBase(nome, telefone);
+            } else {
+                throw new Error('Telefone inválido para salvar lead antes do WhatsApp');
+            }
+        }
+
+        // 1. Atualiza no Firebase primeiro (REGRA CRÍTICA para persistência no mobile)
+        await atualizarLeadWhatsApp(kit, sistema);
 
         // 2. Aguarda 700ms para garantir a fluidez e persistência em webviews (Instagram, Safari)
         await new Promise(resolve => setTimeout(resolve, 700));
 
         // 3. Monta a mensagem
-        const mensagem = `Olá, vim pelo simulador e gostaria de mais informações sobre o Kit ${kit.kit} (${sistema}) de ${kit.kwp} kWp. O investimento estimado ficou em R$ ${kit.investimento}.`;
+        const mensagem = `Olá, vim pelo simulador e gostaria de mais informações sobre o Kit ${kit.kit || kit.nome} (${sistema}) de ${kit.kwp} kWp. O investimento estimado ficou em R$ ${kit.investimento}.`;
         
         // 4. Abre o WhatsApp
-        const url = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP}&text=${encodeURIComponent(mensagem)}`;
+        const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
         
-        // Em mobile, idealmente abrir em nova janela ou direto na mesma tab, window.open nem sempre funciona no Instagram browser
+        // Em mobile, idealmente abrir na mesma tab, pois window.open falha no webview do Instagram/Safari
         window.location.href = url;
 
     } catch (e) {

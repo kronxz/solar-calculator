@@ -1,29 +1,25 @@
-// storage.js - Wrapper para LocalStorage seguro
+/**
+ * js/storage.js — Fachada legada. Implementação em services/storageService.js
+ */
+import * as Store from '../services/storageService.js';
+
 export const Storage = {
-    set: (key, value) => {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (e) {
-            console.error("Erro ao salvar no storage (Modo Privado?):", e);
-        }
-    },
-    get: (key) => {
-        try {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } catch (e) {
-            console.error("Erro ao ler do storage:", e);
-            return null;
-        }
-    },
-    remove: (key) => {
-        localStorage.removeItem(key);
-    },
-    
-    // Funções específicas de negócio
-    setLeadId: (id) => Storage.set('leadAtualId', id),
-    getLeadId: () => Storage.get('leadAtualId'),
-    
-    setKits: (kits) => Storage.set('kitsCalculados', kits),
-    getKits: () => Storage.get('kitsCalculados') || []
+    set: (key, value) => Store.setJson(key, value),
+    get: (key) => Store.getJson(key),
+    remove: (key) => Store.remove(key),
+
+    setLeadId: (id) => Store.setLeadId(id),
+    getLeadId: () => Store.getLeadId(),
+
+    setTelefoneDigitos: (d) => Store.setTelefoneDigitos(d),
+    getTelefoneDigitos: () => Store.getTelefoneDigitos(),
+
+    setKits: (kits) => Store.setKitsCalculados(kits),
+    getKits: () => Store.getKitsCalculados(),
+
+    setKitsDisponiveis: (obj) => Store.setKitsDisponiveis(obj),
+    getKitsDisponiveis: () => Store.getKitsDisponiveis(),
+
+    setKitSelecionado: (kit) => Store.setKitSelecionado(kit),
+    getKitSelecionado: () => Store.getKitSelecionado()
 };

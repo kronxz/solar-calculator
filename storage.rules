@@ -1,0 +1,27 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Pasta de backups - apenas admin
+    match /backups/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Pasta de propostas - usuários autenticados
+    match /propostas/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Pasta de anexos - usuários autenticados
+    match /anexos/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.resource.size < 10 * 1024 * 1024;
+    }
+    
+    // Pasta pública (logos, imagens da empresa)
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+  }
+}

@@ -3742,10 +3742,25 @@ document.getElementById(
 ).innerText =
 "PRO-" + numeroFormatado
 
-  const dados =
-    calcularSistema(lead)
+  try {
+    const rawKits = localStorage.getItem('kitsDisponiveis') || localStorage.getItem('kitsCalculados');
+    if (rawKits) {
+      const kits = JSON.parse(rawKits);
+      const rec = kits.recomendado || kits.essencial || Object.values(kits)[0];
+      if (rec) {
+        if (!lead.kwp) lead.kwp = rec.kwp;
+        if (!lead.placas) lead.placas = rec.placas;
+        if (!lead.geracao) lead.geracao = rec.geracao;
+        if (!lead.geracaoMensal) lead.geracaoMensal = rec.geracao;
+        if (!lead.investimento) lead.investimento = rec.investimento;
+        if (!lead.potenciaPlaca) lead.potenciaPlaca = 550;
+      }
+    }
+  } catch (e) { console.warn('[Proposta] kits CRM:', e); }
 
-  preencherProjeto(dados)
+  const dados = calcularSistema(lead);
+
+  preencherProjeto(dados);
 
   preencherEquipamentos(dados)
 

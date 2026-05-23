@@ -1,0 +1,170 @@
+/* kanban.css — board, cards, toolbar, drag */
+
+.board {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.board::-webkit-scrollbar { height: 6px; }
+.board::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+
+.column {
+  min-width: 290px;
+  max-width: 290px;
+  flex-shrink: 0;
+}
+
+.column h2 {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid var(--borda-sutil);
+}
+
+.card {
+  background: rgba(17, 24, 39, 0.9);
+  border: 1px solid var(--borda-sutil);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease;
+  transition: 0.2s;
+}
+
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-nome { font-size: 15px; display: block; margin-bottom: 4px; }
+.card-alerta { font-weight: 700; font-size: 11px; margin: 4px 0; }
+.card-utm { border-radius: 8px !important; }
+.card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 10px; }
+
+.btn-card {
+  padding: 7px 6px;
+  border: none;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-crm);
+  cursor: pointer;
+  transition: 0.15s;
+  color: #fff;
+  width: 100%;
+}
+
+.btn-card:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+.btn-whatsapp { background: #22c55e; }
+.btn-avancar { background: #f59e0b; color: #000; }
+.btn-voltar { background: #6b7280; }
+.btn-excluir { background: #ef4444; }
+.btn-detalhes { background: #0ea5e9; }
+.btn-proposta { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+.btn-fechar-venda { background: #22c55e; grid-column: span 2; }
+
+.mobile-kanban-tabs {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.kanban-btn {
+  background: rgba(17, 24, 39, 0.9);
+  border: 1px solid var(--borda-sutil);
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-crm);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.kanban-btn.active-tab {
+  background: var(--azul-principal);
+  box-shadow: 0 0 18px rgba(37, 99, 235, 0.3);
+}
+
+.todos-btn { grid-column: span 2; }
+
+.kanban-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.kanban-toolbar .input-busca { flex: 1; min-width: 160px; }
+
+.column.drag-over {
+  outline: 2px dashed var(--verde-acento);
+  outline-offset: 4px;
+  background: rgba(34, 197, 94, 0.06);
+}
+
+.card.dragging {
+  opacity: 0.55;
+  transform: scale(0.98);
+}
+
+.crm-card-intel { display: flex; gap: 6px; align-items: center; margin: 4px 0; flex-wrap: wrap; }
+.crm-score-badge { background: #1e293b; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.crm-temp-badge { padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.temp-fria { background: #0ea5e9; color: #fff; }
+.temp-morno { background: #f59e0b; color: #022c22; }
+.temp-quente { background: #ef4444; color: #fff; }
+.crm-ultima-acao { color: #94a3b8; font-size: 11px; display: block; margin-bottom: 4px; }
+.crm-timeline-list { list-style: none; padding: 0; margin: 0; }
+.crm-timeline-item {
+  border-left: 3px solid #2563eb;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+.crm-timeline-item b { display: block; font-size: 13px; }
+.crm-timeline-item small { color: #9ca3af; }
+.crm-timeline-empty { color: #9ca3af; font-size: 13px; font-style: italic; }
+
+.kanban-skeleton .column h2 {
+  background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  color: transparent;
+  border: none;
+}
+
+.kanban-skeleton .card {
+  height: 120px;
+  background: linear-gradient(90deg, #111827 25%, #1f2937 50%, #111827 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.crm-col-empty {
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+  padding: 16px 8px;
+  font-style: italic;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login - MF Soluções</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box{
+  background:#1e293b;
+  padding:40px;
+  border-radius:16px;
+  width:100%;
+  max-width:350px;
+  text-align:center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+  outline:none;
+  font-size:14px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.erro{
+  color:#ef4444;
+  font-size:13px;
+  margin-top:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🔐 Acesso CRM</h1>
+
+<input type="email" id="email" placeholder="Seu email">
+<div style="position:relative;">
+  <input type="password" id="senha" placeholder="Senha" style="padding-right:40px;">
+  <span id="btnToggleSenha" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+    👁️
+  </span>
+</div>
+
+<button id="btnEntrar">Entrar</button>
+
+<p id="erro" class="erro"></p>
+
+</div>
+
+<script type="module">
+import { app } from "../firebase/config.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    window.location.href = './';
+  }
+});
+
+document.getElementById("btnEntrar").addEventListener("click", async () => {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, senha);
+    window.location.href = "./";
+  } catch(e) {
+    document.getElementById("erro").innerText = "Email ou senha inválidos";
+  }
+});
+
+document.getElementById("btnToggleSenha").addEventListener("click", () => {
+  const input = document.getElementById("senha");
+  input.type = input.type === "password" ? "text" : "password";
+});
+</script>
+
+
+  
+</body>
+</html>

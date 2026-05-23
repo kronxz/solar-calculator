@@ -1,0 +1,43 @@
+LEIA TODA A PASTA _project_handover ANTES DE QUALQUER ALTERAÇÃO.
+
+Você está continuando o projeto Solar Calculator MF Soluções.
+
+IMPORTANTE:
+- NÃO recriar o projeto do zero
+- NÃO simplificar arquitetura
+- NÃO remover funcionalidades existentes
+- NÃO quebrar mobile
+- NÃO alterar identidade visual sem necessidade
+- SEMPRE criar backups antes de mudanças críticas
+- SEMPRE validar Firebase após alterações
+
+OBJETIVO:
+Continuar exatamente do estado atual do projeto.
+
+ORDEM OBRIGATÓRIA DE LEITURA:
+1. 00_MASTER_CONTEXT.md
+2. 01_ARCHITECTURE.md
+3. 03_CURRENT_STATUS.md
+4. 04_NEXT_STEPS.md
+5. 05_BUGS_AND_ISSUES.md
+6. 06_AGENT_RULES.md
+7. 13_RECOVERY_GUIDE.md
+8. MASTER_PROMPT_CONTINUATION.md
+
+FOCO PRINCIPAL:
+- estabilizar Firebase DEV
+- integrar login
+- salvar leads
+- integrar CRM
+- corrigir PDF
+- analytics
+- automação WhatsApp
+- estabilidade
+- escalabilidade
+
+Após ler os arquivos:
+1. analisar arquitetura
+2. identificar pendências
+3. verificar riscos
+4. continuar desenvolvimento
+5. explicar alterações críticas antes de executar

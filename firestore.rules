@@ -1,0 +1,118 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ════════════════════════════════════════════════════════════
+    // LEADS — Gestão de leads do CRM
+    // ════════════════════════════════════════════════════════════
+    match /leads/{leadId} {
+      // Qualquer usuário autenticado pode criar leads
+      allow create: if request.auth != null;
+      
+      // Apenas o dono do lead (userId) ou admin pode ler/atualizar
+      allow read, update: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.auth.token.admin == true);
+      
+      // Apenas admin pode deletar permanentemente
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+      
+      // Subcoleção timeline (histórico do lead)
+      match /timeline/{eventId} {
+        allow create: if request.auth != null;
+        allow read: if request.auth != null;
+        allow update, delete: if request.auth != null && request.auth.token.admin == true;
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // EVENTOS — Analytics e tracking de sessões
+    // ════════════════════════════════════════════════════════════
+    match /eventos/{eventoId} {
+      // Qualquer usuário autenticado pode criar eventos (tracking)
+      allow create: if request.auth != null;
+      
+      // Apenas usuários autenticados podem ler (para analytics)
+      allow read: if request.auth != null;
+      
+      // Apenas admin pode atualizar/deletar
+      allow update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // CRM_CONFIG — Configurações globais do CRM
+    // ════════════════════════════════════════════════════════════
+    match /crm_config/{docId} {
+      // Apenas admin pode escrever
+      allow write: if request.auth != null && request.auth.token.admin == true;
+      
+      // Usuários autenticados podem ler
+      allow read: if request.auth != null;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // USERS — Perfil de usuários (opcional, para futuro)
+    // ════════════════════════════════════════════════════════════
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && (request.auth.uid == userId || request.auth.token.admin == true);
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // BACKUPS — Backups do sistema
+    // ════════════════════════════════════════════════════════════
+    match /backups/{backupId} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // INSTALACOES — Gestão de instalações e pós-venda
+    // ════════════════════════════════════════════════════════════
+    match /instalacoes/{instalacaoId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.auth.token.admin == true);
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+      
+      // Subcoleção checklist (checklist de instalação)
+      match /checklist/{checklistId} {
+        allow create, read: if request.auth != null;
+        allow update, delete: if request.auth != null && request.auth.token.admin == true;
+      }
+      
+      // Subcoleção anexos (fotos, documentos da instalação)
+      match /anexos/{anexoId} {
+        allow create, read: if request.auth != null;
+        allow update, delete: if request.auth != null && request.auth.token.admin == true;
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // AGENDA — Agenda técnica e visitas
+    // ════════════════════════════════════════════════════════════
+    match /agenda/{eventoId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // GARANTIAS — Gestão de garantias e manutenções
+    // ════════════════════════════════════════════════════════════
+    match /garantias/{garantiaId} {
+      allow create: if request.auth != null;
+      allow read, update: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+      
+      // Subcoleção manutenções
+      match /manutencoes/{manutencaoId} {
+        allow create, read: if request.auth != null;
+        allow update, delete: if request.auth != null && request.auth.token.admin == true;
+      }
+    }
+  }
+}

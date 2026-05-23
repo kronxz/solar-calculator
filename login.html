@@ -74,74 +74,42 @@ button{
 
 <input type="email" id="email" placeholder="Seu email">
 <div style="position:relative;">
-
   <input type="password" id="senha" placeholder="Senha" style="padding-right:40px;">
-
-  <span onclick="toggleSenha()" 
-        style="
-        position:absolute;
-        right:10px;
-        top:50%;
-        transform:translateY(-50%);
-        cursor:pointer;
-        font-size:18px;
-        ">
+  <span id="btnToggleSenha" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
     👁️
   </span>
-
 </div>
 
-<button onclick="login()">Entrar</button>
+<button id="btnEntrar">Entrar</button>
 
 <p id="erro" class="erro"></p>
 
 </div>
 
 <script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { app } from "./firebase/config.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
-  authDomain: "mf-solucoes-crm.firebaseapp.com",
-  projectId: "mf-solucoes-crm",
-  storageBucket: "mf-solucoes-crm.firebasestorage.app",
-  messagingSenderId: "492242482187",
-  appId: "1:492242482187:web:34c99a57f3b99c2260030e"
-};
-
-const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.login = async function(){
-
+document.getElementById("btnEntrar").addEventListener("click", async () => {
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
 
-  try{
+  try {
     await signInWithEmailAndPassword(auth, email, senha);
-    
+    console.log("AUTH SUCCESS:", auth.currentUser);
     localStorage.setItem("logado", "true");
-    
-    window.location.href = "crm/";
-  }catch(e){
+    window.location.href = "crm-dev/";
+  } catch(e) {
     document.getElementById("erro").innerText = "Email ou senha inválidos";
   }
+});
 
-}
-
-</script>
-<script>
-function toggleSenha(){
+document.getElementById("btnToggleSenha").addEventListener("click", () => {
   const input = document.getElementById("senha");
-
-  if(input.type === "password"){
-    input.type = "text";
-  }else{
-    input.type = "password";
-  }
-}
+  input.type = input.type === "password" ? "text" : "password";
+});
 </script>
 
 

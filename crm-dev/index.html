@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM — MF Soluções</title>
+  <meta name="description" content="Painel CRM interno da MF Soluções Elétricas para gestão de leads e pipeline de vendas de energia solar.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- CSS modular -->
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/dashboard.css">
+  <link rel="stylesheet" href="./css/kanban.css">
+  <link rel="stylesheet" href="./css/modal.css">
+  <link rel="stylesheet" href="./css/mobile.css">
+</head>
+
+<body>
+
+  <button type="button" id="btnSidebarToggle" class="sidebar-toggle" aria-label="Abrir menu">☰</button>
+  <div id="sidebarBackdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+  <div id="crmLoading" class="crm-loading" aria-hidden="true" aria-live="polite">
+    <div class="crm-loading-box">
+      <div class="crm-loading-spinner" aria-hidden="true"></div>
+      <span class="crm-loading-text">Carregando CRM...</span>
+    </div>
+  </div>
+  <div id="crmToast" class="crm-toast crm-toast--info" role="status" aria-live="polite"></div>
+
+  <!-- ════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════ -->
+  <aside id="sidebar" role="navigation" aria-label="Menu principal">
+    <div class="menu-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">MF CRM</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button id="btn-dashboard" class="sidebar-btn active" data-page="dashboardPage" aria-current="page">
+        <span class="btn-icon">📊</span> Dashboard
+      </button>
+      <button id="btn-visitas" class="sidebar-btn" data-page="visitasPage">
+        <span class="btn-icon">👁️</span> Visitas
+      </button>
+      <button id="btn-leads" class="sidebar-btn" data-page="leadsPage">
+        <span class="btn-icon">📋</span> Leads
+      </button>
+      <button id="btn-instalacoes" class="sidebar-btn" data-page="instalacoesPage">
+        <span class="btn-icon">🔧</span> Instalações
+      </button>
+      <button id="btn-tecnico" class="sidebar-btn" data-page="tecnicoPage">
+        <span class="btn-icon">🛠️</span> Área Técnica
+      </button>
+      <button id="btn-financeiro" class="sidebar-btn" data-page="financeiroPage">
+        <span class="btn-icon">💰</span> Financeiro
+      </button>
+      <button id="btn-notificacoes" class="sidebar-btn" data-page="notificacoesPage">
+        <span class="btn-icon">🔔</span> Notificações
+      </button>
+      <button id="btn-stats" class="sidebar-btn" data-page="statsPage">
+        <span class="btn-icon">🏆</span> Estatísticas
+      </button>
+      <button id="btn-analytics" class="sidebar-btn" data-page="analyticsPage">
+        <span class="btn-icon">📈</span> Analytics
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button id="btn-backup" class="sidebar-btn sidebar-btn--ghost">
+        <span class="btn-icon">⬇</span> Backup
+      </button>
+    </div>
+  </aside>
+
+  <!-- ════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════ -->
+  <main class="main-content" id="mainContent">
+
+    <!-- User Bar -->
+    <div id="userBar" role="status">
+      <span id="crmSyncStatus" class="crm-sync-status crm-sync-status--syncing" title="Status Firebase">🔄 Sincronizando</span>
+      <span class="user-icon">👤</span>
+      <span id="userEmail" class="user-email">—</span>
+      <button id="btn-logout" class="btn-logout" type="button">Sair</button>
+    </div>
+
+    <!-- ─── DASHBOARD PAGE ─── -->
+    <section id="dashboardPage" class="page active" aria-label="Dashboard">
+
+      <!-- Quick Actions Panel -->
+      <div class="painel-rapido glass-card">
+        <h2 class="painel-titulo">⚡ Central Rápida</h2>
+
+        <div class="acoes-rapidas">
+          <a href="https://kronxz.github.io/mf-solucoes-eletricas/#inicio" target="_blank" rel="noopener" class="acao-link">
+            🌐 Site
+          </a>
+          <a href="../index.html#simulador" target="_blank" rel="noopener" class="acao-link">
+            ☀️ Calculadora
+          </a>
+          <a href="https://www.instagram.com/mf.eletricidade/?hl=pt-br" target="_blank" rel="noopener" class="acao-link">
+            📸 Instagram
+          </a>
+          <a href="https://www.nfse.gov.br/EmissorNacional/Dashboard" target="_blank" rel="noopener" class="acao-link">
+            📄 NFS-e
+          </a>
+          <a href="https://wa.me/5521972381004" target="_blank" rel="noopener" class="acao-link">
+            💬 WhatsApp
+          </a>
+        </div>
+
+        <!-- Company Info Cards -->
+        <div class="dados-empresa-grid">
+          <div class="glass-card info-card">
+            <b>🏢 Empresa</b><br><br>
+            MF Soluções Elétricas<br>
+            CNPJ: 48.929.808/0001-84<br>
+            <span style="color:var(--verde-acento)">MEI Ativo</span>
+          </div>
+          <div class="glass-card info-card">
+            <b>📍 Endereço</b><br><br>
+            Park Way 451<br>
+            Quadra 173 Lote 9<br>
+            Bambuí — Maricá/RJ
+          </div>
+          <div class="glass-card info-card">
+            <b>💳 PIX</b><br><br>
+            <span style="color:var(--verde-acento); font-size:1.1em; font-weight:700">21972381004</span>
+          </div>
+          <div class="glass-card info-card">
+            <b>📞 Contato</b><br><br>
+            WhatsApp:<br>
+            <span style="color:var(--azul-principal)">(21) 97238-1004</span>
+          </div>
+        </div>
+
+        <!-- Internal Notes -->
+        <div class="notas-wrapper">
+          <label for="notasInternas" class="notas-label">📝 Anotações Internas</label>
+          <textarea id="notasInternas" class="notas-textarea" placeholder="Escreva suas anotações internas aqui... (salvo automaticamente)"></textarea>
+          <span id="notasStatus" class="notas-status">—</span>
+        </div>
+      </div>
+
+      <!-- Metric Cards -->
+      <div class="dashboard-metrics" id="dashboardMetrics">
+        <div class="glass-card metric-card">
+          <b>💰 Em Negociação</b>
+          <span id="negociacao" class="metric-value">R$ 0</span>
+        </div>
+        <div class="glass-card metric-card">
+          <b>🏆 Fechado</b>
+          <span id="fechadoTotal" class="metric-value" style="color:var(--verde-acento)">R$ 0</span>
+        </div>
+        <div class="glass-card metric-card">
+          <b>📊 Leads</b>
+          <span id="totalLeads" class="metric-value">0</span>
+        </div>
+        <div class="glass-card metric-card">
+          <b>📈 Conversão</b>
+          <span id="conversao" class="metric-value">0%</span>
+        </div>
+      </div>
+
+      <!-- Analytics Summary inline on Dashboard -->
+      <div id="analytics" class="analytics-mini-grid"></div>
+
+      <!-- Traffic Stats Grid -->
+      <div class="dashboard-grid glass-card">
+        <!-- Visitas -->
+        <div class="stats-row">
+          <span class="stats-titulo">👁️ Visitas</span>
+          <div class="mini-card"><h3 id="visitasHoje">0</h3><p>Hoje</p></div>
+          <div class="mini-card"><h3 id="visitasSemana">0</h3><p>Semana</p></div>
+          <div class="mini-card"><h3 id="visitasMes">0</h3><p>Mês</p></div>
+          <div class="mini-card"><h3 id="visitasAno">0</h3><p>Ano</p></div>
+        </div>
+        <!-- Leads -->
+        <div class="stats-row">
+          <span class="stats-titulo">📊 Leads</span>
+          <div class="mini-card"><h3 id="leadsHoje">0</h3><p>Hoje</p></div>
+          <div class="mini-card"><h3 id="leadsSemana">0</h3><p>Semana</p></div>
+          <div class="mini-card"><h3 id="leadsMes">0</h3><p>Mês</p></div>
+          <div class="mini-card"><h3 id="leadsAno">0</h3><p>Ano</p></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── VISITAS PAGE ─── -->
+    <section id="visitasPage" class="page" aria-label="Visitas">
+      <h1>👁️ Visitas</h1>
+      <p id="visitasMeta" class="crm-page-meta">Carregando sessões...</p>
+      <div id="visitasConteudo" class="visitas-list"></div>
+    </section>
+
+    <!-- ─── LEADS PAGE ─── -->
+    <section id="leadsPage" class="page" aria-label="Leads — Kanban">
+
+      <!-- Leads Actions -->
+      <div class="leads-actions">
+        <button id="btn-novo-lead" type="button" class="btn-primary" style="background:var(--verde-acento)">
+          ➕ Novo Lead
+        </button>
+        <button id="btn-lixeira" type="button" class="btn-secondary">
+          🗑️ Lixeira
+        </button>
+      </div>
+
+      <div class="kanban-toolbar">
+        <input id="kanbanBusca" type="search" class="input-busca" placeholder="🔍 Buscar nome ou telefone..." autocomplete="off">
+        <select id="kanbanFiltroStatus" class="input-busca" aria-label="Filtrar status">
+          <option value="">Todos os status</option>
+          <option value="novo">🟡 Novos</option>
+          <option value="contato">🔵 Contato</option>
+          <option value="proposta">🟠 Proposta</option>
+          <option value="negociacao">🟣 Negociação</option>
+          <option value="fechado">🟢 Fechado</option>
+          <option value="instalacao">🔧 Instalação</option>
+          <option value="pos-venda">💼 Pós-Venda</option>
+          <option value="manutencao">🛠️ Manutenção</option>
+        </select>
+        <select id="kanbanOrdenar" class="input-busca" aria-label="Ordenar leads">
+          <option value="recente">Mais recentes</option>
+          <option value="antigo">Mais antigos</option>
+          <option value="valor">Maior valor</option>
+          <option value="score">Maior score</option>
+          <option value="nome">Nome A–Z</option>
+        </select>
+      </div>
+
+      <!-- Mobile Kanban Tabs -->
+      <div class="mobile-kanban-tabs" id="kanbanTabs" role="tablist">
+        <button class="kanban-btn active-tab" data-coluna="novo" role="tab" aria-selected="true">🟡 Novos</button>
+        <button class="kanban-btn" data-coluna="contato" role="tab" aria-selected="false">🔵 Contato</button>
+        <button class="kanban-btn" data-coluna="proposta" role="tab" aria-selected="false">🟠 Proposta</button>
+        <button class="kanban-btn" data-coluna="negociacao" role="tab" aria-selected="false">🟣 Negoc.</button>
+        <button class="kanban-btn" data-coluna="fechado" role="tab" aria-selected="false">🟢 Fechado</button>
+        <button class="kanban-btn" data-coluna="instalacao" role="tab" aria-selected="false">🔧 Instal.</button>
+        <button class="kanban-btn" data-coluna="pos-venda" role="tab" aria-selected="false">💼 Pós</button>
+        <button class="kanban-btn" data-coluna="manutencao" role="tab" aria-selected="false">🛠️ Manut.</button>
+        <button class="kanban-btn todos-btn" data-coluna="todos" role="tab" aria-selected="false">📋 Todos</button>
+      </div>
+
+      <!-- Kanban Board -->
+      <div class="board" id="kanbanBoard">
+        <div class="column" id="novo" data-status="novo" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🟡 Novos</h2>
+        </div>
+        <div class="column" id="contato" data-status="contato" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🔵 Contato</h2>
+        </div>
+        <div class="column" id="proposta" data-status="proposta" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🟠 Proposta</h2>
+        </div>
+        <div class="column" id="negociacao" data-status="negociacao" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🟣 Negociação</h2>
+        </div>
+        <div class="column" id="fechado" data-status="fechado" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🟢 Fechado</h2>
+        </div>
+        <div class="column" id="instalacao" data-status="instalacao" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🔧 Instalação</h2>
+        </div>
+        <div class="column" id="pos-venda" data-status="pos-venda" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>💼 Pós-Venda</h2>
+        </div>
+        <div class="column" id="manutencao" data-status="manutencao" ondragover="event.preventDefault()" role="tabpanel">
+          <h2>🛠️ Manutenção</h2>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── INSTALAÇÕES PAGE ─── -->
+    <section id="instalacoesPage" class="page" aria-label="Instalações">
+      <div class="instalacoes-header glass-card">
+        <div>
+          <h1>🔧 Instalações</h1>
+          <p class="crm-page-meta">Gerencie agendamentos, checklist técnico, status, timeline e anexos.</p>
+        </div>
+      </div>
+
+      <div class="instalacoes-panel glass-card">
+        <div class="instalacoes-form">
+          <select id="instalacaoLeadSelect" class="input-busca" aria-label="Selecionar lead para instalação">
+            <option value="">Selecionar lead</option>
+          </select>
+          <input id="instalacaoData" type="date" class="input-busca" aria-label="Data da instalação">
+          <input id="instalacaoResponsavel" type="text" class="input-busca" placeholder="Responsável técnico" aria-label="Responsável técnico">
+          <textarea id="instalacaoObservacoes" class="input-busca" rows="2" placeholder="Observações técnicas (opcional)" aria-label="Observações técnicas"></textarea>
+          <button id="btnCriarInstalacao" type="button" class="btn-primary">🗓️ Agendar instalação</button>
+        </div>
+      </div>
+
+      <div class="instalacoes-grid">
+        <div id="instalacoesLista" class="instalacoes-list"></div>
+        <div id="instalacoesConteudo" class="instalacoes-detalhes"></div>
+      </div>
+    </section>
+
+    <!-- ─── ÁREA TÉCNICA PAGE ─── -->
+    <section id="tecnicoPage" class="page" aria-label="Área Técnica">
+      <!-- Renderizado dinamicamente pelo crm-tecnico.js -->
+    </section>
+
+    <!-- ─── FINANCEIRO PAGE ─── -->
+    <section id="financeiroPage" class="page" aria-label="Financeiro">
+      <!-- Renderizado dinamicamente pelo crm-financeiro.js -->
+    </section>
+
+    <!-- ─── NOTIFICAÇÕES PAGE ─── -->
+    <section id="notificacoesPage" class="page" aria-label="Notificações">
+      <!-- Renderizado dinamicamente pelo crm-notificacoes.js -->
+    </section>
+
+    <!-- ─── STATS PAGE ─── -->
+    <section id="statsPage" class="page" aria-label="Estatísticas">
+      <h1>🏆 Estatísticas</h1>
+
+      <div class="glass-card" style="margin-bottom:24px; padding:24px">
+        <h2 style="margin-top:0">📊 Performance dos Kits</h2>
+        <div id="statsKits"></div>
+      </div>
+
+      <div class="glass-card" style="padding:24px">
+        <h2 style="margin-top:0">📈 Leads por Dia (14 dias)</h2>
+        <canvas id="graficoLeads" height="120" style="width:100%"></canvas>
+      </div>
+    </section>
+
+    <!-- ─── ANALYTICS PAGE ─── -->
+    <section id="analyticsPage" class="page" aria-label="Analytics">
+      <h1>📈 Analytics</h1>
+      <p id="analyticsLive" class="crm-page-meta crm-live-badge">Aguardando eventos...</p>
+
+      <div id="analyticsResumo"></div>
+
+      <button id="toggleEventos" type="button" class="btn-primary" style="margin-top:20px">
+        🧠 Ver eventos completos IA
+      </button>
+
+      <div id="eventosBrutos" style="display:none; margin-top:20px">
+        <textarea id="textoEventos" class="eventos-textarea" readonly aria-label="Eventos brutos para IA"></textarea>
+        <button id="btn-copiar-eventos" type="button" class="btn-primary" style="margin-top:10px; background:var(--verde-acento); color:#000">
+          📋 Copiar para IA
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════
+       MODAL — LIXEIRA
+  ════════════════════════════════ -->
+  <div id="modalLixeira" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Lixeira de leads" aria-hidden="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">🗑️ Lixeira</h2>
+        <button id="btn-fechar-lixeira" type="button" class="btn-fechar" aria-label="Fechar lixeira">✕</button>
+      </div>
+      <input id="pesquisaLixeira" type="search" placeholder="Pesquisar lead excluído..." class="input-busca" autocomplete="off">
+      <div id="listaLixeira" role="list"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       MODAL — DETALHES DO LEAD
+  ════════════════════════════════ -->
+  <div id="modalDetalhes" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Detalhes do lead" aria-hidden="true">
+    <div class="modal-detalhes-box">
+      <!-- Header -->
+      <div class="modal-header">
+        <h2 class="modal-title">📊 Detalhes do Lead</h2>
+        <button id="btnFecharModal" type="button" class="btn-fechar" aria-label="Fechar detalhes">✕</button>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="modal-tabs" id="abasLead" role="tablist">
+        <button class="modal-tab active" data-aba="abaLead" role="tab" aria-selected="true">📋 Lead</button>
+        <button class="modal-tab" data-aba="abaInteligencia" role="tab" aria-selected="false">🧠 Inteligência</button>
+        <button class="modal-tab" data-aba="abaFinanciamento" role="tab" aria-selected="false">💳 Financiamento</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="modal-tab-content" id="modalDetalhesConteudo">
+
+        <!-- ABA LEAD -->
+        <div id="abaLead" class="aba-panel active" role="tabpanel">
+          <div class="aba-scroll">
+            <div class="crm-card-intel" style="margin-bottom:12px" id="detalhe-intel"></div>
+            <p class="crm-ultima-acao" id="detalhe-ultima-acao"></p>
+            <h3 style="margin:16px 0 8px;font-size:15px">🕐 Timeline recente</h3>
+            <div id="detalhe-timeline"></div>
+            <hr class="modal-divider">
+            <div id="detalhe-info-lead" class="info-lead-grid"></div>
+            <hr class="modal-divider">
+            <h3 style="margin:12px 0 6px;font-size:15px">📝 Observações</h3>
+            <textarea id="detalhe-observacoes" class="notas-internas" rows="4" placeholder="Anotações sobre este lead..."></textarea>
+            <span id="detalhe-obs-status" class="notas-status"></span>
+            <button type="button" id="btnPropostaModal" class="btn-card btn-proposta" style="margin-top:12px;width:100%">📄 Abrir Proposta PDF</button>
+          </div>
+        </div>
+
+        <!-- ABA INTELIGÊNCIA -->
+        <div id="abaInteligencia" class="aba-panel" role="tabpanel" style="display:none">
+          <div class="aba-scroll">
+            <div id="analyticsLead">
+              <p class="crm-timeline-empty">Selecione um lead com sessionId para ver a inteligência.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA FINANCIAMENTO -->
+        <div id="abaFinanciamento" class="aba-panel" role="tabpanel" style="display:none">
+          <div class="aba-scroll">
+            <div id="detalhe-financiamento"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- App Entry Point -->
+  <script type="module" src="./js/app.js"></script>
+
+</body>
+</html>

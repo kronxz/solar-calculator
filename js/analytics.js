@@ -1,142 +1,54 @@
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"
+import { db, collection, addDoc, serverTimestamp } from '../firebase/config.js';
 
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"
+// =====================================
+// SESSION REAL & SESSION ID
+// =====================================
 
+const TEMPO_EXPIRACAO = 30 * 60 * 1000; // 30 min
 
-// 🔥 FIREBASE CONFIG
+let sessionData = JSON.parse(localStorage.getItem("sessionData"));
+const agora = Date.now();
 
-const firebaseConfig = {
-
-  apiKey: "AIzaSyD8OBOl1hUfsrWWT0-L19uuI-F273IvBgU",
-
-  authDomain: "mf-solucoes-crm.firebaseapp.com",
-
-  projectId: "mf-solucoes-crm",
-
-  storageBucket: "mf-solucoes-crm.firebasestorage.app",
-
-  messagingSenderId: "492242482187",
-
-  appId: "1:492242482187:web:c5d808bf46d199bc60030e"
-
+if (
+  !sessionData ||
+  !sessionData.timestamp ||
+  (agora - sessionData.timestamp) > TEMPO_EXPIRACAO
+) {
+  sessionData = {
+    id: crypto.randomUUID(),
+    timestamp: agora
+  };
+} else {
+  // atualiza atividade
+  sessionData.timestamp = agora;
 }
-// 🔥 INICIA FIREBASE
 
-const app =
-initializeApp(firebaseConfig)
+localStorage.setItem("sessionData", JSON.stringify(sessionData));
 
-const db =
-getFirestore(app)
+let sessionId = localStorage.getItem("sessionId");
+if (!sessionId) {
+  sessionId = crypto.randomUUID();
+  localStorage.setItem("sessionId", sessionId);
+}
 
 // =====================================
 // VISITA ÚNICA POR SESSÃO
 // =====================================
 
 export function podeRegistrarVisita(){
-
-  const ultimaVisita =
-  localStorage.getItem(
-    "ultimaVisitaSession"
-  )
-
-  if(ultimaVisita === sessionId){
-
-    return false
-
+  const ultimaVisita = localStorage.getItem("ultimaVisitaSession");
+  if (ultimaVisita === sessionId) {
+    return false;
   }
-
-  localStorage.setItem(
-    "ultimaVisitaSession",
-    sessionId
-  )
-
-  return true
-
+  localStorage.setItem("ultimaVisitaSession", sessionId);
+  return true;
 }
-
-
-// =====================================
-// SESSION ID
-// =====================================
-
-// =====================================
-// SESSION REAL
-// =====================================
-
-const TEMPO_EXPIRACAO =
-30 * 60 * 1000 // 30 min
-
-let sessionData =
-JSON.parse(
-  localStorage.getItem("sessionData")
-)
-
-const agora = Date.now()
-
-if(
-
-  !sessionData ||
-
-  !sessionData.timestamp ||
-
-  (agora - sessionData.timestamp)
-  > TEMPO_EXPIRACAO
-
-){
-
-  sessionData = {
-
-    id: crypto.randomUUID(),
-
-    timestamp: agora
-
-  }
-
-}
-
-else{
-
-  // atualiza atividade
-  sessionData.timestamp = agora
-
-}
-
-localStorage.setItem(
-  "sessionData",
-  JSON.stringify(sessionData)
-)
-
-let sessionId =
-localStorage.getItem("sessionId")
-
-if(!sessionId){
-
-  sessionId =
-  crypto.randomUUID()
-
-  localStorage.setItem(
-    "sessionId",
-    sessionId
-  )
-
-}
-
 
 // =====================================
 // SCORE
 // =====================================
 
-let leadScore =
-Number(
-  localStorage.getItem("leadScore")
-) || 0
+let leadScore = Number(localStorage.getItem("leadScore")) || 0;
 
 
 // =====================================
@@ -430,4 +342,11 @@ export function podeSalvarEvento(){
 
   return true
 
+}
+
+// Exposição global das funções para scripts embutidos e legado
+if (typeof window !== 'undefined') {
+    window.salvarEvento = salvarEvento;
+    window.adicionarScore = adicionarScore;
+    window.sanitizarTexto = sanitizarTexto;
 }

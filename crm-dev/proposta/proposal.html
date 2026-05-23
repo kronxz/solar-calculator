@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Proposta Solar</title>
+  <link rel="stylesheet" href="proposal.css">
+  <script src="assets/vendors/chart.min.js"></script>
+  <script src="assets/vendors/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <div id="proposal-root" class="proposal-root">
+    <section class="proposal-cover">
+      <div class="cover-art">
+        <svg width="794" height="1123" viewBox="0 0 794 1123" aria-hidden="true">
+          <polygon points="120,60 680,60 740,200 740,940 680,1060 120,1060 60,940 60,200" fill="none" stroke="#2F80ED" stroke-width="2" opacity="0.5"/>
+          <polygon points="240,320 310,360 310,440 240,480 170,440 170,360" fill="#2F80ED"/>
+          <polygon points="310,420 400,480 400,600 310,660 220,600 220,480" fill="#2D74C4"/>
+          <polygon points="170,380 210,410 210,460 170,490 130,460 130,410" fill="#2F80ED"/>
+          <defs>
+            <clipPath id="hexImg">
+              <polygon points="540,420 650,480 650,600 540,660 430,600 430,480"/>
+            </clipPath>
+          </defs>
+          <image href="assets/placas.jpg" x="410" y="420" width="280" height="280" clip-path="url(#hexImg)" class="hex-image"/>
+          <polygon points="540,420 650,480 650,600 540,660 430,600 430,480" fill="none" stroke="#ffffff" stroke-width="8"/>
+          <polygon points="630,420 720,470 720,590 630,640 540,590 540,470" fill="#56CCF2" opacity="0.65"/>
+          <polygon points="640,760 780,840 780,1000 640,1080 500,1000 500,840" fill="#2F80ED"/>
+        </svg>
+      </div>
+      <div class="cover-logo">
+        <img src="assets/logo.jpg" alt="logo">
+        <span>MF Serviços<br>Especializados</span>
+      </div>
+      <div class="cover-head">
+        <div class="cover-label">Proposta Comercial</div>
+        <h1 id="p-title-main">PROPOSTA</h1>
+        <h2 id="p-subtitle">Comercial</h2>
+      </div>
+      <div class="cover-client">
+        <div><span>Cliente</span><strong id="p-nome-cliente">—</strong></div>
+        <div><span>Endereço</span><strong id="p-endereco">—</strong></div>
+        <div><span>Cidade</span><strong id="p-cidade">—</strong></div>
+        <div><span>Telefone</span><strong id="p-telefone">—</strong></div>
+      </div>
+      <div class="cover-lines">
+        <div class="cover-line"><strong>Proposta</strong><span id="p-propostaId-cover">#00000</span></div>
+        <div class="cover-line"><strong>Validade</strong><span id="p-validade-cover">30 dias</span></div>
+        <div class="cover-line"><strong>Data</strong><span id="p-data">—</span></div>
+        <div class="cover-line"><strong>Vendedor</strong><span id="p-vendedor-cover">—</span></div>
+      </div>
+    </section>
+
+    <section class="proposal-body">
+      <h2 class="proposal-title">Resumo da Proposta</h2>
+      <div class="proposal-section" id="section-resumo">
+        <div class="grid-3">
+          <div class="card"><b>Consumo Mensal</b><div id="p-consumo">—</div></div>
+          <div class="card"><b>Geração Estimada</b><div id="p-geracao">—</div></div>
+          <div class="card"><b>Economia</b><div id="p-economia">—</div></div>
+        </div>
+      </div>
+
+      <div class="proposal-section">
+        <h3 class="section-title">Detalhes do Projeto</h3>
+        <table class="data-table">
+          <tbody>
+            <tr><th>Proposta</th><td id="p-propostaId-table">#00000</td></tr>
+            <tr><th>Validade</th><td id="p-validade-table">30 dias</td></tr>
+            <tr><th>Consumo</th><td id="p-consumo-table">—</td></tr>
+            <tr><th>Geração</th><td id="p-geracao-table">—</td></tr>
+            <tr><th>Economia Mensal</th><td id="p-economia-mensal">R$ 0,00</td></tr>
+            <tr><th>Economia Anual</th><td id="p-economia-anual">R$ 0,00</td></tr>
+            <tr><th>Investimento</th><td id="p-investimento">R$ 0,00</td></tr>
+            <tr><th>Payback</th><td id="p-payback">—</td></tr>
+            <tr><th>Inversor</th><td id="p-inversor">—</td></tr>
+            <tr><th>Quantidade de Placas</th><td id="p-placas">—</td></tr>
+            <tr><th>Potência do Sistema</th><td id="p-kwp">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="proposal-section" id="section-kit">
+        <h3 class="section-title">Kit Recomendado</h3>
+        <div class="kit-container">
+          <div class="kit-details" id="p-kit"></div>
+          <div class="kit-image"><img src="assets/lista-equipamentos.jpg" alt="Equipamentos"></div>
+        </div>
+      </div>
+
+      <div class="proposal-section" id="section-kits-adicionais">
+        <h3 class="section-title">Kits Adicionais</h3>
+        <div id="p-kits-adicionais" class="additional-kits"></div>
+      </div>
+
+      <div class="proposal-section" id="section-financiamento">
+        <h3 class="section-title">Financiamento</h3>
+        <div id="p-financiamento" class="financing-list"></div>
+      </div>
+
+      <div class="proposal-section" id="section-graficos">
+        <h3 class="section-title">Economia Estimada</h3>
+        <canvas id="chart-economia" width="760" height="320"></canvas>
+      </div>
+
+      <div class="proposal-section" id="section-observacoes">
+        <h3 class="section-title">Observações</h3>
+        <div id="p-observacoes" class="observacoes-box"></div>
+      </div>
+
+      <footer class="proposal-footer">
+        <div class="signature"><strong>Vendedor:</strong> <span id="p-vendedor-footer">—</span></div>
+        <div class="signature"><strong>Score:</strong> <span id="p-score">—</span></div>
+      </footer>
+    </section>
+
+    <div class="proposal-actions">
+      <button id="btn-export-pdf">Exportar PDF</button>
+      <button id="btn-print">Imprimir</button>
+    </div>
+  </div>
+
+  <script type="module" src="proposal-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // LEADS
+    match /leads/{leadId} {
+
+      allow create:
+      if request.auth != null;
+
+      allow read, update, delete:
+      if request.auth != null;
+    }
+
+    // EVENTOS
+    match /eventos/{eventoId} {
+
+      allow create:
+      if true;
+
+      allow read:
+      if request.auth != null;
+    }
+
+    // CONFIG CRM
+    match /crm_config/{userId} {
+
+      allow read, write:
+      if request.auth != null;
+    }
+  }
+}
