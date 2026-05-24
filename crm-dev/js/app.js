@@ -1,7 +1,7 @@
 // [MF-AI-CHANGE] app.js — Orquestrador CRM Dev — 2026-05-22
 // Integra auth, realtime leads/eventos, e conecta todos os módulos
 
-import { app, db } from '../../firebase/config.js';
+import { app, db } from '../firebase/config.js';
 import {
   getAuth, onAuthStateChanged, signOut
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';

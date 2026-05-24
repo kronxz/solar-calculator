@@ -5,11 +5,11 @@ import {
   doc, updateDoc, addDoc, collection, deleteDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { app } from '../../firebase/config.js';
+import { app } from '../firebase/config.js';
 import {
   crmCardIntel,
   toDateFromFirestore
-} from '../../crm/crm-realtime.js';
+} from './crm-realtime.js';
 import { abrirProposta as abrirPropostaLead } from './crm-proposal.js';
 import { toast, escHtml } from './crm-utils.js';
 

@@ -1,4 +1,4 @@
-import { atualizarLeadWhatsApp } from '../../services/leadService.js';
+import { atualizarLeadWhatsApp } from '../services/leadService.js';
 import { salvarEvento, adicionarScore } from './analytics.js';
 
 const NUMERO_WHATSAPP = "5521972381004"; // Telefone Oficial da MF Soluções

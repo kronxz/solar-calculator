@@ -7,7 +7,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { TIMELINE_LIMIT } from './crm-config.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { app } from '../../firebase/config.js';
+import { app } from '../firebase/config.js';
 import { abrirProposta } from './crm-proposal.js';
 import { toast, escHtml } from './crm-utils.js';
 import { renderHtmlFinanciamento, renderHtmlKitResumo } from './crm-finance.js';
@@ -17,7 +17,7 @@ import {
   badgeTemperaturaHtml,
   crmCardIntel,
   toDateFromFirestore
-} from '../../crm/crm-realtime.js';
+} from './crm-realtime.js';
 
 let _db = null;
 let _leads = [];

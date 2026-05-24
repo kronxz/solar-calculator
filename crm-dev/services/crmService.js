@@ -1,0 +1,28 @@
+import { db, doc, updateDoc, collection, getDocs, query, where } from '../firebase/config.js';
+
+export async function atualizarStatusLead(leadId, novoStatus) {
+  try {
+    const ref = doc(db, "leads", leadId);
+    await updateDoc(ref, { status: novoStatus });
+    console.log(`Lead ${leadId} movido para ${novoStatus}`);
+  } catch (e) {
+    console.error("Erro ao atualizar status do lead:", e);
+    throw e;
+  }
+}
+
+export async function buscarLeadsPorUsuario(userId) {
+  try {
+    const q = query(collection(db, "leads"), where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+    const leads = [];
+    snapshot.forEach(doc => {
+      leads.push({ id: doc.id, ...doc.data() });
+    });
+    console.log(`Fetched ${leads.length} leads for user ${userId}`);
+    return leads;
+  } catch (e) {
+    console.error("Erro ao buscar leads:", e);
+    throw e;
+  }
+}

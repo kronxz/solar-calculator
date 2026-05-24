@@ -1,4 +1,4 @@
-import { app, db, collection, addDoc, serverTimestamp } from '../../firebase/config.js';
+import { app, db, collection, addDoc, serverTimestamp } from '../firebase/config.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 // =====================================

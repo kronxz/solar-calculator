@@ -1,5 +1,5 @@
 import { calcularSimulacao } from './calc.js';
-import { criarLeadBase, atualizarLeadCalculadora } from '../../services/leadService.js';
+import { criarLeadBase, atualizarLeadCalculadora } from '../services/leadService.js';
 import { abrirWhatsApp } from './whatsapp.js';
 import { captureUTM } from './utm.js';
 import { salvarEvento, adicionarScore } from './analytics.js';

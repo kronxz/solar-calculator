@@ -5,7 +5,7 @@ import {
   collection, doc, setDoc, updateDoc, onSnapshot, query, where
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { app } from '../../firebase/config.js';
+import { app } from '../firebase/config.js';
 import { toast, escHtml, formatDate } from './crm-utils.js';
 
 let _db = null;
