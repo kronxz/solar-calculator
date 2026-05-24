@@ -152,6 +152,22 @@
         { "fieldPath": "userId", "order": "ASCENDING" },
         { "fieldPath": "leadId", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "notificacoes_logs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "dataEnvio", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "instalacoes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "dataInstalacao", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []
