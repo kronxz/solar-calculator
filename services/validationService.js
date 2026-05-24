@@ -158,25 +158,44 @@ function validarNumeroOpcional(valor, min, max) {
 }
 
 /**
- * Anti-flood: impede a mesma ação+fingerprint em menos de 30 segundos.
+ * Anti-flood: impede spam real de criação de leads.
+ * REGRA: cooldown de 20s para NOVOS fingerprints.
+ * Re-chamadas do mesmo número (blur → calcular) são permitidas com cooldown de 1s.
  * @param {string} acao - ex: criar_lead_base
  * @param {string} fingerprint - ex: criar_lead:21999999999
  */
 export function verificarFlood(acao, fingerprint) {
     if (acao !== 'criar_lead_base') {
+        console.log('[VALIDATION] cooldown OK — ação não bloqueável:', acao);
         return sucesso(true);
     }
 
     const agora = Date.now();
-    const COOLDOWN_LEAD = 20_000; // 20s
+    // Cooldown REAL para spam: 20s entre fingerprints DIFERENTES
+    // Re-chamada do MESMO número (blur + calcular): cooldown mínimo de 1s
+    const COOLDOWN_NOVO = 20_000;  // 20s para número novo tentando de novo
+    const COOLDOWN_RECHAMADA = 1_000; // 1s para re-chamada legítima (blur → calcular)
 
     const ultimo = getFloodMap(acao);
     const ultimaChave = ultimo[fingerprint];
 
-    if (ultimaChave && agora - ultimaChave < COOLDOWN_LEAD) {
-        const segundos = Math.ceil((COOLDOWN_LEAD - (agora - ultimaChave)) / 1000);
-        return falha('FLOOD_INTERVALO', `Aguarde ${segundos}s antes de enviar novamente.`);
+    if (ultimaChave) {
+        const decorrido = agora - ultimaChave;
+        // Mesmo número sendo chamado de novo rapidamente (fluxo legítimo: blur + clicar calcular)
+        // Permite após 1s — suficiente para evitar duplo-clique mas não bloqueia fluxo normal
+        if (decorrido < COOLDOWN_RECHAMADA) {
+            const ms = Math.ceil(COOLDOWN_RECHAMADA - decorrido);
+            return falha('FLOOD_INTERVALO', `Aguarde ${Math.ceil(ms/1000)}s antes de enviar novamente.`);
+        }
+        // Dentro do cooldown de re-chamada legítima — libera sem penalidade
+        console.log('[VALIDATION] primeiro envio liberado — re-chamada do mesmo número OK');
+        ultimo[fingerprint] = agora;
+        setFloodMap(acao, ultimo);
+        return sucesso(true);
     }
+
+    // Primeiro envio deste fingerprint
+    console.log('[VALIDATION] primeiro envio liberado — novo número');
 
     const sessao = getFloodSessao();
     if (agora - sessao.resetAt > 60 * 60 * 1000) {

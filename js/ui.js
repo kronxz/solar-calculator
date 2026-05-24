@@ -3,6 +3,7 @@ import { criarLeadBase, atualizarLeadCalculadora } from '../services/leadService
 import { abrirWhatsApp } from './whatsapp.js';
 import { captureUTM } from './utm.js';
 import { salvarEvento, adicionarScore } from './analytics.js';
+import { Storage } from './storage.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Captura UTM na entrada
@@ -98,16 +99,26 @@ async function executarSimulacao() {
     salvarEvento('clicou_simular');
     adicionarScore(5);
 
-    try {
-        await criarLeadBase(nome, telefone);
-    } catch (err) {
-        console.error("Erro ao criar lead base antes da simulação:", err);
-        alert("Erro ao salvar lead. Verifique os dados e tente novamente.");
-        return;
+    // Cria lead base apenas se ainda não existe na sessão
+    // Evita disparar o flood cooldown quando o lead já foi criado no blur do telefone
+    const leadJaExiste = !!Storage.getLeadId();
+    if (!leadJaExiste) {
+        try {
+            await criarLeadBase(nome, telefone);
+        } catch (err) {
+            console.error("Erro ao criar lead base antes da simulação:", err);
+            alert("Erro ao salvar lead. Verifique os dados e tente novamente.");
+            return;
+        }
+    } else {
+        console.log('[SIMULADOR] Lead já existe no cache, pulando criarLeadBase');
     }
+
+    console.log('[SIMULADOR] iniciar cálculo');
 
     // Chama a simulação com os parâmetros dinâmicos corretos
     const { consumoMensal, geracaoMensal, kits, kitsDisponiveis } = calcularSimulacao(contaDeLuz, tariff, hsp, potenciaPlaca);
+    console.log('[SIMULADOR] kits gerados:', kits.length);
 
     mostrarResultados(kits, contaDeLuz);
 
