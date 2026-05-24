@@ -164,10 +164,9 @@ function limparListeners() {
 
 function iniciarRealtimeLeads(userId) {
   if (unsubscribeLeads) { unsubscribeLeads(); }
-  // Limit the realtime listen to recent leads to reduce read costs
-  const leadsQuery = userId
-    ? query(collection(db, 'leads'), where('userId', '==', userId), orderBy('data', 'desc'), limit(LEADS_LIMIT))
-    : query(collection(db, 'leads'), orderBy('data', 'desc'), limit(LEADS_LIMIT));
+  // Permite que todos os leads públicos e privados apareçam no CRM.
+  // Ordena por 'createdAt' para que os leads capturados no simulador apareçam corretamente.
+  const leadsQuery = query(collection(db, 'leads'), orderBy('createdAt', 'desc'), limit(LEADS_LIMIT));
 
   // Keep a map for incremental updates to avoid full rebuilds on large datasets
   _leadsMap.clear();
