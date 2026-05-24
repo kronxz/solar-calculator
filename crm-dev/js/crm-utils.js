@@ -124,4 +124,12 @@ export function iniciarMonitorConexao() {
   window.addEventListener('offline', () => { upd(); toast('Sem internet', 'warn'); });
   upd();
 }
-
+export function formatDate(date) {
+  if (!date) return '—';
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return '—';
+  const dia = String(d.getDate()).padStart(2, '0');
+  const mes = String(d.getMonth() + 1).padStart(2, '0');
+  const ano = d.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
