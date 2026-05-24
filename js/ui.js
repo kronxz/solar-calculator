@@ -112,14 +112,17 @@ async function executarSimulacao() {
     mostrarResultados(kits, contaDeLuz);
 
     try {
+        console.log("[SIMULADOR] Kits carregados:", kitsDisponiveis);
         await atualizarLeadCalculadora({
             contaDeLuz,
             consumoMensal: Number(consumoMensal),
             geracaoMensal: Number(geracaoMensal),
             hsp,
             tarifa: tariff,
-            potenciaPlaca
+            potenciaPlaca,
+            kitsDisponiveis
         });
+        console.log("[SIMULADOR] Lead salvo");
         
         const resultSection = document.getElementById('result') || document.querySelector('.resultados-container');
         if (resultSection) {

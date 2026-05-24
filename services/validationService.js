@@ -258,7 +258,8 @@ export function validarDadosCalculadora(dados = {}) {
         hsp: rHsp.value,
         potenciaPlaca: rPlaca.value,
         consumoMensal: validarNumeroOpcional(dados.consumoMensal, 0, 50_000),
-        geracaoMensal: validarNumeroOpcional(dados.geracaoMensal, 0, 50_000)
+        geracaoMensal: validarNumeroOpcional(dados.geracaoMensal, 0, 50_000),
+        kitsDisponiveis: dados.kitsDisponiveis || null
     });
 }
 

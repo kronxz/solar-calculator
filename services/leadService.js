@@ -35,7 +35,7 @@ export async function carregarLeads() {
         });
         return leads;
     } catch (e) {
-        console.error("Erro ao carregar leads:", e);
+        console.error("[leadService] ERRO DETALHADO:", e);
         throw e;
     }
 }
@@ -125,11 +125,7 @@ export async function criarLeadBase(nome, telefone) {
         return docRef.id;
 
     } catch (e) {
-        if (e.code) {
-            console.warn('[leadService] Lead base bloqueado:', e.code, e.message);
-        } else {
-            console.error('[leadService] Erro ao criar lead base:', e);
-        }
+        console.error("[leadService] ERRO DETALHADO:", e);
         throw e;
     }
 }
@@ -160,6 +156,7 @@ export async function atualizarLeadCalculadora(dadosCalculo) {
         await updateDoc(leadRef, {
             ...dadosValidados,
             kits: kits,
+            kitsDisponiveis: dadosValidados.kitsDisponiveis || null,
             valor: Number(dadosValidados.contaDeLuz || 0),
             consumo: Number(dadosValidados.consumoMensal || 0),
             lastAction: serverTimestamp(),
@@ -171,11 +168,7 @@ export async function atualizarLeadCalculadora(dadosCalculo) {
         timeline(leadId, tipoSimulacao, { contaDeLuz: dadosValidados.contaDeLuz });
         score(leadId, tipoSimulacao);
     } catch (e) {
-        if (e.code) {
-            console.warn('[leadService] Calculadora bloqueada:', e.code, e.message);
-        } else {
-            console.error('[leadService] Erro ao atualizar lead na calculadora:', e);
-        }
+        console.error("[leadService] ERRO DETALHADO:", e);
         throw e;
     }
 }
@@ -221,11 +214,7 @@ export async function atualizarLeadWhatsApp(kit, sistemaEscolhido) {
         });
         score(leadId, TIMELINE_TIPOS.CLICOU_WHATSAPP);
     } catch (e) {
-        if (e.code) {
-            console.warn('[leadService] WhatsApp bloqueado:', e.code, e.message);
-        } else {
-            console.error('[leadService] Erro ao atualizar lead para WhatsApp:', e);
-        }
+        console.error("[leadService] ERRO DETALHADO:", e);
         throw e;
     }
 }

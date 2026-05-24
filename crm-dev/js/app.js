@@ -92,7 +92,7 @@ function iniciarNavegacao() {
   document.getElementById('btn-logout')?.addEventListener('click', () => {
     const auth = getAuth(app);
     signOut(auth).then(() => {
-      window.location.href = 'login.html';
+      // window.location.href = 'login.html'; // REMOVIDO TEMPORARIAMENTE
     });
   });
 
@@ -236,7 +236,13 @@ onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
     setGlobalLoading(false);
-    window.location.href = 'login.html';
+
+    if (window.location.pathname.includes('login')) {
+      window.location.href = '/';
+      return;
+    }
+
+    mostrarPagina('dashboardPage');
     return;
   }
 
